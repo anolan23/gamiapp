@@ -1,0 +1,29 @@
+.form-section {
+  padding: 6.4rem 0;
+  display: flex;
+  width: 700px;
+  margin: 0 auto;
+  border-bottom: 1px solid $color-100;
+
+  &:last-child {
+    border-bottom: none;
+  }
+  &__icon {
+    font-size: 4.8rem;
+    color: $color-black-20;
+  }
+  &__title {
+    font-size: 4rem;
+    font-weight: 700;
+  }
+  &__content {
+    padding: 0 2.4rem;
+    &__text {
+    }
+    &__inputs {
+      margin-top: 3.2rem;
+      display: grid;
+      gap: 3.2rem;
+    }
+  }
+}

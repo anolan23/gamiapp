@@ -1,7 +1,7 @@
 import UserToggle from '../UserToggle';
 
 interface Props {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 function Navbar({ children }: Props) {

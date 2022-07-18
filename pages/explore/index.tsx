@@ -4,15 +4,19 @@ import Navbar from '../../components/Navbar';
 import Button from '../../components/Button';
 import Event from '../../components/Event';
 import Input from '../../components/Input';
+import { useRouter } from 'next/router';
 
 function Explore() {
   const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
     ssr: false,
   });
+  const router = useRouter();
   return (
     <div className="explore">
       <Navbar>
-        <Button color="primary">Create event</Button>
+        <Button color="primary" onClick={() => router.push('/events/create')}>
+          Create event
+        </Button>
       </Navbar>
       <div className="explore__content">
         <main className="explore__main">

@@ -1,0 +1,15 @@
+.input-group {
+  padding: 8px 1.6rem;
+  padding-top: 0;
+  border: 1px solid $color-black-20;
+  &__label {
+    font-size: 1.2rem;
+  }
+  &__input {
+    & input {
+      margin-left: 0;
+      height: auto;
+      padding: 4px 0;
+    }
+  }
+}
