@@ -19,11 +19,14 @@ body {
 
 input,
 textarea {
+  color: inherit;
   font-family: inherit;
-  font-size: 1.4rem;
+  font-size: inherit;
+  font-weight: inherit;
   resize: none;
   &::placeholder {
-    color: #bdbdbd;
+    font-weight: 400;
+    color: $color-black-20;
   }
 }
 

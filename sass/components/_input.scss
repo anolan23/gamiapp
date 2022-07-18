@@ -1,0 +1,18 @@
+.input-box {
+  display: flex;
+  align-items: center;
+  border: none;
+  overflow: hidden;
+
+  &__icon {
+    color: $color-black-10;
+  }
+  &__input {
+    background-color: inherit;
+    margin-left: 1.3rem;
+    flex: 1;
+    border: none;
+    outline: none;
+    height: 4.8rem;
+  }
+}

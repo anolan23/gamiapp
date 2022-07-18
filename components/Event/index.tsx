@@ -4,7 +4,7 @@ export interface Event {
   image?: string;
   title: string;
   game: string;
-  summary: string;
+  summary?: string;
   attendees: number;
   date: Date;
 }
