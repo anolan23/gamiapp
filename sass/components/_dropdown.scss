@@ -1,0 +1,44 @@
+.dropdown {
+  z-index: 10;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 1.6rem);
+  min-width: 19rem;
+  background-color: $color-200;
+  border: $border;
+  box-shadow: 0px 2px 4px 0px #0000000d;
+  border-radius: 1.2rem;
+  color: inherit;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 0 1.2rem;
+
+  &--up {
+    top: unset;
+    right: 1.6rem;
+    bottom: 100%;
+  }
+
+  &__divide {
+    border: $border;
+  }
+
+  &__item {
+    padding: 1.2rem 1.3rem;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    border-radius: 0.8rem;
+    transition: all 0.1s;
+    &:hover {
+      background-color: $color-100;
+    }
+    &--main {
+      color: #eb5757;
+    }
+    &__text {
+      margin-left: 1.2rem;
+    }
+  }
+}

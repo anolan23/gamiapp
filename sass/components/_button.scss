@@ -1,0 +1,29 @@
+.btn {
+  padding: 1.6rem 2.4rem;
+  background-color: $color-400;
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    filter: brightness(80%);
+  }
+
+  &--secondary {
+    background-color: transparent;
+    color: $color-400;
+    border: 1px solid $color-400;
+  }
+
+  &--sky-blue {
+    background-color: #56ccf2;
+  }
+
+  &--red {
+    background-color: #eb5757;
+  }
+}

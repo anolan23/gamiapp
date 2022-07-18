@@ -1,0 +1,39 @@
+.dashboard {
+  display: grid;
+  grid-template-rows: 100vh;
+  grid-template-columns: 9.4rem 1fr;
+  @media screen and (max-width: 800px) {
+    grid-template-columns: 6.2rem 1fr;
+  }
+  &__content {
+    display: flex;
+    @media screen and (max-width: 800px) {
+      flex-direction: column;
+      overflow-y: scroll;
+    }
+  }
+  &__main {
+    flex: 1;
+    background-color: #fafafe;
+    height: 100%;
+    overflow: hidden;
+    @media screen and (max-width: 800px) {
+      height: fit-content;
+      overflow: unset;
+    }
+  }
+
+  &__scrollable {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    overflow-y: scroll;
+    padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+    box-sizing: content-box; /* So the width will be 100% + 17px */
+    @media screen and (max-width: 800px) {
+      overflow-y: unset;
+      padding-right: 0;
+      box-sizing: border-box;
+    }
+  }
+}
