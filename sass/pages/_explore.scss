@@ -1,7 +1,4 @@
 .explore {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
   &__content {
     min-height: 0;
     flex: 1;
@@ -30,7 +27,6 @@
     }
   }
   &__events {
-    
     flex: 1;
     padding: 3.2rem 0;
     display: grid;

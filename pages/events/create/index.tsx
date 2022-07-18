@@ -1,12 +1,14 @@
-import Navbar from '../../../components/Navbar';
+import Navbar from '../../../layouts/Navbar';
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import FormSection from '../../../components/FormSection';
 import InputGroup from '../../../components/InputGroup';
+import Page from '../../../layouts/Page';
+import Banner from '../../../layouts/Banner';
 
 function Create() {
   return (
-    <div className="create">
+    <Page className="create">
       <Navbar></Navbar>
       <div className="create__content">
         <FormSection
@@ -42,11 +44,11 @@ function Create() {
           />
         </FormSection>
       </div>
-      <div className="create__actions">
+      <Banner>
         <Button color="secondary">Discard</Button>
         <Button>Save and Continue</Button>
-      </div>
-    </div>
+      </Banner>
+    </Page>
   );
 }
 

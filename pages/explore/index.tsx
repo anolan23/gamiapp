@@ -1,9 +1,10 @@
 import dynamic from 'next/dynamic';
 
-import Navbar from '../../components/Navbar';
+import Navbar from '../../layouts/Navbar';
 import Button from '../../components/Button';
 import Event from '../../components/Event';
 import Input from '../../components/Input';
+import Page from '../../layouts/Page';
 import { useRouter } from 'next/router';
 
 function Explore() {
@@ -12,7 +13,7 @@ function Explore() {
   });
   const router = useRouter();
   return (
-    <div className="explore">
+    <Page className="explore">
       <Navbar>
         <Button color="primary" onClick={() => router.push('/events/create')}>
           Create event
@@ -102,7 +103,7 @@ function Explore() {
           <MapWithNoSSR />
         </div>
       </div>
-    </div>
+    </Page>
   );
 }
 

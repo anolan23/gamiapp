@@ -2,12 +2,10 @@
   z-index: 10;
   position: absolute;
   right: 0;
-  top: calc(100% + 1.6rem);
-  min-width: 19rem;
+  top: 100%;
+  min-width: 24rem;
   background-color: $color-200;
   border: $border;
-  box-shadow: 0px 2px 4px 0px #0000000d;
-  border-radius: 1.2rem;
   color: inherit;
   font-size: 1.2rem;
   font-weight: 500;
