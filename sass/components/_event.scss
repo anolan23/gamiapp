@@ -1,0 +1,50 @@
+.event {
+  margin: 3.2rem;
+  background-color: $color-100;
+  width: 30rem;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  color: $color-black-30;
+  cursor: pointer;
+
+  &__image {
+    position: relative;
+    height: 20rem;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 10px;
+    &__text {
+      display: flex;
+      flex-direction: column;
+    }
+    &__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &__date {
+        display: flex;
+        align-items: center;
+        &__val {
+          margin-left: 1rem;
+        }
+      }
+      &__attendees {
+        display: flex;
+        align-items: center;
+        &__count {
+        }
+      }
+    }
+  }
+  &__title {
+    font-weight: 700;
+    color: $color-black-10;
+    margin-bottom: 8px;
+  }
+  &__game {
+    font-size: 1.4rem;
+  }
+}
