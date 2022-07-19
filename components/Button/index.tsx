@@ -6,6 +6,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function Button({
+  form,
   type,
   extended,
   color = 'primary',
@@ -15,6 +16,7 @@ function Button({
 }: ButtonProps) {
   return (
     <button
+      form={form}
       className={`btn ${
         extended ? 'btn--extended' : ''
       } ${className} btn--${color}`}

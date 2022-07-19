@@ -2,10 +2,12 @@ import Input from '../Input';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
+  icon?: string;
 }
 
 function InputGroup({
   label,
+  icon,
   type,
   name,
   placeholder,
@@ -19,6 +21,7 @@ function InputGroup({
       <label className="input-group__label">{label}</label>
       <Input
         className="input-group__input"
+        icon={icon}
         type={type}
         name={name}
         placeholder={placeholder}

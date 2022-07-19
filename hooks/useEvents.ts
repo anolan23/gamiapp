@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import backend from '../lib/backend';
 
 export interface Event {
-  id: number;
+  id?: number;
   createdAt?: string;
   updatedAt?: string;
   userId: number;

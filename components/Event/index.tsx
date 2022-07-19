@@ -10,7 +10,7 @@ function EventComponent({ event }: Props) {
     <div className="event">
       <div className="event__image">
         <Image
-          src={event.image || '/event.jpeg'}
+          src={event.image || '/event.webp'}
           alt="event"
           layout="fill"
           objectFit="cover"

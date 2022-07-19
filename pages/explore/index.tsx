@@ -21,7 +21,10 @@ function Explore() {
   return (
     <Page className="explore">
       <Navbar>
-        <Button color="primary" onClick={() => router.push('/events/create')}>
+        <Button
+          color="primary"
+          onClick={() => router.push('/manage/events/create')}
+        >
           Create event
         </Button>
       </Navbar>
