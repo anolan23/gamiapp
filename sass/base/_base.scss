@@ -35,3 +35,29 @@ button {
   font-weight: 700;
   font-size: inherit;
 }
+
+.logo {
+  &,
+  &:link,
+  &:visited {
+    color: inherit;
+    text-decoration: none;
+    font-size: 3.2rem;
+    font-weight: 700;
+  }
+  &--small {
+    font-size: 2.4rem;
+  }
+  &--green {
+    color: $color-400;
+  }
+}
+
+.link {
+  &,
+  &:link,
+  &:visited {
+    text-decoration: none;
+    color: $color-300;
+  }
+}

@@ -4,14 +4,20 @@ import Navbar from '../../layouts/Navbar';
 import Button from '../../components/Button';
 import Event from '../../components/Event';
 import Input from '../../components/Input';
+import ListRenderer from '../../components/ListRenderer';
 import Page from '../../layouts/Page';
 import { useRouter } from 'next/router';
+import useUser from '../../hooks/useUser';
+import useEvents from '../../hooks/useEvents';
 
 function Explore() {
   const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
     ssr: false,
   });
+  const user = useUser();
+  const { events } = useEvents();
   const router = useRouter();
+
   return (
     <Page className="explore">
       <Navbar>
@@ -37,64 +43,10 @@ function Explore() {
             <Button>Search</Button>
           </div>
           <div className="explore__events">
-            <Event
-              event={{
-                image: '/event.webp',
-                title: 'Halo LAN party',
-
-                game: 'Halo 3',
-                attendees: 7,
-                date: new Date(),
-              }}
-            />
-            <Event
-              event={{
-                image: '/event.webp',
-                title: 'Halo LAN party',
-
-                game: 'Halo 3',
-                attendees: 7,
-                date: new Date(),
-              }}
-            />
-            <Event
-              event={{
-                image: '/event.webp',
-                title: 'Halo LAN party',
-
-                game: 'Halo 3',
-                attendees: 7,
-                date: new Date(),
-              }}
-            />
-            <Event
-              event={{
-                image: '/event.webp',
-                title: 'Halo LAN party',
-
-                game: 'Halo 3',
-                attendees: 7,
-                date: new Date(),
-              }}
-            />
-            <Event
-              event={{
-                image: '/event.webp',
-                title: 'Halo LAN party',
-
-                game: 'Halo 3',
-                attendees: 7,
-                date: new Date(),
-              }}
-            />
-            <Event
-              event={{
-                image: '/event.webp',
-                title: 'Halo LAN party',
-
-                game: 'Halo 3',
-                attendees: 7,
-                date: new Date(),
+            <ListRenderer
+              list={events}
+              itemRenderer={(event) => {
+                return <Event event={event} />;
               }}
             />
           </div>

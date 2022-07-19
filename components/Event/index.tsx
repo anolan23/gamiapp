@@ -1,13 +1,5 @@
 import Image from 'next/image';
-
-export interface Event {
-  image?: string;
-  title: string;
-  game: string;
-  summary?: string;
-  attendees: number;
-  date: Date;
-}
+import { Event } from '../../hooks/useEvents';
 
 interface Props {
   event: Event;
@@ -27,19 +19,19 @@ function EventComponent({ event }: Props) {
       <div className="event__content">
         <div className="event__content__text">
           <span className="event__title">{event.title}</span>
-          <span className="event__game">{event.game}</span>
+          <span className="event__game">{event.gameId}</span>
         </div>
         <div className="event__content__bottom">
           <div className="event__content__bottom__date">
             <span className="material-icons">schedule</span>
             <span className="event__content__bottom__date__val">
-              {event.date.toLocaleDateString()}
+              {event.startsAt}
             </span>
           </div>
           <div className="event__content__bottom__attendees">
             <span className="material-icons">person</span>
             <span className="event__content__bottom__attendees__count">
-              {event.attendees}
+              {event.playerCount}
             </span>
           </div>
         </div>

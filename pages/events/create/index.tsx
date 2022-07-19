@@ -13,7 +13,7 @@ function Create() {
       <div className="create__content">
         <FormSection
           title="Basic Info"
-          description="Name your game event and tell gamers what game will be played. Add
+          description="Name your event and tell gamers what game will be played. Add
             details that highlight what makes it unique."
           icon="segment"
         >

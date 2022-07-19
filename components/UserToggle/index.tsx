@@ -3,6 +3,7 @@ import { useState, useRef, useCallback } from 'react';
 import Avatar from '../Avatar';
 import Dropdown from '../Dropdown';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
+import useUser from '../../hooks/useUser';
 
 interface Props {
   className?: string;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 function UserToggle({ className, direction = 'down' }: Props) {
+  const { user } = useUser();
   const [show, setShow] = useState<boolean>(false);
   const toggleRef = useRef<HTMLDivElement>(null);
 
@@ -26,9 +28,7 @@ function UserToggle({ className, direction = 'down' }: Props) {
       ref={toggleRef}
     >
       <Avatar className="user-toggle__image" />
-      <span className="user-toggle__name">
-        {'aaron.nolan24@gmail.com' || 'Sign up'}
-      </span>
+      <span className="user-toggle__name">{user?.email || 'Sign up'}</span>
       <span className="material-icons user-toggle__icon">expand_more</span>
       <Dropdown
         show={show}

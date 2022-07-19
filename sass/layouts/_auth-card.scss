@@ -1,0 +1,64 @@
+.auth-card {
+  background-color: $color-100;
+  display: flex;
+  flex-direction: column;
+  width: 47.4rem;
+  padding: 4.3rem 5.9rem;
+  margin: auto;
+  border-radius: 24px;
+  @media only screen and (max-width: 550px) {
+    border: none;
+    margin: 0 auto;
+    padding: 2.4rem;
+  }
+  &__logo {
+  }
+  &__heading {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-top: 2.4rem;
+    margin-bottom: 1.6rem;
+  }
+  &__text {
+    color: $color-black-20;
+    margin-bottom: 3.2rem;
+  }
+  &__form {
+    display: grid;
+    gap: 1.6rem;
+    &__input {
+      & input {
+        &:-webkit-autofill {
+          &,
+          &:hover,
+          &:focus,
+          &:active {
+            -webkit-box-shadow: 0 0 0 1000px white inset !important;
+          }
+        }
+      }
+    }
+  }
+  &__message {
+    color: $color-black-20;
+    font-size: 1.4rem;
+    text-align: center;
+    margin-top: 3.2rem;
+  }
+  &__socials {
+    color: white;
+    fill: currentColor;
+    align-self: center;
+    display: grid;
+    grid-auto-flow: column;
+    width: min-content;
+    gap: 2rem;
+    margin: 2.4rem 0;
+    cursor: pointer;
+  }
+  &__prompt {
+    text-align: center;
+    font-size: 1.4rem;
+    color: $color-black-20;
+  }
+}

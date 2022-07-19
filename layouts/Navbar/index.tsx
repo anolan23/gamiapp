@@ -9,9 +9,9 @@ function Navbar({ children }: Props) {
   return (
     <nav className="navbar">
       <Link href="/explore" passHref>
-        <a className="navbar__logo">
+        <a className="logo">
           Gami
-          <span className="navbar__logo--green">app</span>
+          <span className="logo--green">app</span>
         </a>
       </Link>
       <div className="navbar__right">

@@ -1,3 +1,6 @@
+import { useRouter } from 'next/router';
+import useAuth from '../../hooks/useAuth';
+
 interface Props {
   show: boolean;
   close: () => void;
@@ -5,6 +8,8 @@ interface Props {
 }
 
 function Dropdown({ show, close, direction = 'down' }: Props) {
+  const { logout } = useAuth();
+  const router = useRouter();
   if (!show) return null;
   return (
     <div className={`dropdown ${direction === 'up' ? 'dropdown--up' : ''}`}>
@@ -19,7 +24,12 @@ function Dropdown({ show, close, direction = 'down' }: Props) {
       <div className="dropdown__divide"></div>
       <div
         className="dropdown__item dropdown__item--main"
-        onClick={async () => {}}
+        onClick={async () => {
+          try {
+            await logout();
+            router.push('/login');
+          } catch (error) {}
+        }}
       >
         <span className="material-icons">logout</span>
         <span className="dropdown__item__text">Logout</span>
