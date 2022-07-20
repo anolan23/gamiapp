@@ -28,7 +28,7 @@ function Create() {
         if (!user?.id) return;
         const event = { ...values, userId: user.id, gameId: +values.gameId };
         const created = await createEvent(event);
-        router.push(`/manage/events/${created.id}`);
+        router.push(`/manage/events/${created.id}/details`);
       } catch (error) {}
     },
   });
