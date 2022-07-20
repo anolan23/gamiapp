@@ -12,7 +12,7 @@ import useUser from '../../../../../hooks/useUser';
 import SidebarManage from '../../../../../components/SidebarManage';
 import ManagerDashboard from '../../../../../components/ManagerDashboard';
 
-function Details() {
+function Publish() {
   const { user } = useUser();
   const router = useRouter();
   const { query } = router;
@@ -29,30 +29,9 @@ function Details() {
   });
 
   return (
-    <Page className="details">
+    <Page className="publish">
       <Navbar></Navbar>
-      <ManagerDashboard>
-        <form id="basic-info" onSubmit={formik.handleSubmit}>
-          <FormSection
-            title="Main Event Image"
-            description="This is the first image gamers will see at the top of your listing. Use a high quality image: 2160x1080px (2:1 ratio)."
-            icon="image"
-          ></FormSection>
-          <FormSection
-            title="Description"
-            description="Add more details to your event."
-            icon="segment"
-          >
-            <InputGroup
-              name="summary"
-              value={formik.values.summary}
-              onChange={formik.handleChange}
-              label="Summary"
-              placeholder="Write a short event summary to get attendees excited"
-            />
-          </FormSection>
-        </form>
-      </ManagerDashboard>
+      <ManagerDashboard>publish</ManagerDashboard>
       <Banner>
         <Button color="secondary" text="Discard" />
         <Button type="submit" form="basic-info" text="Save & Continue" />
@@ -61,4 +40,4 @@ function Details() {
   );
 }
 
-export default Details;
+export default Publish;

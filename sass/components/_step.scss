@@ -1,9 +1,15 @@
 .step {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  padding: 1.6rem 3.2rem;
-  font-weight: 700;
+  &,
+  &:link,
+  &:visited {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 1.6rem 3.2rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: inherit;
+  }
   &--active {
     background-color: $color-200;
     & .step__circle {

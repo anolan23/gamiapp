@@ -18,12 +18,17 @@
 @import 'components/form-section';
 @import 'components/step';
 @import 'components/dropdown-btn';
+@import 'components/sidebar-manage';
+@import 'components/basic-info';
+@import 'components/manager-dashboard';
 
 @import 'layouts/page';
 @import 'layouts/banner';
 @import 'layouts/auth-card';
 @import 'layouts/sidebar';
+@import 'layouts/container';
 
 @import 'pages/explore';
 @import 'pages/create';
 @import 'pages/details';
+@import 'pages/basic-info';

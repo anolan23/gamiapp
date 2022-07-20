@@ -1,4 +1,6 @@
 .page {
+  position: relative;
+  min-height: 0;
   height: 100vh;
   display: flex;
   flex-direction: column;
