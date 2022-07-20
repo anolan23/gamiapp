@@ -4,6 +4,7 @@ import Avatar from '../Avatar';
 import Dropdown from '../Dropdown';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import useUser from '../../hooks/useUser';
+import DropdownItem from '../DropdownItem';
 
 interface Props {
   className?: string;
@@ -30,11 +31,9 @@ function UserToggle({ className, direction = 'down' }: Props) {
       <Avatar className="user-toggle__image" />
       <span className="user-toggle__name">{user?.email || 'Sign up'}</span>
       <span className="material-icons user-toggle__icon">expand_more</span>
-      <Dropdown
-        show={show}
-        close={() => setShow(false)}
-        direction={direction}
-      />
+      <Dropdown show={show} close={() => setShow(false)} direction={direction}>
+        <DropdownItem icon="logout">Logout</DropdownItem>
+      </Dropdown>
     </div>
   );
 }

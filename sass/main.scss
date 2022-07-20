@@ -16,10 +16,14 @@
 @import 'components/input';
 @import 'components/input-group';
 @import 'components/form-section';
+@import 'components/step';
+@import 'components/dropdown-btn';
 
 @import 'layouts/page';
 @import 'layouts/banner';
 @import 'layouts/auth-card';
+@import 'layouts/sidebar';
 
 @import 'pages/explore';
 @import 'pages/create';
+@import 'pages/details';

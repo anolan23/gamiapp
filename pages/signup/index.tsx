@@ -57,9 +57,7 @@ function Signup() {
             onBlur={formik.handleBlur}
             value={formik.values.password}
           />
-          <Button type="submit" extended>
-            Start gaming now
-          </Button>
+          <Button type="submit" extended text="Start gaming now" />
         </form>
         <span className="auth-card__message">
           or continue with these social profiles

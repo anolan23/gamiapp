@@ -107,10 +107,8 @@ function Create() {
         </FormSection>
       </form>
       <Banner>
-        <Button color="secondary">Discard</Button>
-        <Button type="submit" form="basic-info">
-          Save and Continue
-        </Button>
+        <Button color="secondary" text="Discard" />
+        <Button type="submit" form="basic-info" text="Save & Continue" />
       </Banner>
     </Page>
   );

@@ -1,0 +1,28 @@
+.step {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 1.6rem 3.2rem;
+  font-weight: 700;
+  &--active {
+    background-color: $color-200;
+    & .step__circle {
+      background-color: $color-100;
+    }
+  }
+  &__circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-200;
+    height: 50px;
+    width: 50px;
+    border-radius: 9999px;
+    margin-right: 1.6rem;
+  }
+  &__icon {
+    font-weight: inherit;
+  }
+  &__text {
+  }
+}

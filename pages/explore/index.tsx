@@ -22,11 +22,11 @@ function Explore() {
     <Page className="explore">
       <Navbar>
         <Button
+          icon="add"
+          text="Create event"
           color="primary"
           onClick={() => router.push('/manage/events/create')}
-        >
-          Create event
-        </Button>
+        />
       </Navbar>
       <div className="explore__content">
         <main className="explore__main">
@@ -43,7 +43,7 @@ function Explore() {
                 className="explore__input"
               />
             </div>
-            <Button>Search</Button>
+            <Button icon="search" text="Search" />
           </div>
           <div className="explore__events">
             <ListRenderer
