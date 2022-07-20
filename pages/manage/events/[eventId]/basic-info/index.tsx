@@ -12,18 +12,21 @@ import SidebarManage from '../../../../../components/SidebarManage';
 import BasicInfo from '../../../../../components/BasicInfo';
 import ManagerDashboard from '../../../../../components/ManagerDashboard';
 import Container from '../../../../../layouts/Container';
+import useBackend from '../../../../../hooks/useBackend';
+import { Event } from '../../../../../hooks/useEvents';
 
 function BasicInfoPage() {
   const { user } = useUser();
   const router = useRouter();
-  const { query } = router;
-  console.log(query);
+  const { eventId } = router.query;
+  const { data: event } = useBackend<Event>(`/api/events/${eventId}`);
+  if (!event) return <h1>loading...</h1>;
 
   return (
     <Page className="basic-info">
       <Navbar></Navbar>
-      <ManagerDashboard>
-        <BasicInfo onSubmit={(values) => console.log(values)} />
+      <ManagerDashboard event={event}>
+        <BasicInfo onSubmit={(values) => console.log(values)} event={event} />
       </ManagerDashboard>
       <Banner>
         <Button color="secondary" text="Discard" />

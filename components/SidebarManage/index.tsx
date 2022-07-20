@@ -5,12 +5,16 @@ import Sidebar from '../../layouts/Sidebar';
 import DropdownButton from '../DropdownButton';
 import DropdownItem from '../DropdownItem';
 import Step from '../Step';
+import { Event } from '../../hooks/useEvents';
 
-function SidebarManage() {
+interface Props {
+  event: Event;
+}
+
+function SidebarManage({ event }: Props) {
   const router = useRouter();
   const parts = router.pathname.split('/');
   const match = parts[parts.length - 1];
-  console.log(match);
 
   return (
     <Sidebar>
@@ -24,10 +28,8 @@ function SidebarManage() {
         <DropdownButton text="Draft" color="secondary" openTo="right">
           <DropdownItem icon="menu_book">Publish now</DropdownItem>
         </DropdownButton>
-        <span className="sidebar-manage__details__title">Halo 3 LAN Party</span>
-        <span className="sidebar-manage__details__date">
-          Sun, Aug 28, 2022 7:00 PM
-        </span>
+        <span className="sidebar-manage__details__title">{event.title}</span>
+        <span className="sidebar-manage__details__date">{event.startsAt}</span>
         <Link href="/" passHref>
           <a className="sidebar-manage__details__preview">
             <span className="sidebar-manage__details__preview__text">

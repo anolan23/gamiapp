@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import Link from 'next/link';
+import { Event } from '../../hooks/useEvents';
 
 import FormSection from '../FormSection';
 import InputGroup from '../InputGroup';
@@ -14,6 +15,7 @@ export interface BasicInfoValues {
 
 interface Props {
   onSubmit: (values: BasicInfoValues) => any;
+  event: Event;
 }
 
 function BasicInfo({ onSubmit }: Props) {

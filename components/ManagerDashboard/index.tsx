@@ -1,13 +1,15 @@
+import { Event } from '../../hooks/useEvents';
 import SidebarManage from '../SidebarManage';
 
 interface Props {
+  event: Event;
   children: React.ReactNode;
 }
 
-function ManagerDashboard({ children }: Props) {
+function ManagerDashboard({ event, children }: Props) {
   return (
     <div className="manager-dashboard">
-      <SidebarManage />
+      <SidebarManage event={event} />
       {children}
     </div>
   );
