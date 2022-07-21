@@ -6,6 +6,7 @@ import DropdownButton from '../DropdownButton';
 import DropdownItem from '../DropdownItem';
 import Step from '../Step';
 import { Event } from '../../hooks/useEvents';
+import { toDateTimeString } from '../../lib/helpers';
 
 interface Props {
   event: Event;
@@ -29,7 +30,9 @@ function SidebarManage({ event }: Props) {
           <DropdownItem icon="menu_book">Publish now</DropdownItem>
         </DropdownButton>
         <span className="sidebar-manage__details__title">{event.title}</span>
-        <span className="sidebar-manage__details__date">{event.starts_at}</span>
+        <span className="sidebar-manage__details__date">
+          {toDateTimeString(event.starts_at)}
+        </span>
         <Link href="/" passHref>
           <a className="sidebar-manage__details__preview">
             <span className="sidebar-manage__details__preview__text">
@@ -43,20 +46,20 @@ function SidebarManage({ event }: Props) {
       </div>
       <div className="sidebar-manage__steps">
         <Step
-          href="/manage/events/12/basic-info"
+          href={`/manage/events/${event.id}/basic-info`}
           step={1}
           main="Basic Info"
           complete
           active={match === 'basic-info'}
         />
         <Step
-          href="/manage/events/12/details"
+          href={`/manage/events/${event.id}/details`}
           step={2}
           main="Details"
           active={match === 'details'}
         />
         <Step
-          href="/manage/events/12/publish"
+          href={`/manage/events/${event.id}/publish`}
           step={3}
           main="Publish"
           active={match === 'publish'}
