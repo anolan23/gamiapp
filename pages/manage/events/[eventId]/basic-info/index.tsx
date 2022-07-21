@@ -1,19 +1,17 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import Navbar from '../../../../../layouts/Navbar';
 import Button from '../../../../../components/Button';
-import FormSection from '../../../../../components/FormSection';
-import InputGroup from '../../../../../components/InputGroup';
 import Page from '../../../../../layouts/Page';
 import Banner from '../../../../../layouts/Banner';
 import useUser from '../../../../../hooks/useUser';
-import SidebarManage from '../../../../../components/SidebarManage';
-import BasicInfo from '../../../../../components/BasicInfo';
+import BasicInfo, {
+  BasicInfoValues,
+} from '../../../../../components/BasicInfo';
 import ManagerDashboard from '../../../../../components/ManagerDashboard';
-import Container from '../../../../../layouts/Container';
 import useBackend from '../../../../../hooks/useBackend';
 import { Event } from '../../../../../hooks/useEvents';
+import { updateEvent } from '../../../../../lib/api';
 
 function BasicInfoPage() {
   const { user } = useUser();
@@ -21,11 +19,19 @@ function BasicInfoPage() {
   const { eventId } = router.query;
   const url = eventId ? `/api/events/${eventId}` : null;
   const { data: event } = useBackend<Event>(url);
-  if (!event) return <h1>loading...</h1>;
   console.log(event);
+
+  if (!event) return <h1>loading...</h1>;
 
   const toDatetimeLocal = (dateString: string): string => {
     return new Date(dateString).toISOString().slice(0, 16);
+  };
+
+  const onSubmit = async function (values: BasicInfoValues) {
+    try {
+      await updateEvent(event.id, values);
+      router.push(`/manage/events/${event.id}/details`);
+    } catch (error) {}
   };
 
   return (
@@ -34,7 +40,7 @@ function BasicInfoPage() {
       <ManagerDashboard event={event}>
         <BasicInfo
           event={event}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={onSubmit}
           initialValues={{
             title: event.title,
             game_id: event.game_id.toString(),
