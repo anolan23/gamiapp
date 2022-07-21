@@ -19,19 +19,19 @@ function EventComponent({ event }: Props) {
       <div className="event__content">
         <div className="event__content__text">
           <span className="event__title">{event.title}</span>
-          <span className="event__game">{event.gameId}</span>
+          <span className="event__game">{event.game_id}</span>
         </div>
         <div className="event__content__bottom">
           <div className="event__content__bottom__date">
             <span className="material-icons">schedule</span>
             <span className="event__content__bottom__date__val">
-              {event.startsAt}
+              {event.starts_at}
             </span>
           </div>
           <div className="event__content__bottom__attendees">
             <span className="material-icons">person</span>
             <span className="event__content__bottom__attendees__count">
-              {event.playerCount}
+              {event.player_count}
             </span>
           </div>
         </div>

@@ -3,17 +3,17 @@ import backend from '../lib/backend';
 
 export interface Event {
   id?: number;
-  createdAt?: string;
-  updatedAt?: string;
-  userId: number;
-  gameId: number;
+  created_at?: string;
+  updated_at?: string;
+  user_id: number;
+  game_id: number;
   title: string;
   summary?: string;
-  startsAt: string;
-  endsAt?: string;
+  starts_at: string;
+  ends_at?: string;
   address: string;
   image?: string;
-  playerCount?: number;
+  player_count?: number;
 }
 
 function useEvents() {

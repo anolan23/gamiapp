@@ -21,7 +21,7 @@ function Create() {
   const onSubmit = async function (values: BasicInfoValues) {
     try {
       if (!user?.id) return;
-      const event = { ...values, userId: user.id, gameId: +values.gameId };
+      const event = { ...values, user_id: user.id, game_id: +values.game_id };
       const created = await createEvent(event);
       router.push(`/manage/events/${created.id}/details`);
     } catch (error) {}

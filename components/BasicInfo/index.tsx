@@ -7,27 +7,28 @@ import InputGroup from '../InputGroup';
 
 export interface BasicInfoValues {
   title: string;
-  gameId: string;
+  game_id: string;
   address: string;
-  startsAt: string;
-  endsAt: string;
+  starts_at: string;
+  ends_at: string;
 }
 
 interface Props {
+  initialValues?: BasicInfoValues;
   onSubmit: (values: BasicInfoValues) => any;
   event: Event;
 }
 
-function BasicInfo({ onSubmit }: Props) {
-  const initialValues: BasicInfoValues = {
+function BasicInfo({ initialValues, onSubmit, event }: Props) {
+  const initValues: BasicInfoValues = initialValues || {
     title: '',
-    gameId: '',
+    game_id: '',
     address: '',
-    startsAt: '',
-    endsAt: '',
+    starts_at: '',
+    ends_at: '',
   };
   const formik = useFormik({
-    initialValues: initialValues,
+    initialValues: initValues,
     onSubmit,
   });
   return (
@@ -46,8 +47,8 @@ function BasicInfo({ onSubmit }: Props) {
           placeholder="Be clear and descriptive"
         />
         <InputGroup
-          name="gameId"
-          value={formik.values.gameId}
+          name="game_id"
+          value={formik.values.game_id}
           onChange={formik.handleChange}
           label="Featured game"
           placeholder="Search games"
@@ -78,8 +79,8 @@ function BasicInfo({ onSubmit }: Props) {
         icon="date_range"
       >
         <InputGroup
-          name="startsAt"
-          value={formik.values.startsAt}
+          name="starts_at"
+          value={formik.values.starts_at}
           onChange={formik.handleChange}
           label="Event starts"
           placeholder="Search for a venue or address"
@@ -87,8 +88,8 @@ function BasicInfo({ onSubmit }: Props) {
           // icon="calendar_today"
         />
         <InputGroup
-          name="endsAt"
-          value={formik.values.endsAt}
+          name="ends_at"
+          value={formik.values.ends_at}
           onChange={formik.handleChange}
           label="Event ends"
           placeholder="Search for a venue or address"

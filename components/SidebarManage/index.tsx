@@ -29,7 +29,7 @@ function SidebarManage({ event }: Props) {
           <DropdownItem icon="menu_book">Publish now</DropdownItem>
         </DropdownButton>
         <span className="sidebar-manage__details__title">{event.title}</span>
-        <span className="sidebar-manage__details__date">{event.startsAt}</span>
+        <span className="sidebar-manage__details__date">{event.starts_at}</span>
         <Link href="/" passHref>
           <a className="sidebar-manage__details__preview">
             <span className="sidebar-manage__details__preview__text">

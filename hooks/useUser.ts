@@ -6,14 +6,14 @@ import backend from '../lib/backend';
 export interface User {
   isLoggedIn: boolean;
   id: number;
-  createdAt?: string;
-  updatedAt?: string;
-  googleId?: number;
+  created_at?: string;
+  updated_at?: string;
+  google_id?: number;
   email: string;
   password?: string;
   username?: string;
-  firstName?: string;
-  lastName?: string;
+  first_name?: string;
+  last_name?: string;
 }
 
 export default function useUser({

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import backend from '../lib/backend';
 
-function useBackend<T>(url: string) {
+function useBackend<T>(url: string | null) {
   const [data, setData] = useState<T>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<any>();
@@ -19,6 +19,7 @@ function useBackend<T>(url: string) {
   };
 
   useEffect(() => {
+    if (!url) return;
     get(url);
   }, [url]);
 

@@ -11,12 +11,15 @@ import Banner from '../../../../../layouts/Banner';
 import useUser from '../../../../../hooks/useUser';
 import SidebarManage from '../../../../../components/SidebarManage';
 import ManagerDashboard from '../../../../../components/ManagerDashboard';
+import useBackend from '../../../../../hooks/useBackend';
+import { Event } from '../../../../../hooks/useEvents';
 
 function Details() {
   const { user } = useUser();
   const router = useRouter();
-  const { query } = router;
-  console.log(query);
+  const { eventId } = router.query;
+  const url = eventId ? `/api/events/${eventId}` : null;
+  const { data: event } = useBackend<Event>(url);
   const formik = useFormik({
     initialValues: {
       summary: '',
@@ -28,10 +31,12 @@ function Details() {
     },
   });
 
+  if (!event) return <h1>loading...</h1>;
+
   return (
     <Page className="details">
       <Navbar></Navbar>
-      <ManagerDashboard>
+      <ManagerDashboard event={event}>
         <form id="basic-info" onSubmit={formik.handleSubmit}>
           <FormSection
             title="Main Event Image"
