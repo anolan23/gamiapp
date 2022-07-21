@@ -35,7 +35,7 @@ function BasicInfoPage() {
   };
 
   return (
-    <Page className="basic-info">
+    <Page>
       <Navbar></Navbar>
       <ManagerDashboard event={event}>
         <BasicInfo
@@ -49,11 +49,11 @@ function BasicInfoPage() {
             ends_at: event.ends_at ? toDatetimeLocal(event.ends_at) : '',
           }}
         />
+        <Banner>
+          <Button color="secondary" text="Discard" />
+          <Button type="submit" form="basic-info" text="Save & Continue" />
+        </Banner>
       </ManagerDashboard>
-      <Banner>
-        <Button color="secondary" text="Discard" />
-        <Button type="submit" form="basic-info" text="Save & Continue" />
-      </Banner>
     </Page>
   );
 }

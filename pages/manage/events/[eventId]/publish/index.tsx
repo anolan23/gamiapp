@@ -37,11 +37,13 @@ function Publish() {
   return (
     <Page className="publish">
       <Navbar></Navbar>
-      <ManagerDashboard event={event}>publish</ManagerDashboard>
-      <Banner>
-        <Button color="secondary" text="Discard" />
-        <Button type="submit" form="basic-info" text="Save & Continue" />
-      </Banner>
+      <ManagerDashboard event={event}>
+        publish
+        <Banner>
+          <Button color="secondary" text="Discard" />
+          <Button type="submit" form="publish" text="Publish" />
+        </Banner>
+      </ManagerDashboard>
     </Page>
   );
 }

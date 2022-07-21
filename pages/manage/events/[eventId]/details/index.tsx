@@ -29,7 +29,7 @@ function DetailsPage() {
   };
 
   return (
-    <Page className="details">
+    <Page>
       <Navbar></Navbar>
       <ManagerDashboard event={event}>
         <Details
@@ -39,11 +39,11 @@ function DetailsPage() {
             summary: event.summary ?? '',
           }}
         />
+        <Banner>
+          <Button color="secondary" text="Discard" />
+          <Button type="submit" form="details" text="Save & Continue" />
+        </Banner>
       </ManagerDashboard>
-      <Banner>
-        <Button color="secondary" text="Discard" />
-        <Button type="submit" form="details" text="Save & Continue" />
-      </Banner>
     </Page>
   );
 }

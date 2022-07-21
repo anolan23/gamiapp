@@ -21,6 +21,8 @@
 @import 'components/sidebar-manage';
 @import 'components/basic-info';
 @import 'components/manager-dashboard';
+@import 'components/details';
+@import 'components/basic-info';
 
 @import 'layouts/page';
 @import 'layouts/banner';
@@ -30,5 +32,3 @@
 
 @import 'pages/explore';
 @import 'pages/create';
-@import 'pages/details';
-@import 'pages/basic-info';

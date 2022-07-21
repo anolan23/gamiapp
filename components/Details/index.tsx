@@ -23,7 +23,7 @@ function Details({ initialValues, onSubmit, event }: Props) {
     onSubmit,
   });
   return (
-    <form id="details" onSubmit={formik.handleSubmit}>
+    <form id="details" className="details" onSubmit={formik.handleSubmit}>
       <FormSection
         title="Main Event Image"
         description="This is the first image gamers will see at the top of your listing. Use a high quality image: 2160x1080px (2:1 ratio)."
