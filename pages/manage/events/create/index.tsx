@@ -13,6 +13,7 @@ import { createEvent } from '../../../../lib/api';
 import useUser from '../../../../hooks/useUser';
 import BasicInfo from '../../../../components/BasicInfo';
 import { BasicInfoValues } from '../../../../components/BasicInfo';
+import Container from '../../../../layouts/Container';
 
 function Create() {
   const { user } = useUser();
@@ -30,11 +31,13 @@ function Create() {
   return (
     <Page className="create">
       <Navbar></Navbar>
-      <BasicInfo onSubmit={onSubmit} />
-      <Banner>
-        <Button color="secondary" text="Discard" />
-        <Button type="submit" form="basic-info" text="Save & Continue" />
-      </Banner>
+      <Container className="create__container">
+        <BasicInfo onSubmit={onSubmit} />
+        <Banner>
+          <Button color="secondary" text="Discard" />
+          <Button type="submit" form="basic-info" text="Save & Continue" />
+        </Banner>
+      </Container>
     </Page>
   );
 }

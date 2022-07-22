@@ -16,10 +16,9 @@ export interface BasicInfoValues {
 interface Props {
   initialValues?: BasicInfoValues;
   onSubmit: (values: BasicInfoValues) => any;
-  event: Event;
 }
 
-function BasicInfo({ initialValues, onSubmit, event }: Props) {
+function BasicInfo({ initialValues, onSubmit }: Props) {
   const initValues: BasicInfoValues = initialValues || {
     title: '',
     game_id: '',

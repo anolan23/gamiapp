@@ -12,7 +12,7 @@ function FormSection({ title, description, icon, children }: Props) {
       <div className="form-section__content">
         <div className="form-section__content__text">
           <h1 className="form-section__title">{title}</h1>
-          <p>{description}</p>
+          <p className="form-section__description">{description}</p>
         </div>
         <div className="form-section__content__inputs">{children}</div>
       </div>

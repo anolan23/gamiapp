@@ -1,9 +1,9 @@
 .create {
   position: relative;
   min-height: 0;
-  &__content {
-    min-height: 0;
-    flex: 1;
+  &__container {
+    display: grid;
+    grid-template-rows: 1fr 100px;
     overflow-y: auto;
   }
 }

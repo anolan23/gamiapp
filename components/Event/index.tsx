@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Event } from '../../hooks/useEvents';
+import { toDateTimeString } from '../../lib/helpers';
 
 interface Props {
   event: Event;
@@ -25,13 +26,13 @@ function EventComponent({ event }: Props) {
           <div className="event__content__bottom__date">
             <span className="material-icons">schedule</span>
             <span className="event__content__bottom__date__val">
-              {event.starts_at}
+              {toDateTimeString(event.starts_at)}
             </span>
           </div>
           <div className="event__content__bottom__attendees">
             <span className="material-icons">person</span>
             <span className="event__content__bottom__attendees__count">
-              {event.player_count}
+              {event.player_count || 1}
             </span>
           </div>
         </div>

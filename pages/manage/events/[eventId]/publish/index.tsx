@@ -4,8 +4,7 @@ import { useRouter } from 'next/router';
 
 import Navbar from '../../../../../layouts/Navbar';
 import Button from '../../../../../components/Button';
-import FormSection from '../../../../../components/FormSection';
-import InputGroup from '../../../../../components/InputGroup';
+import Publish, { PublishValues } from '../../../../../components/Publish';
 import Page from '../../../../../layouts/Page';
 import Banner from '../../../../../layouts/Banner';
 import useUser from '../../../../../hooks/useUser';
@@ -13,39 +12,46 @@ import SidebarManage from '../../../../../components/SidebarManage';
 import ManagerDashboard from '../../../../../components/ManagerDashboard';
 import useBackend from '../../../../../hooks/useBackend';
 import { Event } from '../../../../../hooks/useEvents';
+import { updateEvent } from '../../../../../lib/api';
 
-function Publish() {
+function PublishPage() {
   const { user } = useUser();
   const router = useRouter();
   const { eventId } = router.query;
   const url = eventId ? `/api/events/${eventId}` : null;
   const { data: event } = useBackend<Event>(url);
 
-  const formik = useFormik({
-    initialValues: {
-      summary: '',
-    },
-    async onSubmit(values) {
-      try {
-        console.log(values);
-      } catch (error) {}
-    },
-  });
-
   if (!event) return <h1>loading...</h1>;
 
+  const handleSubmit = async function (values: PublishValues) {
+    try {
+      const cols = { ...values, published: true };
+      await updateEvent(event.id, cols);
+    } catch (error) {}
+  };
+
   return (
-    <Page className="publish">
+    <Page>
       <Navbar></Navbar>
       <ManagerDashboard event={event}>
-        publish
+        <Publish
+          onSubmit={handleSubmit}
+          event={event}
+          initialValues={{
+            open: event.open,
+          }}
+        />
         <Banner>
           <Button color="secondary" text="Discard" />
-          <Button type="submit" form="publish" text="Publish" />
+          <Button
+            type="submit"
+            form="publish"
+            text={event.published ? 'Save' : 'Publish'}
+          />
         </Banner>
       </ManagerDashboard>
     </Page>
   );
 }
 
-export default Publish;
+export default PublishPage;

@@ -8,6 +8,7 @@ interface Props extends ButtonProps {
 }
 
 function DropdownButton({
+  size,
   openTo,
   text,
   extended,
@@ -36,6 +37,7 @@ function DropdownButton({
   return (
     <div className="dropdown-btn" ref={btnRef}>
       <Button
+        size={size}
         onClick={() => setShow(!show)}
         className={className}
         text={text}

@@ -26,7 +26,12 @@ function SidebarManage({ event }: Props) {
         <span className="sidebar-manage__back__text">Events</span>
       </button>
       <div className="sidebar-manage__details">
-        <DropdownButton text="Draft" color="secondary" openTo="right">
+        <DropdownButton
+          text={event.published ? 'Live' : 'Draft'}
+          color="primary"
+          openTo="right"
+          size="small"
+        >
           <DropdownItem icon="menu_book">Publish now</DropdownItem>
         </DropdownButton>
         <span className="sidebar-manage__details__title">{event.title}</span>

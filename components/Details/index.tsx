@@ -11,10 +11,9 @@ export interface DetailsValues {
 interface Props {
   initialValues?: DetailsValues;
   onSubmit: (values: DetailsValues) => any;
-  event: Event;
 }
 
-function Details({ initialValues, onSubmit, event }: Props) {
+function Details({ initialValues, onSubmit }: Props) {
   const initValues: DetailsValues = initialValues || {
     summary: '',
   };

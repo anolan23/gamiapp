@@ -2,6 +2,7 @@ type Color = 'primary' | 'secondary';
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  size?: 'small' | 'large';
   extended?: boolean;
   color?: Color;
   text: string;
@@ -10,6 +11,7 @@ export interface ButtonProps
 }
 
 function Button({
+  size,
   icon,
   iconPos = 'left',
   text,
@@ -25,7 +27,7 @@ function Button({
       form={form}
       className={`btn ${
         extended ? 'btn--extended' : ''
-      } ${className} btn--${color}`}
+      } ${className} btn--${color} btn--${size}`}
       type={type}
       onClick={onClick}
     >

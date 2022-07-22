@@ -27,8 +27,9 @@ function BasicInfoPage() {
     return new Date(dateString).toISOString().slice(0, 16);
   };
 
-  const onSubmit = async function (values: BasicInfoValues) {
+  const handleSubmit = async function (values: BasicInfoValues) {
     try {
+      if (!event.id) return;
       await updateEvent(event.id, values);
       router.push(`/manage/events/${event.id}/details`);
     } catch (error) {}
@@ -39,8 +40,7 @@ function BasicInfoPage() {
       <Navbar></Navbar>
       <ManagerDashboard event={event}>
         <BasicInfo
-          event={event}
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
           initialValues={{
             title: event.title,
             game_id: event.game_id.toString(),

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import backend from '../lib/backend';
 
 export interface Event {
-  id: number;
+  id?: number;
   created_at?: string;
   updated_at?: string;
   user_id: number;
@@ -14,6 +14,8 @@ export interface Event {
   address: string;
   image?: string;
   player_count?: number;
+  open?: boolean;
+  published?: boolean;
 }
 
 function useEvents() {

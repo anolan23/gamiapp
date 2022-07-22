@@ -23,6 +23,7 @@ function DetailsPage() {
 
   const onSubmit = async function (values: DetailsValues) {
     try {
+      if (!event.id) return;
       await updateEvent(event.id, values);
       router.push(`/manage/events/${event.id}/publish`);
     } catch (error) {}
@@ -34,7 +35,6 @@ function DetailsPage() {
       <ManagerDashboard event={event}>
         <Details
           onSubmit={onSubmit}
-          event={event}
           initialValues={{
             summary: event.summary ?? '',
           }}

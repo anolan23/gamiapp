@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.6rem;
+  padding: 1.6rem 2.4rem;
   background-color: $color-400;
   color: white;
   outline: none;
@@ -35,5 +35,10 @@
 
   &--red {
     background-color: #eb5757;
+  }
+
+  //SIZES
+  &--small {
+    padding: 1rem;
   }
 }
