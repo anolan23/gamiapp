@@ -25,8 +25,10 @@ function PublishPage() {
 
   const handleSubmit = async function (values: PublishValues) {
     try {
+      if (!event.id) return;
       const cols = { ...values, published: true };
       await updateEvent(event.id, cols);
+      router.push(`/events/${event.id}`);
     } catch (error) {}
   };
 
@@ -38,7 +40,7 @@ function PublishPage() {
           onSubmit={handleSubmit}
           event={event}
           initialValues={{
-            open: event.open,
+            open: event.open || true,
           }}
         />
         <Banner>
