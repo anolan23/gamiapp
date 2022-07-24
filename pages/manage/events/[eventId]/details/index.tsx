@@ -11,6 +11,8 @@ import ManagerDashboard from '../../../../../components/ManagerDashboard';
 import useBackend from '../../../../../hooks/useBackend';
 import { Event } from '../../../../../hooks/useEvents';
 import { updateEvent } from '../../../../../lib/api';
+import useGeocode from '../../../../../hooks/useGeocode';
+import { useEffect } from 'react';
 
 function DetailsPage() {
   const { user } = useUser();
@@ -18,6 +20,7 @@ function DetailsPage() {
   const { eventId } = router.query;
   const url = eventId ? `/api/events/${eventId}` : null;
   const { data: event } = useBackend<Event>(url);
+  const { data, query } = useGeocode();
 
   if (!event) return <h1>loading...</h1>;
 
