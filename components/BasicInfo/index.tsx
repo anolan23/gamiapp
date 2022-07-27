@@ -5,8 +5,10 @@ import { useEffect } from 'react';
 import { Event } from '../../hooks/useEvents';
 import useMapbox, { Feature, Coords } from '../../hooks/useMapbox';
 import useThrottle from '../../hooks/useThrottle';
+import { parseAddress } from '../../lib/helpers';
 import AddressItem from '../AddressItem';
 import AutoComplete from '../AutoComplete';
+import Button from '../Button';
 
 import FormSection from '../FormSection';
 import InputGroup from '../InputGroup';
@@ -42,17 +44,36 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
     onSubmit,
   });
 
+  const handleEditLocationClick = function () {
+    formik.setFieldValue('address', '');
+    formik.setFieldValue('coords', '');
+  };
+
   const renderLocation = function () {
-    if (event?.coords && event?.address) {
-      const staticMapUrl = getStaticMapUrl(event.coords);
+    const { coords, address } = formik.values;
+    if (coords && address) {
+      const staticMapUrl = getStaticMapUrl(JSON.parse(coords));
+      const { street, city } = parseAddress(address);
       return (
         <div className="basic-info__location">
           <div className="basic-info__location__image-container">
             <Image
               src={staticMapUrl}
               alt="static map"
-              height={300}
-              width={500}
+              layout="fill"
+              objectFit="fill"
+            />
+          </div>
+          <div className="basic-info__location__address-container">
+            <div className="basic-info__location__address-container__address">
+              <span className="basic-info__location__street">{street}</span>
+              <span className="basic-info__location__city">{city}</span>
+            </div>
+            <Button
+              text="Edit location"
+              color="secondary"
+              size="small"
+              onClick={handleEditLocationClick}
             />
           </div>
         </div>

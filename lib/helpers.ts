@@ -12,3 +12,10 @@ export function toDateTimeString(datetime: string) {
 
   return new Intl.DateTimeFormat(undefined, options).format(date);
 }
+
+export function parseAddress(address: string) {
+  const arr = address.split(',');
+  const street = arr[0];
+  const city = arr.slice(1, -1).join(',');
+  return { street, city };
+}

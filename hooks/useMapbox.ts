@@ -50,7 +50,7 @@ function useMapbox() {
   );
 
   const getStaticMapUrl = function ([long, lat]: Coords): string {
-    return `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+000(${long},${lat})/${long},${lat},15/500x300?access_token=pk.eyJ1IjoiYW5vbDEyNTgiLCJhIjoiY2w1eWc0ZHBpMGV0ZzNpczJwbzRncWV2YSJ9.7IE8TFs_sBvPtE411SXDkw`;
+    return `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+000(${long},${lat})/${long},${lat},15/600x165?access_token=pk.eyJ1IjoiYW5vbDEyNTgiLCJhIjoiY2w1eWc0ZHBpMGV0ZzNpczJwbzRncWV2YSJ9.7IE8TFs_sBvPtE411SXDkw`;
   };
 
   return { data, forward, coords, getStaticMapUrl };

@@ -1,8 +1,26 @@
 .basic-info {
   overflow-y: auto;
   &__location {
+    background-color: $color-100;
     &__image-container {
       position: relative;
+      width: 100%;
+      height: 165px;
+    }
+    &__address-container {
+      padding: 1.6rem 3.2rem;
+      display: flex;
+      justify-content: space-between;
+      &__address {
+      }
+    }
+    &__street {
+      display: block;
+      font-weight: 700;
+    }
+    &__city {
+      display: block;
+      color: $color-black-20;
     }
   }
 }
