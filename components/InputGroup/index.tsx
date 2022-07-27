@@ -1,6 +1,7 @@
 import Input from '../Input';
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputGroupProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   icon?: string;
 }
@@ -13,9 +14,10 @@ function InputGroup({
   placeholder,
   value,
   onChange,
+  onFocus,
   onBlur,
   className,
-}: Props) {
+}: InputGroupProps) {
   return (
     <div className={`input-group ${className ?? ''}`}>
       <label className="input-group__label">{label}</label>
@@ -27,6 +29,7 @@ function InputGroup({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        onFocus={onFocus}
         onBlur={onBlur}
       />
     </div>

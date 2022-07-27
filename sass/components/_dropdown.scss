@@ -6,7 +6,7 @@
   top: 100%;
   margin-top: 4px;
   min-width: 24rem;
-  background-color: $color-200;
+  background-color: $color-100;
   border: $border;
   color: inherit;
   font-size: 1.2rem;
@@ -16,6 +16,10 @@
   &--right {
     left: 0;
     right: unset;
+  }
+  &--stretch {
+    left: 0;
+    right: 0;
   }
 
   &__divide {
@@ -31,7 +35,7 @@
   white-space: nowrap;
   transition: all 0.1s;
   &:hover {
-    background-color: $color-100;
+    background-color: $color-200;
   }
   &--main {
     color: #eb5757;

@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
 import backend from '../lib/backend';
+import { Coords } from './useMapbox';
 
 export interface Event {
   id?: number;
   created_at?: string;
   updated_at?: string;
-  user_id: number;
+  user_id?: number;
   game_id: number;
   title: string;
   summary?: string;
   starts_at: string;
   ends_at?: string;
   address: string;
+  coords?: Coords;
+  location?: string;
   image?: string;
   player_count?: number;
   open?: boolean;

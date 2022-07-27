@@ -31,7 +31,7 @@ function UserToggle({ className, direction = 'down' }: Props) {
       <Avatar className="user-toggle__image" />
       <span className="user-toggle__name">{user?.email || 'Sign up'}</span>
       <span className="material-icons user-toggle__icon">expand_more</span>
-      <Dropdown show={show} close={() => setShow(false)} direction={direction}>
+      <Dropdown show={show} close={() => setShow(false)}>
         <DropdownItem icon="logout">Logout</DropdownItem>
       </Dropdown>
     </div>

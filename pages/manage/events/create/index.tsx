@@ -22,7 +22,15 @@ function Create() {
   const onSubmit = async function (values: BasicInfoValues) {
     try {
       if (!user?.id) return;
-      const event = { ...values, user_id: user.id, game_id: +values.game_id };
+      const coords = JSON.parse(values.coords);
+      const [long, lat] = coords;
+      const event: any = {
+        ...values,
+        user_id: user.id,
+        game_id: +values.game_id,
+        location: coords ? `POINT(${long} ${lat})` : undefined,
+      };
+      delete event.coords;
       const created = await createEvent(event);
       router.push(`/manage/events/${created.id}/details`);
     } catch (error) {}

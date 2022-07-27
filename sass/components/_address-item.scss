@@ -1,0 +1,21 @@
+.address-item {
+  background-color: inherit;
+  padding: 1.2rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  white-space: nowrap;
+  transition: all 0.1s;
+  &:hover {
+    filter: brightness(90%);
+  }
+  &__main {
+    font-size: 1.6rem;
+
+    font-weight: 700;
+  }
+  &__sub {
+    font-size: 1.4rem;
+    color: $color-black-20;
+  }
+}

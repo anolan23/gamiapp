@@ -11,6 +11,12 @@ const nextConfig = {
 
     return config;
   },
+  publicRuntimeConfig: {
+    NEXT_PUBLIC_MAPBOX: process.env.NEXT_PUBLIC_MAPBOX,
+  },
+  images: {
+    domains: ['api.mapbox.com'],
+  },
 };
 
 module.exports = nextConfig;

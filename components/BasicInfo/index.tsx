@@ -1,6 +1,12 @@
 import { useFormik } from 'formik';
+import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { Event } from '../../hooks/useEvents';
+import useMapbox, { Feature, Coords } from '../../hooks/useMapbox';
+import useThrottle from '../../hooks/useThrottle';
+import AddressItem from '../AddressItem';
+import AutoComplete from '../AutoComplete';
 
 import FormSection from '../FormSection';
 import InputGroup from '../InputGroup';
@@ -11,25 +17,71 @@ export interface BasicInfoValues {
   address: string;
   starts_at: string;
   ends_at: string;
+  coords: string;
 }
 
 interface Props {
+  event?: Event;
   initialValues?: BasicInfoValues;
   onSubmit: (values: BasicInfoValues) => any;
 }
 
-function BasicInfo({ initialValues, onSubmit }: Props) {
+function BasicInfo({ event, initialValues, onSubmit }: Props) {
+  const { data, forward, getStaticMapUrl } = useMapbox();
+  const throttle = useThrottle();
   const initValues: BasicInfoValues = initialValues || {
     title: '',
     game_id: '',
     address: '',
     starts_at: '',
     ends_at: '',
+    coords: '',
   };
   const formik = useFormik({
     initialValues: initValues,
     onSubmit,
   });
+
+  const renderLocation = function () {
+    if (event?.coords && event?.address) {
+      const staticMapUrl = getStaticMapUrl(event.coords);
+      return (
+        <div className="basic-info__location">
+          <div className="basic-info__location__image-container">
+            <Image
+              src={staticMapUrl}
+              alt="static map"
+              height={300}
+              width={500}
+            />
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <AutoComplete<Feature>
+          name="address"
+          value={formik.values.address}
+          onChange={(e) => {
+            formik.handleChange(e);
+            throttle.wait(() => {
+              if (!e.target.value) return;
+              forward(e.target.value);
+            }, 1500);
+          }}
+          label="Venue location"
+          placeholder="Search for a venue or address"
+          items={data}
+          itemRenderer={(item) => <AddressItem placeName={item.place_name} />}
+          onItemClick={(item) => {
+            formik.setFieldValue('address', item.place_name);
+            formik.setFieldValue('coords', JSON.stringify(item.center));
+          }}
+        />
+      );
+    }
+  };
+
   return (
     <form id="basic-info" onSubmit={formik.handleSubmit} className="basic-info">
       <FormSection
@@ -64,13 +116,7 @@ function BasicInfo({ initialValues, onSubmit }: Props) {
         description="Help gamers in the area discover your event and let attendees know where to show up."
         icon="map"
       >
-        <InputGroup
-          name="address"
-          value={formik.values.address}
-          onChange={formik.handleChange}
-          label="Venue location"
-          placeholder="Search for a venue or address"
-        />
+        {renderLocation()}
       </FormSection>
       <FormSection
         title="Date and time"

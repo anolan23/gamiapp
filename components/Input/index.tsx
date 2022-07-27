@@ -9,6 +9,7 @@ function Input({
   placeholder,
   value,
   onChange,
+  onFocus,
   onBlur,
   className,
 }: Props) {
@@ -27,6 +28,7 @@ function Input({
         spellCheck={false}
         value={value}
         onChange={onChange}
+        onFocus={onFocus}
         onBlur={onBlur}
       />
     </div>

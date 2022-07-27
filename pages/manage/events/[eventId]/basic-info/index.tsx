@@ -19,7 +19,6 @@ function BasicInfoPage() {
   const { eventId } = router.query;
   const url = eventId ? `/api/events/${eventId}` : null;
   const { data: event } = useBackend<Event>(url);
-  console.log(event);
 
   if (!event) return <h1>loading...</h1>;
 
@@ -30,7 +29,15 @@ function BasicInfoPage() {
   const handleSubmit = async function (values: BasicInfoValues) {
     try {
       if (!event.id) return;
-      await updateEvent(event.id, values);
+      const coords = JSON.parse(values.coords);
+      const [long, lat] = coords;
+      const updates: any = {
+        ...values,
+        game_id: +values.game_id,
+        location: coords ? `POINT(${long} ${lat})` : undefined,
+      };
+      delete updates['coords'];
+      await updateEvent(event.id, updates);
       router.push(`/manage/events/${event.id}/details`);
     } catch (error) {}
   };
@@ -40,6 +47,7 @@ function BasicInfoPage() {
       <Navbar></Navbar>
       <ManagerDashboard event={event}>
         <BasicInfo
+          event={event}
           onSubmit={handleSubmit}
           initialValues={{
             title: event.title,
@@ -47,6 +55,7 @@ function BasicInfoPage() {
             address: event.address,
             starts_at: toDatetimeLocal(event.starts_at),
             ends_at: event.ends_at ? toDatetimeLocal(event.ends_at) : '',
+            coords: JSON.stringify(event.coords),
           }}
         />
         <Banner>
