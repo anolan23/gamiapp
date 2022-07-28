@@ -20,6 +20,12 @@ interface FeatureCollection {
   features?: Feature[];
 }
 
+interface GetStaticMapUrl {
+  coords: Coords;
+  width: number;
+  height: number;
+}
+
 function useMapbox() {
   const [data, setData] = useState<Feature[]>();
   const { coords } = useLocation();
@@ -51,8 +57,12 @@ function useMapbox() {
     [coords]
   );
 
-  const getStaticMapUrl = function ([long, lat]: Coords): string {
-    return `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+000(${long},${lat})/${long},${lat},15/600x165?access_token=${process.env.NEXT_PUBLIC_MAPBOX}`;
+  const getStaticMapUrl = function ({
+    coords: [long, lat],
+    width,
+    height,
+  }: GetStaticMapUrl): string {
+    return `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+000(${long},${lat})/${long},${lat},15/${width}x${height}?access_token=${process.env.NEXT_PUBLIC_MAPBOX}`;
   };
 
   const getStaticTilesUrl = function (

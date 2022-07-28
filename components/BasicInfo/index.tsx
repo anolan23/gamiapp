@@ -52,7 +52,11 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
   const renderLocation = function () {
     const { coords, address } = formik.values;
     if (coords && address) {
-      const staticMapUrl = getStaticMapUrl(JSON.parse(coords));
+      const staticMapUrl = getStaticMapUrl({
+        coords: JSON.parse(coords),
+        width: 600,
+        height: 165,
+      });
       const { street, city } = parseAddress(address);
       return (
         <div className="basic-info__location">

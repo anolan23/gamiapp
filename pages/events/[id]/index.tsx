@@ -12,6 +12,8 @@ import { ParsedUrlQuery } from 'querystring';
 import { Event } from '../../../hooks/useEvents';
 import Image from 'next/image';
 import Button from '../../../components/Button';
+import { parseAddress } from '../../../lib/helpers';
+import useMapbox from '../../../hooks/useMapbox';
 
 interface Props {
   event: Event;
@@ -20,12 +22,30 @@ interface Props {
 function EventPage({ event }: Props) {
   const { user } = useUser();
   const router = useRouter();
+  const { getStaticMapUrl } = useMapbox();
   const { slug } = router.query;
-  const MapWithNoSSR = dynamic(() => import('../../../components/Map'), {
-    ssr: false,
-  });
 
   if (router.isFallback) return <h1>loading...</h1>;
+
+  const { street, city } = parseAddress(event.address);
+  const staticMapUrl = event.coords
+    ? getStaticMapUrl({
+        coords: event.coords,
+        width: 1000,
+        height: 400,
+      })
+    : undefined;
+  const renderStaticMap = function () {
+    if (!staticMapUrl) return null;
+    return (
+      <Image
+        src={staticMapUrl}
+        alt="event map"
+        layout="fill"
+        objectFit="contain"
+      />
+    );
+  };
 
   return (
     <Page>
@@ -93,9 +113,8 @@ function EventPage({ event }: Props) {
                       Location
                     </h3>
                     <div className="events-page__event__detail__content__values">
-                      <p>Soldier Field & Field Museum</p>
-                      <p>80 West St.</p>
-                      <p>Chicago, IL 60605</p>
+                      <p>{street}</p>
+                      <p>{city}</p>
                     </div>
                     <Link href="/" passHref>
                       <a className="link">View map</a>
@@ -106,18 +125,16 @@ function EventPage({ event }: Props) {
               </div>
             </div>
           </div>
-          <div className="events-page__event__map">
-            <MapWithNoSSR />
-          </div>
+          <div className="events-page__event__map">{renderStaticMap()}</div>
           <div className="events-page__event__address">
             <div className="events-page__event__address__container">
               <span>{event.title}</span>
               <span className="events-page__event__address__container--small">
                 at
               </span>
-              <span>Soldier Field & Field Museum</span>
+              <span>{street}</span>
               <span className="events-page__event__address__container--small">
-                80 West St., Chicago, IL 60605
+                {city}
               </span>
             </div>
           </div>
