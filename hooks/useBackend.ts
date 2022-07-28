@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 import { useEffect, useState } from 'react';
 import backend from '../lib/backend';
 
-function useBackend<T>(url: string, config?: AxiosRequestConfig) {
+function useBackend<T>(url?: string, config?: AxiosRequestConfig | null) {
   const [data, setData] = useState<T>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<any>();
@@ -10,7 +10,8 @@ function useBackend<T>(url: string, config?: AxiosRequestConfig) {
   useEffect(() => {
     const get = async function () {
       try {
-        if (!config) return;
+        if (!url) return;
+        if (config === null) return;
         setLoading(true);
         const response = await backend.get(url, config);
         setData(response.data);

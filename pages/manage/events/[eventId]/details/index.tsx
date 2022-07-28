@@ -18,7 +18,7 @@ function DetailsPage() {
   const { user } = useUser();
   const router = useRouter();
   const { eventId } = router.query;
-  const url = eventId ? `/api/events/${eventId}` : null;
+  const url = eventId ? `/api/events/${eventId}` : undefined;
   const { data: event } = useBackend<Event>(url);
   const { data, forward } = useMapbox();
 

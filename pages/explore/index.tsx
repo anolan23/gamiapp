@@ -13,6 +13,7 @@ import useLocation from '../../hooks/useLocation';
 import { useMemo } from 'react';
 import { Event } from '../../hooks/useEvents';
 import { MarkerType } from '../../components/Map';
+import { Coords } from '../../hooks/useMapbox';
 
 function Explore() {
   const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
@@ -21,7 +22,7 @@ function Explore() {
   const { coords } = useLocation();
   const user = useUser();
   const config = useMemo(() => {
-    if (!coords) return undefined;
+    if (!coords) return null;
     return {
       params: {
         center: `${coords?.longitude},${coords?.latitude}`,
@@ -33,7 +34,9 @@ function Explore() {
   const { data: events } = useBackend<Event[]>(`/api/events`, config);
   const router = useRouter();
 
-  const center = coords ? [coords.latitude, coords.longitude] : undefined;
+  const center: Coords | undefined = coords
+    ? [coords.latitude, coords.longitude]
+    : undefined;
 
   const markers = events
     ? events.map((event): MarkerType => {
@@ -48,6 +51,7 @@ function Explore() {
     <Page className="explore">
       <Navbar>
         <Button
+          size="small"
           icon="add"
           text="Create event"
           color="primary"
@@ -74,8 +78,14 @@ function Explore() {
           <div className="explore__events">
             <ListRenderer
               list={events}
-              itemRenderer={(event, index) => {
-                return <EventComponent key={index} event={event} />;
+              itemRenderer={(event: Event, index) => {
+                return (
+                  <EventComponent
+                    key={index}
+                    event={event}
+                    onClick={() => router.push(`/events/${event.id}`)}
+                  />
+                );
               }}
             />
           </div>

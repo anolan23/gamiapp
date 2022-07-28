@@ -1,49 +1,81 @@
 .event {
   background-color: $color-100;
-  width: 100%;
-  border-radius: 1.2rem;
-  overflow: hidden;
-  color: $color-black-30;
+  height: 200px;
+  display: flex;
+  margin-bottom: 3.2rem;
   cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    filter: brightness(85%);
+  }
 
   &__image {
+    flex: 1;
     position: relative;
-    height: 20rem;
   }
-  &__content {
+  &__text {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    padding: 16px;
-    gap: 10px;
-    &__text {
+    padding: 1.6rem 3.2rem;
+    font-size: 1.4rem;
+    color: $color-black-20;
+
+    &__info {
+      font-size: 1.2rem;
       display: flex;
       flex-direction: column;
+      min-width: 0;
+      white-space: nowrap;
     }
-    &__bottom {
+    &__title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: white;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &__datetime {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &__location {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &__summary {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &__attendees {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      &__date {
-        display: flex;
-        align-items: center;
-        &__val {
-          margin-left: 1rem;
-        }
-      }
-      &__attendees {
-        display: flex;
-        align-items: center;
-        &__count {
-        }
+      &__count {
       }
     }
-  }
-  &__title {
-    font-weight: 700;
-    color: $color-black-10;
-    margin-bottom: 8px;
-  }
-  &__game {
-    font-size: 1.4rem;
+    &__preview {
+      &,
+      &:link,
+      &:visited {
+        display: flex;
+        align-items: center;
+        color: $color-300;
+        text-decoration: none;
+        font-size: 1.6rem;
+        &:hover {
+          & .publish__event__text__preview__text {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      &__text {
+        margin-right: 4px;
+      }
+      &__icon {
+      }
+    }
   }
 }
