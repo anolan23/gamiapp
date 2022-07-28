@@ -1,3 +1,5 @@
+import { Coords } from '../hooks/useMapbox';
+
 export function toDateTimeString(datetime: string) {
   const date = new Date(datetime);
   const options: Intl.DateTimeFormatOptions = {
@@ -18,4 +20,8 @@ export function parseAddress(address: string) {
   const street = arr[0];
   const city = arr.slice(1, -1).join(',');
   return { street, city };
+}
+
+export function coordsToCoordString(coords: Coords): string {
+  return `${coords[0]},${coords[1]}`;
 }

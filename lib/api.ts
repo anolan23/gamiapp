@@ -18,5 +18,3 @@ export async function updateEvent(id: number, cols: any) {
     throw error;
   }
 }
-
-

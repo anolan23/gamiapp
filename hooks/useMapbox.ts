@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import useLocation from './useLocation';
 
 export type Coords = [number, number];
 
@@ -14,13 +15,7 @@ interface FeatureCollection {
 
 function useMapbox() {
   const [data, setData] = useState<Feature[]>();
-  const [coords, setCoords] = useState<GeolocationCoordinates>();
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((pos) => {
-      setCoords(pos.coords);
-    });
-  }, []);
+  const { coords } = useLocation();
 
   const forward = useCallback(
     async function (q: string) {

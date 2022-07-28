@@ -8,14 +8,28 @@ import ListRenderer from '../../components/ListRenderer';
 import Page from '../../layouts/Page';
 import { useRouter } from 'next/router';
 import useUser from '../../hooks/useUser';
-import useEvents from '../../hooks/useEvents';
+import useBackend from '../../hooks/useBackend';
+import useLocation from '../../hooks/useLocation';
+import { coordsToCoordString } from '../../lib/helpers';
+import { useMemo } from 'react';
 
 function Explore() {
   const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
     ssr: false,
   });
+  const { coords } = useLocation();
   const user = useUser();
-  const { events } = useEvents();
+  const config = useMemo(() => {
+    if (!coords) return undefined;
+    return {
+      params: {
+        center: `${coords?.longitude},${coords?.latitude}`,
+        radius: 5,
+      },
+    };
+  }, [coords]);
+
+  const { data: events } = useBackend(`/api/events`, config);
   const router = useRouter();
 
   return (
