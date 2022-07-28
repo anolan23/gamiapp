@@ -88,7 +88,7 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
             throttle.wait(() => {
               if (!e.target.value) return;
               forward(e.target.value);
-            }, 1500);
+            }, 500);
           }}
           label="Venue location"
           placeholder="Search for a venue or address"

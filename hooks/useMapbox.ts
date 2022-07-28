@@ -4,6 +4,13 @@ import useLocation from './useLocation';
 
 export type Coords = [number, number];
 
+type MapboxStyle =
+  | 'streets-v11'
+  | 'outdoors-v11'
+  | 'light-v10'
+  | 'dark-v10'
+  | 'navigation-night-v1';
+
 export interface Feature {
   place_name: string;
   center: Coords;
@@ -45,10 +52,16 @@ function useMapbox() {
   );
 
   const getStaticMapUrl = function ([long, lat]: Coords): string {
-    return `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+000(${long},${lat})/${long},${lat},15/600x165?access_token=pk.eyJ1IjoiYW5vbDEyNTgiLCJhIjoiY2w1eWc0ZHBpMGV0ZzNpczJwbzRncWV2YSJ9.7IE8TFs_sBvPtE411SXDkw`;
+    return `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+000(${long},${lat})/${long},${lat},15/600x165?access_token=${process.env.NEXT_PUBLIC_MAPBOX}`;
   };
 
-  return { data, forward, coords, getStaticMapUrl };
+  const getStaticTilesUrl = function (
+    style: MapboxStyle = 'streets-v11'
+  ): string {
+    return `https://api.mapbox.com/styles/v1/mapbox/${style}/tiles/{z}/{x}/{y}?access_token=${process.env.NEXT_PUBLIC_MAPBOX}`;
+  };
+
+  return { data, forward, coords, getStaticMapUrl, getStaticTilesUrl };
 }
 
 export default useMapbox;

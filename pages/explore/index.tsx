@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 
 import Navbar from '../../layouts/Navbar';
 import Button from '../../components/Button';
-import Event from '../../components/Event';
+import EventComponent from '../../components/Event';
 import Input from '../../components/Input';
 import ListRenderer from '../../components/ListRenderer';
 import Page from '../../layouts/Page';
@@ -10,8 +10,9 @@ import { useRouter } from 'next/router';
 import useUser from '../../hooks/useUser';
 import useBackend from '../../hooks/useBackend';
 import useLocation from '../../hooks/useLocation';
-import { coordsToCoordString } from '../../lib/helpers';
 import { useMemo } from 'react';
+import { Event } from '../../hooks/useEvents';
+import { MarkerType } from '../../components/Map';
 
 function Explore() {
   const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
@@ -29,8 +30,19 @@ function Explore() {
     };
   }, [coords]);
 
-  const { data: events } = useBackend(`/api/events`, config);
+  const { data: events } = useBackend<Event[]>(`/api/events`, config);
   const router = useRouter();
+
+  const center = coords ? [coords.latitude, coords.longitude] : undefined;
+
+  const markers = events
+    ? events.map((event): MarkerType => {
+        const [long, lat] = event.coords!;
+        return {
+          position: [lat, long],
+        };
+      })
+    : undefined;
 
   return (
     <Page className="explore">
@@ -62,14 +74,14 @@ function Explore() {
           <div className="explore__events">
             <ListRenderer
               list={events}
-              itemRenderer={(event) => {
-                return <Event event={event} />;
+              itemRenderer={(event, index) => {
+                return <EventComponent key={index} event={event} />;
               }}
             />
           </div>
         </main>
         <div className="explore__map">
-          <MapWithNoSSR />
+          <MapWithNoSSR center={center} markers={markers} />
         </div>
       </div>
     </Page>
