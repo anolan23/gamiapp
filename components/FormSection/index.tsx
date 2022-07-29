@@ -7,7 +7,7 @@ interface Props {
 
 function FormSection({ title, description, icon, children }: Props) {
   return (
-    <div className="form-section">
+    <section className="form-section">
       <span className="material-icons form-section__icon">{icon}</span>
       <div className="form-section__content">
         <div className="form-section__content__text">
@@ -16,7 +16,7 @@ function FormSection({ title, description, icon, children }: Props) {
         </div>
         <div className="form-section__content__inputs">{children}</div>
       </div>
-    </div>
+    </section>
   );
 }
 

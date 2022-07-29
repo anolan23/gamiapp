@@ -28,12 +28,21 @@
 }
 
 .dropdown-item {
-  padding: 1.2rem 1.3rem;
-  margin: 1rem 0;
+  width: 100%;
+  padding: 1.6rem;
   display: flex;
   align-items: center;
   white-space: nowrap;
   transition: all 0.1s;
+  background-color: inherit;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  &,
+  &:link,
+  &:visited {
+    text-decoration: none;
+  }
   &:hover {
     background-color: $color-200;
   }

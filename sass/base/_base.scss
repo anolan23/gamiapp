@@ -15,10 +15,6 @@ body {
   box-sizing: border-box;
   padding: 0;
   background-color: $color-200;
-  scrollbar-color: transparent transparent;
-  *::-webkit-scrollbar {
-    background-color: transparent; /* color of the tracking area */
-  }
 }
 
 input,

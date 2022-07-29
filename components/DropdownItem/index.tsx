@@ -1,14 +1,19 @@
-interface Props extends React.HTMLProps<HTMLDivElement> {
+import Link from 'next/link';
+
+interface Props extends React.HTMLAttributes<HTMLAnchorElement> {
+  href: string;
   icon?: string;
   children: React.ReactNode;
 }
 
-function DropdownItem({ icon, onClick, onMouseDown, children }: Props) {
+function DropdownItem({ href, icon, onClick, onMouseDown, children }: Props) {
   return (
-    <div className="dropdown-item" onClick={onClick} onMouseDown={onMouseDown}>
-      <span className="material-icons dropdown-item__icon">{icon}</span>
-      <span className="dropdown-item__text">{children}</span>
-    </div>
+    <Link href={href}>
+      <a className="dropdown-item" onClick={onClick} onMouseDown={onMouseDown}>
+        <span className="material-icons dropdown-item__icon">{icon}</span>
+        <span className="dropdown-item__text">{children}</span>
+      </a>
+    </Link>
   );
 }
 

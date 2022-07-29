@@ -14,6 +14,7 @@ import { useMemo } from 'react';
 import { Event } from '../../hooks/useEvents';
 import { MarkerType } from '../../components/Map';
 import { Coords } from '../../hooks/useMapbox';
+import ButtonLink from '../../components/ButtonLink';
 
 function Explore() {
   const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
@@ -50,12 +51,12 @@ function Explore() {
   return (
     <Page className="explore">
       <Navbar>
-        <Button
+        <ButtonLink
+          href="/manage/events/create"
           size="small"
           icon="add"
           text="Create event"
           color="primary"
-          onClick={() => router.push('/manage/events/create')}
         />
       </Navbar>
       <div className="explore__content">

@@ -23,7 +23,6 @@ function EventPage({ event }: Props) {
   const { user } = useUser();
   const router = useRouter();
   const { getStaticMapUrl } = useMapbox();
-  const { slug } = router.query;
 
   if (router.isFallback) return <h1>loading...</h1>;
 

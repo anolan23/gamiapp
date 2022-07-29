@@ -7,6 +7,7 @@
   color: white;
   outline: none;
   border: none;
+  user-select: none;
 
   white-space: nowrap;
   cursor: pointer;
@@ -40,5 +41,13 @@
   //SIZES
   &--small {
     padding: 1rem;
+  }
+}
+
+.btn-link {
+  &,
+  &:link,
+  &:visited {
+    text-decoration: none;
   }
 }

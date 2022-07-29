@@ -5,6 +5,7 @@ import Dropdown from '../Dropdown';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import useUser from '../../hooks/useUser';
 import DropdownItem from '../DropdownItem';
+import useAuth from '../../hooks/useAuth';
 
 interface Props {
   className?: string;
@@ -13,6 +14,7 @@ interface Props {
 
 function UserToggle({ className, direction = 'down' }: Props) {
   const { user } = useUser();
+  const { logout } = useAuth();
   const [show, setShow] = useState<boolean>(false);
   const toggleRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +34,10 @@ function UserToggle({ className, direction = 'down' }: Props) {
       <span className="user-toggle__name">{user?.email || 'Sign up'}</span>
       <span className="material-icons user-toggle__icon">expand_more</span>
       <Dropdown show={show} close={() => setShow(false)}>
-        <DropdownItem icon="logout">Logout</DropdownItem>
+        <DropdownItem href="/manage/events">Manage my events</DropdownItem>
+        <DropdownItem href="/signup" icon="logout" onClick={logout}>
+          Logout
+        </DropdownItem>
       </Dropdown>
     </div>
   );
