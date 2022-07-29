@@ -1,8 +1,12 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import Button from '../../../components/Button';
+import { useCallback, useRef, useState } from 'react';
+import ButtonLink from '../../../components/ButtonLink';
+import Dropdown from '../../../components/Dropdown';
+import DropdownItem from '../../../components/DropdownItem';
 import useBackend from '../../../hooks/useBackend';
 import { Event } from '../../../hooks/useEvents';
+import { useOutsideClick } from '../../../hooks/useOutsideClick';
 import useUser from '../../../hooks/useUser';
 import Container from '../../../layouts/Container';
 import Navbar from '../../../layouts/Navbar';
@@ -26,11 +30,11 @@ function ManageEvents() {
       <Container className="manage-events__container">
         <h1 className="manage-events__title">Events</h1>
         <div className="manage-events__action">
-          <Button
+          <ButtonLink
+            href="/manage/events/create"
             text="Create event"
             size="small"
             icon="add"
-            onClick={() => router.push('/manage/events/create')}
           />
         </div>
         <div className="manage-events__events">{renderEvents()}</div>
@@ -44,6 +48,14 @@ interface EventProps {
 }
 
 function EventComponent({ event }: EventProps) {
+  const [show, setShow] = useState<boolean>(false);
+  const actionRef = useRef<HTMLDivElement>(null);
+
+  const onClickOutside = useCallback(() => {
+    setShow(false);
+  }, []);
+
+  useOutsideClick(actionRef, onClickOutside);
   return (
     <div className="manage-events__event">
       <div className="manage-events__event__image">
@@ -54,7 +66,34 @@ function EventComponent({ event }: EventProps) {
           objectFit="cover"
         />
       </div>
-      <div className="manage-events__event__content"></div>
+      <div className="manage-events__event__content">
+        <div className="manage-events__event__content__info">
+          <span className="manage-events__event__title">{event.title}</span>
+          <span className="manage-events__event__text">
+            {event.address.split(',').slice(0, -1).join(',')}
+          </span>
+          <span className="manage-events__event__text">
+            Sunday, August 28, 2022 at 7:00 PM CDT
+          </span>
+        </div>
+        <div>
+          <div
+            onClick={() => setShow(!show)}
+            ref={actionRef}
+            className="manage-events__event__content__action"
+          >
+            <span className="material-icons manage-events__event__icon">
+              more_horiz
+            </span>
+            <Dropdown show={show}>
+              <DropdownItem href={`/events/${event.id}`}>View</DropdownItem>
+              <DropdownItem href={`/manage/events/${event.id}/basic-info`}>
+                Edit
+              </DropdownItem>
+            </Dropdown>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

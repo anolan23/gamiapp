@@ -1,20 +1,24 @@
+import { AxiosRequestConfig } from 'axios';
 import { useFormik } from 'formik';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Event } from '../../hooks/useEvents';
+import useGames, { Game } from '../../hooks/useGames';
 import useMapbox, { Feature, Coords } from '../../hooks/useMapbox';
 import useThrottle from '../../hooks/useThrottle';
 import { parseAddress } from '../../lib/helpers';
 import AddressItem from '../AddressItem';
 import AutoComplete from '../AutoComplete';
 import Button from '../Button';
+import DropdownItem from '../DropdownItem';
 
 import FormSection from '../FormSection';
 import InputGroup from '../InputGroup';
 
 export interface BasicInfoValues {
   title: string;
+  game: string;
   game_id: string;
   address: string;
   starts_at: string;
@@ -29,10 +33,12 @@ interface Props {
 }
 
 function BasicInfo({ event, initialValues, onSubmit }: Props) {
-  const { data, forward, getStaticMapUrl } = useMapbox();
+  const { data: places, forward, getStaticMapUrl } = useMapbox();
+  const { data: games, search } = useGames();
   const throttle = useThrottle();
   const initValues: BasicInfoValues = initialValues || {
     title: '',
+    game: '',
     game_id: '',
     address: '',
     starts_at: '',
@@ -96,7 +102,7 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
           }}
           label="Venue location"
           placeholder="Search for a venue or address"
-          items={data}
+          items={places}
           itemRenderer={(item) => <AddressItem placeName={item.place_name} />}
           onItemClick={(item) => {
             formik.setFieldValue('address', item.place_name);
@@ -122,13 +128,34 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
           label="Event title"
           placeholder="Be clear and descriptive"
         />
-        <InputGroup
+        <AutoComplete<Game>
+          name="game"
+          value={formik.values.game}
+          onChange={(e) => {
+            formik.handleChange(e);
+            throttle.wait(() => {
+              if (!e.target.value) return;
+              search({ name: e.target.value, limit: 5 });
+            }, 500);
+          }}
+          label="Featured game"
+          placeholder="Search games"
+          items={games}
+          itemRenderer={(item) => (
+            <DropdownItem href="/">{item.name}</DropdownItem>
+          )}
+          onItemClick={(item) => {
+            formik.setFieldValue('game', item.name);
+            formik.setFieldValue('game_id', item.id);
+          }}
+        />
+        {/* <InputGroup
           name="game_id"
           value={formik.values.game_id}
           onChange={formik.handleChange}
           label="Featured game"
           placeholder="Search games"
-        />
+        /> */}
         <span>
           Need game ideas?{' '}
           <Link href="/" passHref>

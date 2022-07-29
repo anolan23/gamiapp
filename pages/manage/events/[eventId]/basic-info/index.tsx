@@ -17,7 +17,7 @@ function BasicInfoPage() {
   const { user } = useUser();
   const router = useRouter();
   const { eventId } = router.query;
-  const url = eventId ? `/api/events/${eventId}` : null;
+  const url = eventId ? `/api/events/${eventId}` : undefined;
   const { data: event } = useBackend<Event>(url);
 
   if (!event) return <h1>loading...</h1>;
@@ -51,6 +51,7 @@ function BasicInfoPage() {
           onSubmit={handleSubmit}
           initialValues={{
             title: event.title,
+            game: '',
             game_id: event.game_id.toString(),
             address: event.address,
             starts_at: toDatetimeLocal(event.starts_at),

@@ -9,10 +9,9 @@ import useAuth from '../../hooks/useAuth';
 
 interface Props {
   className?: string;
-  direction?: 'up' | 'down';
 }
 
-function UserToggle({ className, direction = 'down' }: Props) {
+function UserToggle({ className }: Props) {
   const { user } = useUser();
   const { logout } = useAuth();
   const [show, setShow] = useState<boolean>(false);
@@ -33,7 +32,7 @@ function UserToggle({ className, direction = 'down' }: Props) {
       <Avatar className="user-toggle__image" />
       <span className="user-toggle__name">{user?.email || 'Sign up'}</span>
       <span className="material-icons user-toggle__icon">expand_more</span>
-      <Dropdown show={show} close={() => setShow(false)}>
+      <Dropdown show={show}>
         <DropdownItem href="/manage/events">Manage my events</DropdownItem>
         <DropdownItem href="/signup" icon="logout" onClick={logout}>
           Logout
