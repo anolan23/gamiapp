@@ -10,8 +10,12 @@
   }
 
   &__image {
+    background-color: white;
     flex: 1;
     position: relative;
+    &__img {
+      padding: 1.6rem !important;
+    }
   }
   &__text {
     flex: 1;
@@ -21,8 +25,13 @@
     padding: 1.6rem 3.2rem;
     font-size: 1.4rem;
     color: $color-black-20;
+    &__game {
+      font-weight: 700;
+      color: $color-300;
+    }
 
     &__info {
+      margin-top: 8px;
       font-size: 1.2rem;
       display: flex;
       flex-direction: column;

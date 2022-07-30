@@ -11,14 +11,16 @@ function EventComponent({ event, onClick }: Props) {
     <div onClick={onClick} className="event">
       <div className="event__image">
         <Image
+          className="event__image__img"
           src={event.image || event.game?.thumb_url || '/event.jpeg'}
           alt="event"
           layout="fill"
-          objectFit="cover"
+          objectFit="contain"
         />
       </div>
       <div className="event__text">
         <span className="event__text__title">{event.title}</span>
+        <span className="event__text__game">{event.game?.name}</span>
         <div className="event__text__info">
           <span className="event__text__datetime">
             {/* Sunday, August 28, 2022 at 7:00 PM CDT */}

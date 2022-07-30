@@ -39,7 +39,7 @@ function Publish({ initialValues, onSubmit, event }: Props) {
         <div className="publish__event">
           <div className="publish__event__image">
             <Image
-              src={event.image || '/event.webp'}
+              src={event.image || event.game?.thumb_url || '/event.jpeg'}
               alt="event"
               layout="fill"
               objectFit="cover"

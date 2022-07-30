@@ -71,10 +71,7 @@ function EventPage({ event }: Props) {
           <div className="events-page__event__content">
             <div className="events-page__event__content__left">
               <h1 className="events-page__event__title">{event.title}</h1>
-              <p className="events-page__event__summary">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
+              <p className="events-page__event__summary">{event.summary}</p>
               <div>
                 <h2 className="events-page__event__about">About this event</h2>
                 <p className="events-page__event__description">
