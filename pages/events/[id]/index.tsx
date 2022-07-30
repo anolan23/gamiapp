@@ -53,7 +53,7 @@ function EventPage({ event }: Props) {
         <div className="events-page__background">
           <Image
             className="events-page__background__image"
-            src={event.image || '/event.jpeg'}
+            src={event.image || event.game?.image_url || '/event.jpeg'}
             alt="background"
             layout="fill"
             objectFit="cover"
@@ -62,7 +62,7 @@ function EventPage({ event }: Props) {
         <div className="events-page__event">
           <div className="events-page__event__image">
             <Image
-              src={event.image || '/event.jpeg'}
+              src={event.image || event.game?.image_url || '/event.jpeg'}
               alt="event"
               layout="fill"
               objectFit="cover"

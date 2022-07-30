@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import backend from '../lib/backend';
+import { Game } from './useGames';
 import { Coords } from './useMapbox';
 
 export interface Event {
@@ -7,7 +8,7 @@ export interface Event {
   created_at?: string;
   updated_at?: string;
   user_id?: number;
-  game_id: number;
+  game?: Game;
   title: string;
   summary?: string;
   starts_at: string;

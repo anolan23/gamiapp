@@ -18,8 +18,7 @@ import InputGroup from '../InputGroup';
 
 export interface BasicInfoValues {
   title: string;
-  game: string;
-  game_id: string;
+  game: Game;
   address: string;
   starts_at: string;
   ends_at: string;
@@ -34,12 +33,11 @@ interface Props {
 
 function BasicInfo({ event, initialValues, onSubmit }: Props) {
   const { data: places, forward, getStaticMapUrl } = useMapbox();
-  const { data: games, search } = useGames();
+  const { data: games, search, leanGame } = useGames();
   const throttle = useThrottle();
   const initValues: BasicInfoValues = initialValues || {
     title: '',
-    game: '',
-    game_id: '',
+    game: { name: '' },
     address: '',
     starts_at: '',
     ends_at: '',
@@ -129,8 +127,8 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
           placeholder="Be clear and descriptive"
         />
         <AutoComplete<Game>
-          name="game"
-          value={formik.values.game}
+          name="game.name"
+          value={formik.values.game.name}
           onChange={(e) => {
             formik.handleChange(e);
             throttle.wait(() => {
@@ -141,21 +139,12 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
           label="Featured game"
           placeholder="Search games"
           items={games}
-          itemRenderer={(item) => (
-            <DropdownItem href="/">{item.name}</DropdownItem>
-          )}
+          itemRenderer={(item) => <DropdownItem>{item.name}</DropdownItem>}
           onItemClick={(item) => {
-            formik.setFieldValue('game', item.name);
-            formik.setFieldValue('game_id', item.id);
+            const game = leanGame(item);
+            formik.setFieldValue('game', game);
           }}
         />
-        {/* <InputGroup
-          name="game_id"
-          value={formik.values.game_id}
-          onChange={formik.handleChange}
-          label="Featured game"
-          placeholder="Search games"
-        /> */}
         <span>
           Need game ideas?{' '}
           <Link href="/" passHref>

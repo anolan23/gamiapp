@@ -11,7 +11,7 @@ function EventComponent({ event, onClick }: Props) {
     <div onClick={onClick} className="event">
       <div className="event__image">
         <Image
-          src={event.image || '/event.webp'}
+          src={event.image || event.game?.thumb_url || '/event.jpeg'}
           alt="event"
           layout="fill"
           objectFit="cover"

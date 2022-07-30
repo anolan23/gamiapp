@@ -26,8 +26,8 @@ function Create() {
       const [long, lat] = coords;
       const event: any = {
         ...values,
+        game: JSON.stringify(values.game),
         user_id: user.id,
-        game_id: +values.game_id,
         location: coords ? `POINT(${long} ${lat})` : undefined,
       };
       delete event.coords;

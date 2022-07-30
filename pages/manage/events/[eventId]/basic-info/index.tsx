@@ -33,7 +33,6 @@ function BasicInfoPage() {
       const [long, lat] = coords;
       const updates: any = {
         ...values,
-        game_id: +values.game_id,
         location: coords ? `POINT(${long} ${lat})` : undefined,
       };
       delete updates['coords'];
@@ -51,8 +50,7 @@ function BasicInfoPage() {
           onSubmit={handleSubmit}
           initialValues={{
             title: event.title,
-            game: '',
-            game_id: event.game_id.toString(),
+            game: event.game || { name: '' },
             address: event.address,
             starts_at: toDatetimeLocal(event.starts_at),
             ends_at: event.ends_at ? toDatetimeLocal(event.ends_at) : '',
