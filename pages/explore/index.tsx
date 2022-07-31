@@ -10,23 +10,35 @@ import { useRouter } from 'next/router';
 import useUser from '../../hooks/useUser';
 import useBackend from '../../hooks/useBackend';
 import useLocation from '../../hooks/useLocation';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Event } from '../../hooks/useEvents';
 import { MarkerType } from '../../components/Map';
 import { Coords } from '../../hooks/useMapbox';
 import ButtonLink from '../../components/ButtonLink';
+import { useFormik } from 'formik';
+
+const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
+  ssr: false,
+});
 
 function Explore() {
-  const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
-    ssr: false,
+  const { coords, address } = useLocation();
+  const formik = useFormik({
+    initialValues: {
+      address,
+    },
+    onSubmit(values) {
+      console.log(values);
+    },
+    enableReinitialize: true,
   });
-  const { coords } = useLocation();
   const user = useUser();
   const config = useMemo(() => {
     if (!coords) return null;
+    const [long, lat] = coords;
     return {
       params: {
-        center: `${coords?.longitude},${coords?.latitude}`,
+        center: `${long},${lat}`,
         radius: 5,
       },
     };
@@ -36,7 +48,7 @@ function Explore() {
   const router = useRouter();
 
   const center: Coords | undefined = coords
-    ? [coords.latitude, coords.longitude]
+    ? [coords[1], coords[0]]
     : undefined;
 
   const markers = events
@@ -62,19 +74,26 @@ function Explore() {
       <div className="explore__content">
         <main className="explore__main">
           <div className="explore__main__filters">
-            <div className="explore__main__filters__inputs">
+            <form
+              onSubmit={formik.handleSubmit}
+              className="explore__main__filters__inputs"
+            >
               <Input
-                icon="search"
-                placeholder="Search anything"
-                className="explore__input"
-              />
-              <Input
+                name="address"
                 icon="location_on"
                 placeholder="Choose a location"
                 className="explore__input"
+                onChange={formik.handleChange}
+                value={formik.values.address}
+                onFocus={() => {
+                  formik.setFieldValue('address', '');
+                }}
+                onBlur={() => {
+                  formik.setFieldValue('address', address);
+                }}
               />
-            </div>
-            <Button icon="search" text="Search" />
+            </form>
+            <Button icon="tune" text="Filter" size="small" color="secondary" />
           </div>
           <div className="explore__events">
             <ListRenderer

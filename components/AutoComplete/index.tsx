@@ -58,12 +58,7 @@ function AutoComplete<T>({
     <div className="autocomplete" onFocus={handleFocus} onBlur={handleBlur}>
       <InputGroup {...props} onChange={onChange} />
       <div className="autocomplete__dropdown">
-        <Dropdown
-          show={show}
-          close={() => setShow(false)}
-          openTo="right"
-          stretch={true}
-        >
+        <Dropdown show={show} openTo="right" stretch={true}>
           {renderItems()}
         </Dropdown>
       </div>

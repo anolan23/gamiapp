@@ -101,6 +101,7 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
           label="Venue location"
           placeholder="Search for a venue or address"
           items={places}
+          inputRenderer={}
           itemRenderer={(item) => <AddressItem placeName={item.place_name} />}
           onItemClick={(item) => {
             formik.setFieldValue('address', item.place_name);
