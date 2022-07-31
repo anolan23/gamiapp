@@ -2,7 +2,7 @@ import Input from '../Input';
 
 export interface InputGroupProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   icon?: string;
 }
 

@@ -8,7 +8,7 @@ function useLocation() {
 
   const setLocation = function (coords: Coords, address: string) {
     setCoords(coords);
-    setAddress(address);
+    setAddress(address.split(',').slice(0, 2).join(','));
   };
 
   useEffect(() => {
@@ -16,7 +16,7 @@ function useLocation() {
       const { longitude, latitude } = pos.coords;
       const coords: Coords = [longitude, latitude];
       const feature = await reverse(coords, ['place']);
-      setLocation(coords, feature[0].place_name.split(',')[0]);
+      setLocation(coords, feature[0].place_name);
     });
   }, [reverse]);
 

@@ -1,7 +1,8 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Icon } from 'leaflet';
 import useMapbox, { Coords } from '../../hooks/useMapbox';
+import { useRef, useState } from 'react';
 
 export interface MarkerType {
   position: Coords;
@@ -46,6 +47,7 @@ function Map({ center, markers }: Props) {
       scrollWheelZoom={false}
       style={{ height: '100%', minHeight: '100%' }}
     >
+      <ChangeView center={center} zoom={13} />
       <TileLayer
         attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>
         '
@@ -57,4 +59,16 @@ function Map({ center, markers }: Props) {
     </MapContainer>
   );
 }
+
+interface ChangeViewProps {
+  center: Coords;
+  zoom: number;
+}
+
+function ChangeView({ center, zoom }: ChangeViewProps) {
+  const map = useMap();
+  map.setView(center, zoom);
+  return null;
+}
+
 export default Map;

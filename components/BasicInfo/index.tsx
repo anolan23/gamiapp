@@ -14,6 +14,7 @@ import Button from '../Button';
 import DropdownItem from '../DropdownItem';
 
 import FormSection from '../FormSection';
+import Input from '../Input';
 import InputGroup from '../InputGroup';
 
 export interface BasicInfoValues {
@@ -101,7 +102,7 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
           label="Venue location"
           placeholder="Search for a venue or address"
           items={places}
-          inputRenderer={}
+          InputRenderer={InputGroup}
           itemRenderer={(item) => <AddressItem placeName={item.place_name} />}
           onItemClick={(item) => {
             formik.setFieldValue('address', item.place_name);
@@ -139,6 +140,7 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
           }}
           label="Featured game"
           placeholder="Search games"
+          InputRenderer={InputGroup}
           items={games}
           itemRenderer={(item) => <DropdownItem>{item.name}</DropdownItem>}
           onItemClick={(item) => {

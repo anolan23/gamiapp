@@ -13,16 +13,21 @@ import useLocation from '../../hooks/useLocation';
 import { useMemo, useState } from 'react';
 import { Event } from '../../hooks/useEvents';
 import { MarkerType } from '../../components/Map';
-import { Coords } from '../../hooks/useMapbox';
+import useMapbox, { Coords, Feature } from '../../hooks/useMapbox';
 import ButtonLink from '../../components/ButtonLink';
 import { useFormik } from 'formik';
+import AutoComplete from '../../components/AutoComplete';
+import useThrottle from '../../hooks/useThrottle';
+import AddressItem from '../../components/AddressItem';
 
 const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
   ssr: false,
 });
 
 function Explore() {
-  const { coords, address } = useLocation();
+  const { coords, address, setLocation } = useLocation();
+  const throttle = useThrottle();
+  const { data: places, forward } = useMapbox();
   const formik = useFormik({
     initialValues: {
       address,
@@ -60,6 +65,8 @@ function Explore() {
       })
     : undefined;
 
+  console.log(center);
+
   return (
     <Page className="explore">
       <Navbar>
@@ -78,13 +85,31 @@ function Explore() {
               onSubmit={formik.handleSubmit}
               className="explore__main__filters__inputs"
             >
-              <Input
+              <AutoComplete<Feature>
                 name="address"
                 icon="location_on"
                 placeholder="Choose a location"
                 className="explore__input"
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  formik.handleChange(e);
+                  throttle.wait(() => {
+                    if (!e.target.value) return;
+                    if (!coords) return;
+                    forward({
+                      coords,
+                      q: e.target.value,
+                    });
+                  }, 500);
+                }}
+                items={places}
+                onItemClick={(item) => {
+                  setLocation(item.center, item.place_name);
+                }}
                 value={formik.values.address}
+                InputRenderer={Input}
+                itemRenderer={(item) => (
+                  <AddressItem placeName={item.place_name} />
+                )}
                 onFocus={() => {
                   formik.setFieldValue('address', '');
                 }}

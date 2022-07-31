@@ -25,10 +25,16 @@ interface GetStaticMapUrl {
   height: number;
 }
 
+interface Forward {
+  coords: Coords;
+  q: string;
+  types?: string[];
+}
+
 function useMapbox() {
   const [data, setData] = useState<any>();
 
-  const forward = useCallback(async function (coords: Coords, q: string) {
+  const forward = useCallback(async function ({ coords, q, types }: Forward) {
     try {
       const endpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${q}.json`;
       const [long, lat] = coords;
@@ -36,6 +42,7 @@ function useMapbox() {
         params: {
           access_token: process.env.NEXT_PUBLIC_MAPBOX,
           proximity: coords ? `${long},${lat}` : undefined,
+          types: types ? types.join(',') : undefined,
         },
       });
       if (!response.data.features)
