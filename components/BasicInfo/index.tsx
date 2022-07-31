@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 import { useFormik } from 'formik';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useMemo } from 'react';
+import { useLocation } from '../../context/location';
 import { Event } from '../../hooks/useEvents';
 import useGames, { Game } from '../../hooks/useGames';
 import useMapbox, { Feature, Coords } from '../../hooks/useMapbox';
@@ -14,7 +14,6 @@ import Button from '../Button';
 import DropdownItem from '../DropdownItem';
 
 import FormSection from '../FormSection';
-import Input from '../Input';
 import InputGroup from '../InputGroup';
 
 export interface BasicInfoValues {
@@ -33,6 +32,7 @@ interface Props {
 }
 
 function BasicInfo({ event, initialValues, onSubmit }: Props) {
+  const { coords } = useLocation();
   const { data: places, forward, getStaticMapUrl } = useMapbox();
   const { data: games, search, leanGame } = useGames();
   const throttle = useThrottle();
@@ -55,10 +55,10 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
   };
 
   const renderLocation = function () {
-    const { coords, address } = formik.values;
-    if (coords && address) {
+    const { coords: coordinates, address } = formik.values;
+    if (coordinates && address) {
       const staticMapUrl = getStaticMapUrl({
-        coords: JSON.parse(coords),
+        coords: JSON.parse(coordinates),
         width: 600,
         height: 165,
       });
@@ -96,7 +96,11 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
             formik.handleChange(e);
             throttle.wait(() => {
               if (!e.target.value) return;
-              forward(e.target.value);
+              if (!coords) return;
+              forward({
+                coords,
+                q: e.target.value,
+              });
             }, 500);
           }}
           label="Venue location"

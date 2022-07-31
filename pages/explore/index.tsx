@@ -9,7 +9,6 @@ import Page from '../../layouts/Page';
 import { useRouter } from 'next/router';
 import useUser from '../../hooks/useUser';
 import useBackend from '../../hooks/useBackend';
-import useLocation from '../../hooks/useLocation';
 import { useMemo, useState } from 'react';
 import { Event } from '../../hooks/useEvents';
 import { MarkerType } from '../../components/Map';
@@ -19,6 +18,7 @@ import { useFormik } from 'formik';
 import AutoComplete from '../../components/AutoComplete';
 import useThrottle from '../../hooks/useThrottle';
 import AddressItem from '../../components/AddressItem';
+import { useLocation } from '../../context/location';
 
 const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
   ssr: false,
