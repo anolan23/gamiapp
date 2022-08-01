@@ -25,6 +25,7 @@
     font-size: 2.4rem;
     font-weight: 700;
     & .icon {
+      color: $color-400;
       font-size: 3.2rem;
     }
   }
@@ -45,5 +46,14 @@
   }
   &__map {
     position: relative;
+  }
+  &__current-location {
+    background-color: $color-400;
+    font-size: 1.6rem;
+    min-height: 65px;
+    font-weight: 400;
+    & span {
+      color: inherit;
+    }
   }
 }

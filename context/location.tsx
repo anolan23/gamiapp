@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import useMapbox, { Coords } from '../hooks/useMapbox';
 
 interface LocationProviderProps {
@@ -9,10 +16,12 @@ interface Location {
   coords?: Coords;
   address?: string;
   setLocation: (coords: Coords, address: string) => void;
+  getCurrentLocation: () => void;
 }
 
 const initialState: Location = {
   setLocation: (coords: Coords, address: string) => {},
+  getCurrentLocation: () => {},
 };
 
 const LocationContext = createContext<Location>(initialState);
@@ -27,17 +36,26 @@ export default function LocationProvider({ children }: LocationProviderProps) {
     setAddress(address.split(',').slice(0, 2).join(','));
   };
 
+  const getCurrentLocation = useCallback(
+    function () {
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        const { longitude, latitude } = pos.coords;
+        const coords: Coords = [longitude, latitude];
+        const feature = await reverse(coords, ['place']);
+        setLocation(coords, feature[0].place_name);
+      });
+    },
+    [reverse]
+  );
+
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-      const { longitude, latitude } = pos.coords;
-      const coords: Coords = [longitude, latitude];
-      const feature = await reverse(coords, ['place']);
-      setLocation(coords, feature[0].place_name);
-    });
-  }, [reverse]);
+    getCurrentLocation();
+  }, [getCurrentLocation]);
 
   return (
-    <LocationContext.Provider value={{ coords, address, setLocation }}>
+    <LocationContext.Provider
+      value={{ coords, address, setLocation, getCurrentLocation }}
+    >
       {children}
     </LocationContext.Provider>
   );

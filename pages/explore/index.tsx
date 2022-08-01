@@ -19,13 +19,14 @@ import AutoComplete from '../../components/AutoComplete';
 import useThrottle from '../../hooks/useThrottle';
 import AddressItem from '../../components/AddressItem';
 import { useLocation } from '../../context/location';
+import DropdownItem from '../../components/DropdownItem';
 
 const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
   ssr: false,
 });
 
 function Explore() {
-  const { coords, address, setLocation } = useLocation();
+  const { coords, address, setLocation, getCurrentLocation } = useLocation();
   const throttle = useThrottle();
   const { data: places, forward } = useMapbox();
   const formik = useFormik({
@@ -106,7 +107,17 @@ function Explore() {
                   setLocation(item.center, item.place_name);
                 }}
                 value={formik.values.address}
-                InputRenderer={Input}
+                Input={Input}
+                stickyOptionsRenderer={() => (
+                  <DropdownItem
+                    icon="my_location"
+                    className="explore__current-location"
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={getCurrentLocation}
+                  >
+                    Use my current location
+                  </DropdownItem>
+                )}
                 itemRenderer={(item) => (
                   <AddressItem placeName={item.place_name} />
                 )}

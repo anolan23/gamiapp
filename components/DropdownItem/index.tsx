@@ -3,10 +3,16 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
 }
 
-function DropdownItem({ icon, onClick, onMouseDown, children }: Props) {
+function DropdownItem({
+  icon,
+  onClick,
+  onMouseDown,
+  className,
+  children,
+}: Props) {
   return (
     <button
-      className="dropdown-item"
+      className={`dropdown-item ${className ?? ''}`}
       onClick={onClick}
       onMouseDown={onMouseDown}
     >

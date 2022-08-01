@@ -1,20 +1,21 @@
-import React, { ComponentType, ReactElement, useEffect, useState } from 'react';
-import AddressItem from '../AddressItem';
+import React, { ComponentType, useEffect, useState } from 'react';
 
 import Dropdown from '../Dropdown';
-import InputGroup, { InputGroupProps } from '../InputGroup';
+import { InputGroupProps } from '../InputGroup';
 
 interface Props<T> extends InputGroupProps {
   items?: T[];
   onItemClick: (item: T) => void;
-  InputRenderer: ComponentType;
+  Input: ComponentType;
+  stickyOptionsRenderer?: () => React.ReactElement;
   itemRenderer: (item: T) => React.ReactElement;
 }
 
 function AutoComplete<T>({
   items,
   onItemClick,
-  InputRenderer,
+  Input,
+  stickyOptionsRenderer,
   itemRenderer,
   ...props
 }: Props<T>) {
@@ -57,9 +58,10 @@ function AutoComplete<T>({
 
   return (
     <div className="autocomplete" onFocus={handleFocus} onBlur={handleBlur}>
-      <InputRenderer {...props} />
+      <Input {...props} />
       <div className="autocomplete__dropdown">
         <Dropdown show={show} openTo="right" stretch={true}>
+          {stickyOptionsRenderer ? stickyOptionsRenderer() : null}
           {renderItems()}
         </Dropdown>
       </div>
