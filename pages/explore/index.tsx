@@ -108,12 +108,11 @@ function Explore() {
                 }}
                 value={formik.values.address}
                 Input={Input}
-                stickyOptionsRenderer={() => (
+                stickyItemsRenderer={() => (
                   <DropdownItem
                     icon="my_location"
                     className="explore__current-location"
-                    onMouseDown={(e) => e.preventDefault()}
-                    onClick={getCurrentLocation}
+                    onMouseDown={getCurrentLocation}
                   >
                     Use my current location
                   </DropdownItem>

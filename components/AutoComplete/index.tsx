@@ -7,7 +7,7 @@ interface Props<T> extends InputGroupProps {
   items?: T[];
   onItemClick: (item: T) => void;
   Input: ComponentType;
-  stickyOptionsRenderer?: () => React.ReactElement;
+  stickyItemsRenderer?: () => React.ReactElement;
   itemRenderer: (item: T) => React.ReactElement;
 }
 
@@ -15,7 +15,7 @@ function AutoComplete<T>({
   items,
   onItemClick,
   Input,
-  stickyOptionsRenderer,
+  stickyItemsRenderer,
   itemRenderer,
   ...props
 }: Props<T>) {
@@ -37,7 +37,6 @@ function AutoComplete<T>({
   };
 
   const handleFocus = function () {
-    if (!items) return;
     setShow(true);
   };
 
@@ -50,8 +49,7 @@ function AutoComplete<T>({
     return items.map((item, index) => {
       return React.cloneElement<React.HTMLAttributes<any>>(itemRenderer(item), {
         key: index,
-        onMouseDown: (e) => e.preventDefault(),
-        onClick: () => handleItemClick(item),
+        onMouseDown: () => handleItemClick(item),
       });
     });
   };
@@ -61,7 +59,7 @@ function AutoComplete<T>({
       <Input {...props} />
       <div className="autocomplete__dropdown">
         <Dropdown show={show} openTo="right" stretch={true}>
-          {stickyOptionsRenderer ? stickyOptionsRenderer() : null}
+          {stickyItemsRenderer ? stickyItemsRenderer() : null}
           {renderItems()}
         </Dropdown>
       </div>
