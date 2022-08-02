@@ -1,7 +1,8 @@
 .basic-info {
   overflow-y: auto;
   &__location {
-    background-color: $color-100;
+    background-color: $color-200;
+    border: $border;
     &__image-container {
       position: relative;
       width: 100%;
@@ -20,7 +21,7 @@
     }
     &__city {
       display: block;
-      color: $color-black-20;
+      color: $font-color-secondary;
     }
   }
 }

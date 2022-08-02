@@ -1,4 +1,4 @@
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+export interface ItemProps extends React.HTMLAttributes<HTMLButtonElement> {
   icon?: string;
   children: React.ReactNode;
 }
@@ -9,7 +9,7 @@ function DropdownItem({
   onMouseDown,
   className,
   children,
-}: Props) {
+}: ItemProps) {
   return (
     <button
       className={`dropdown-item ${className ?? ''}`}

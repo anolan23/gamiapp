@@ -22,8 +22,13 @@
     padding: 2.4rem;
     color: inherit;
     transition: all 0.2s;
+    &,
+    &:link,
+    &:visited {
+      text-decoration: none;
+    }
     &:hover {
-      filter: brightness(85%);
+      filter: brightness(95%);
     }
     &__icon {
       font-weight: inherit;
@@ -44,7 +49,7 @@
       font-size: 2.4rem;
     }
     &__date {
-      color: $color-black-20;
+      color: $font-color-secondary;
       font-weight: 400;
     }
     &__preview {

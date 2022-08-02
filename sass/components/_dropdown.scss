@@ -58,3 +58,12 @@
     margin-left: 1.2rem;
   }
 }
+
+.dropdown-item-link {
+  &,
+  &:link,
+  &:visited {
+    text-decoration: none;
+    color: inherit;
+  }
+}

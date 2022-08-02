@@ -1,8 +1,18 @@
 // COLORS
-$color-100: #1d2b38;
-$color-200: #11202d;
-$color-300: #279b97;
-$color-400: #279b52;
+// $color-100: #1d2b38;
+// $color-200: #11202d;
+// $color-300: #279b97;
+// $color-400: #279b52;
+
+// $color-black-50: #000000;
+// $color-black-40: #404040;
+// $color-black-30: #808080;
+// $color-black-20: #bfbfbf;
+// $color-black-10: white;
+$color-100: rgb(242, 242, 242);
+$color-200: white;
+$color-300: rgb(60, 151, 255);
+$color-400: rgb(60, 151, 255);
 
 $color-black-50: #000000;
 $color-black-40: #404040;
@@ -10,5 +20,7 @@ $color-black-30: #808080;
 $color-black-20: #bfbfbf;
 $color-black-10: white;
 // FONT
+$font-color: rgb(61, 61, 61);
+$font-color-secondary: $color-black-30;
 // BORDERS
 $border: 1px solid $color-100;

@@ -2,13 +2,13 @@
   padding: 8px 1.6rem;
   padding-top: 0;
   // border: 1px solid $color-black-20;
-  border: 1px solid $color-100;
+  border: 1px solid $color-black-20;
   &:focus {
     border: 1px solid white;
   }
   &__label {
     font-size: 1.2rem;
-    color: white;
+    color: inherit;
   }
   &__input {
     & input {

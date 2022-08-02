@@ -19,12 +19,14 @@ function SidebarManage({ event }: Props) {
 
   return (
     <Sidebar>
-      <button onClick={() => router.push('/')} className="sidebar-manage__back">
-        <span className="material-icons sidebar-manage__back__icon">
-          chevron_left
-        </span>
-        <span className="sidebar-manage__back__text">Events</span>
-      </button>
+      <Link href={'/manage/events'}>
+        <a className="sidebar-manage__back">
+          <span className="material-icons sidebar-manage__back__icon">
+            chevron_left
+          </span>
+          <span className="sidebar-manage__back__text">Events</span>
+        </a>
+      </Link>
       <div className="sidebar-manage__details">
         <DropdownButton
           text={event.published ? 'Live' : 'Draft'}

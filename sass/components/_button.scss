@@ -7,6 +7,7 @@
   color: white;
   outline: none;
   border: none;
+  border-radius: 12px;
   user-select: none;
 
   white-space: nowrap;
@@ -14,7 +15,7 @@
   transition: all 0.2s;
 
   &:hover {
-    filter: brightness(80%);
+    filter: brightness(90%);
   }
 
   &__text {
@@ -26,8 +27,8 @@
 
   &--secondary {
     background-color: transparent;
-    color: white;
-    border: 1px solid $color-black-20;
+    color: inherit;
+    border: 2px solid $color-100;
   }
 
   &--sky-blue {

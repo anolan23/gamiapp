@@ -60,10 +60,10 @@ function EventComponent({ event }: EventProps) {
     <div className="manage-events__event">
       <div className="manage-events__event__image">
         <Image
-          src={event.image ?? '/event.jpeg'}
+          src={event.image || event.game?.thumb_url || '/event.jpeg'}
           alt="game event"
           layout="fill"
-          objectFit="cover"
+          objectFit="contain"
         />
       </div>
       <div className="manage-events__event__content">

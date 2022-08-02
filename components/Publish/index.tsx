@@ -39,10 +39,11 @@ function Publish({ initialValues, onSubmit, event }: Props) {
         <div className="publish__event">
           <div className="publish__event__image">
             <Image
+              className="publish__event__image__img"
               src={event.image || event.game?.thumb_url || '/event.jpeg'}
               alt="event"
               layout="fill"
-              objectFit="cover"
+              objectFit="contain"
             />
           </div>
           <div className="publish__event__text">

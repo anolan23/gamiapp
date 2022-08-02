@@ -71,7 +71,9 @@ function EventPage({ event }: Props) {
           <div className="events-page__event__content">
             <div className="events-page__event__content__left">
               <h1 className="events-page__event__title">{event.title}</h1>
-              <p className="events-page__event__summary">{event.summary}</p>
+              {event.summary ? (
+                <p className="events-page__event__summary">{event.summary}</p>
+              ) : null}
               <div>
                 <h2 className="events-page__event__about">About this event</h2>
                 <p className="events-page__event__description">
@@ -83,7 +85,7 @@ function EventPage({ event }: Props) {
               </div>
             </div>
             <div className="events-page__event__content__right">
-              <Button text="Join" />
+              <Button text="Attend" />
               <div className="events-page__event__details">
                 <div className="events-page__event__detail">
                   <span className="material-icons events-page__event__detail__icon">

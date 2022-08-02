@@ -27,10 +27,15 @@
     background-color: $color-100;
     margin-bottom: 1.6rem;
     padding: 1.6rem 3.2rem;
+    transition: all 0.2s;
+    &:hover {
+      filter: brightness(95%);
+    }
     &__image {
       position: relative;
       height: 100px;
       width: 100px;
+      background-color: white;
     }
     &__content {
       flex: 1;
@@ -50,10 +55,10 @@
       margin-bottom: 4px;
     }
     &__text {
-      color: $color-black-20;
+      color: $font-color-secondary;
     }
     &__icon {
-      color: $color-black-20;
+      color: $font-color-secondary;
     }
   }
 }
