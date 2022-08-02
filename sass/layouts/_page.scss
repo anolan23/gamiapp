@@ -2,6 +2,9 @@
   position: relative;
   min-height: 0;
   height: 100vh;
+  max-width: 1600px;
+  margin: 0 auto;
   display: flex;
+  border: $border;
   flex-direction: column;
 }
