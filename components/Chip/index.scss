@@ -1,0 +1,25 @@
+.chip {
+  user-select: none;
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+  margin-right: 8px;
+  & input {
+    position: absolute;
+    display: inline-block;
+    opacity: 0;
+    &:checked {
+      & + .chip__custom {
+        border: 2px solid $color-400;
+        color: $color-400;
+      }
+    }
+  }
+  &__custom {
+    color: $font-color-secondary;
+    font-weight: 700;
+    border: 2px solid $color-black-20;
+    border-radius: 12px;
+    padding: 6px 1.6rem;
+  }
+}

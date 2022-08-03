@@ -31,9 +31,10 @@ function AutoComplete<T>({
 
   const handleChange = function (e: React.ChangeEvent<HTMLInputElement>) {};
 
-  const handleItemClick = function (item: T) {
+  const handleItemClick = function (event: React.ChangeEvent<any>, item: T) {
     onItemClick(item);
     setShow(false);
+    event.stopPropagation();
   };
 
   const handleFocus = function () {
@@ -49,7 +50,7 @@ function AutoComplete<T>({
     return items.map((item, index) => {
       return React.cloneElement<React.HTMLAttributes<any>>(itemRenderer(item), {
         key: index,
-        onMouseDown: () => handleItemClick(item),
+        onMouseDown: (e) => handleItemClick(e, item),
       });
     });
   };

@@ -16,7 +16,11 @@ const nextConfig = {
     NEXT_PUBLIC_BGA_CLIENT_ID: process.env.NEXT_PUBLIC_BGA_CLIENT_ID,
   },
   images: {
-    domains: ['api.mapbox.com', 's3-us-west-1.amazonaws.com'],
+    domains: [
+      'api.mapbox.com',
+      's3-us-west-1.amazonaws.com',
+      'cdn.shopify.com',
+    ],
   },
 };
 

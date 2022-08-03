@@ -1,25 +1,28 @@
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { useEffect, useMemo, useState } from 'react';
+import useBackend from '../../hooks/useBackend';
+import useMapbox, { Coords, Feature } from '../../hooks/useMapbox';
+import useUser from '../../hooks/useUser';
+import useThrottle from '../../hooks/useThrottle';
+import { useLocation } from '../../context/location';
 
-import Navbar from '../../layouts/Navbar';
+import AddressItem from '../../components/AddressItem';
+import AutoComplete from '../../components/AutoComplete';
 import Button from '../../components/Button';
+import ButtonLink from '../../components/ButtonLink';
+import DropdownItem from '../../components/DropdownItem';
 import EventComponent from '../../components/Event';
 import Input from '../../components/Input';
 import ListRenderer from '../../components/ListRenderer';
+import Navbar from '../../layouts/Navbar';
 import Page from '../../layouts/Page';
-import { useRouter } from 'next/router';
-import useUser from '../../hooks/useUser';
-import useBackend from '../../hooks/useBackend';
-import { useMemo, useState } from 'react';
-import { Event } from '../../hooks/useEvents';
+import Popup from '../../components/Popup';
 import { MarkerType } from '../../components/Map';
-import useMapbox, { Coords, Feature } from '../../hooks/useMapbox';
-import ButtonLink from '../../components/ButtonLink';
-import { useFormik } from 'formik';
-import AutoComplete from '../../components/AutoComplete';
-import useThrottle from '../../hooks/useThrottle';
-import AddressItem from '../../components/AddressItem';
-import { useLocation } from '../../context/location';
-import DropdownItem from '../../components/DropdownItem';
+import { Event } from '../../hooks/useEvents';
+import Filter, { Filters } from '../../components/Filter';
+import usePopup from '../../hooks/usePopup';
+import useInput from '../../hooks/useInput';
 
 const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
   ssr: false,
@@ -27,31 +30,36 @@ const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
 
 function Explore() {
   const { coords, address, setLocation, getCurrentLocation } = useLocation();
-  const throttle = useThrottle();
-  const { data: places, forward } = useMapbox();
-  const formik = useFormik({
-    initialValues: {
-      address,
-    },
-    onSubmit(values) {
-      console.log(values);
-    },
-    enableReinitialize: true,
-  });
   const user = useUser();
+  const { value: addressText, setValue: setAddressText } = useInput();
+  const [filters, setFilters] = useState<Filters>({
+    name: '',
+    categories: [],
+    radius: 150,
+  });
   const config = useMemo(() => {
     if (!coords) return null;
     const [long, lat] = coords;
     return {
       params: {
         center: `${long},${lat}`,
-        radius: 5,
+        name: filters.name,
+        radius: filters.radius,
+        categories: filters.categories,
+        mechanics: filters.mechanics,
       },
     };
-  }, [coords]);
-
+  }, [coords, filters]);
   const { data: events } = useBackend<Event[]>(`/api/events`, config);
+  const { data: places, forward } = useMapbox();
+  const throttle = useThrottle();
   const router = useRouter();
+  const popup = usePopup();
+
+  //Update address text if address changes
+  useEffect(() => {
+    setAddressText(address || '');
+  }, [setAddressText, address]);
 
   const center: Coords | undefined = coords
     ? [coords[1], coords[0]]
@@ -65,8 +73,6 @@ function Explore() {
         };
       })
     : undefined;
-
-  console.log(center);
 
   return (
     <Page className="explore">
@@ -82,17 +88,13 @@ function Explore() {
       <div className="explore__content">
         <main className="explore__main">
           <div className="explore__main__filters">
-            <form
-              onSubmit={formik.handleSubmit}
-              className="explore__main__filters__inputs"
-            >
+            <div className="explore__main__filters__inputs">
               <AutoComplete<Feature>
-                name="address"
                 icon="location_on"
                 placeholder="Choose a location"
                 className="explore__input"
                 onChange={(e) => {
-                  formik.handleChange(e);
+                  setAddressText(e.target.value);
                   throttle.wait(() => {
                     if (!e.target.value) return;
                     if (!coords) return;
@@ -106,7 +108,7 @@ function Explore() {
                 onItemClick={(item) => {
                   setLocation(item.center, item.place_name);
                 }}
-                value={formik.values.address}
+                value={addressText}
                 Input={Input}
                 stickyItemsRenderer={() => (
                   <DropdownItem
@@ -121,14 +123,20 @@ function Explore() {
                   <AddressItem placeName={item.place_name} />
                 )}
                 onFocus={() => {
-                  formik.setFieldValue('address', '');
+                  setAddressText('');
                 }}
                 onBlur={() => {
-                  formik.setFieldValue('address', address);
+                  setAddressText(address || '');
                 }}
               />
-            </form>
-            <Button icon="tune" text="Filter" size="small" color="secondary" />
+            </div>
+            <Button
+              onClick={() => popup.setShow(true)}
+              icon="tune"
+              text="Filter"
+              size="small"
+              color="secondary"
+            />
           </div>
           <div className="explore__events">
             <ListRenderer
@@ -149,6 +157,15 @@ function Explore() {
           <MapWithNoSSR center={center} markers={markers} />
         </div>
       </div>
+      <Popup show={popup.show} close={popup.close}>
+        <Filter
+          onSubmit={(values) => {
+            setFilters(values);
+            popup.close();
+          }}
+          initialValues={filters}
+        />
+      </Popup>
     </Page>
   );
 }

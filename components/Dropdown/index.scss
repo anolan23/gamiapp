@@ -6,13 +6,13 @@
   top: 100%;
   margin-top: 4px;
   min-width: 24rem;
-  background-color: $color-100;
-  border: $border;
+  background-color: $color-200;
+  border: 2px solid $color-black-10;
   color: inherit;
   font-size: 1.2rem;
   font-weight: 400;
   padding: 0;
-  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.15);
+  // box-shadow: 0px 0px 10px 15px rgba(0, 0, 0, 0.05);
   &--right {
     left: 0;
     right: unset;

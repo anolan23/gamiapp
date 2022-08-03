@@ -1,0 +1,43 @@
+.popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3000;
+  background-color: rgba(18, 15, 19, 0.5);
+  transition: all 0.1s;
+  @media only screen and (max-width: 650px) {
+    justify-content: stretch;
+    align-items: stretch;
+  }
+
+  &__window {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-200;
+    min-width: 70rem;
+    width: 70rem;
+    max-height: 90vh;
+    padding: 2.4rem 3.2rem;
+    border-radius: 2.4rem;
+    overflow: hidden;
+    animation: moveInBottom 0.4s ease;
+    @media only screen and (max-width: 650px) {
+      border-radius: 0;
+      width: 100%;
+      min-width: unset;
+      max-width: unset;
+      max-height: unset;
+    }
+    &__close {
+      align-self: flex-end;
+      cursor: pointer;
+      color: #828282;
+    }
+  }
+}
