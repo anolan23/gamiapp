@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
+import dayjs from 'dayjs';
 
 import useUser from '../../../hooks/useUser';
 import Page from '../../../layouts/Page';
@@ -96,8 +96,10 @@ function EventPage({ event }: Props) {
                       Date and time
                     </h3>
                     <time className="events-page__event__detail__content__values">
-                      <p>Sun, August 28, 2022</p>
-                      <p>7:00 PM - 10:00 PM CDT</p>
+                      <p>{`${dayjs(event.starts_at).format(
+                        'ddd, MMMM D, YYYY'
+                      )}`}</p>
+                      <p>{`${dayjs(event.starts_at).format('h:mm A')}`}</p>
                     </time>
                   </div>
                   <div></div>

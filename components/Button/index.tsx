@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 type Color = 'primary' | 'secondary';
 
 export interface ButtonProps
@@ -6,7 +8,7 @@ export interface ButtonProps
   extended?: boolean;
   color?: Color;
   text: string;
-  icon?: string;
+  icon?: string | ReactElement;
   iconPos?: 'left' | 'right';
 }
 
@@ -32,11 +34,23 @@ function Button({
       onClick={onClick}
     >
       {icon && iconPos === 'left' ? (
-        <span className="material-icons dropdown-btn__icon">{icon}</span>
+        <span
+          className={`${
+            typeof icon === 'string' ? 'material-icons' : ''
+          } btn__icon`}
+        >
+          {icon}
+        </span>
       ) : null}
       <span className="btn__text">{text}</span>
       {icon && iconPos === 'right' ? (
-        <span className="material-icons btn__icon">{icon}</span>
+        <span
+          className={`${
+            typeof icon === 'string' ? 'material-icons' : ''
+          } btn__icon`}
+        >
+          {icon}
+        </span>
       ) : null}
     </button>
   );

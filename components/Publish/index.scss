@@ -4,7 +4,7 @@
   &__container {
     display: flex;
     flex-direction: column;
-    padding: 6.4rem 0;
+    padding: 3.2rem 0;
     width: 850px;
     margin: 0 auto;
   }
@@ -13,67 +13,6 @@
     margin-bottom: 6.4rem;
   }
   &__event {
-    min-height: 200px;
-    width: 90%;
-    display: flex;
-    box-shadow: 0px 5px 20px 10px #00000026;
-    margin-bottom: 3.2rem;
-
-    &__image {
-      flex: 1;
-      position: relative;
-      &__img {
-        padding: 1.6rem !important;
-      }
-    }
-    &__text {
-      flex: 1;
-      display: grid;
-      gap: 1;
-      padding: 1.6rem 3.2rem;
-      font-size: 1.2rem;
-      color: $font-color-secondary;
-      &__info {
-        display: flex;
-        flex-direction: column;
-      }
-      &__title {
-        font-size: 1.6rem;
-        font-weight: 700;
-        color: $font-color;
-      }
-      &__datetime {
-      }
-      &__location {
-      }
-      &__attendees {
-        display: flex;
-        align-items: center;
-        &__count {
-        }
-      }
-      &__preview {
-        &,
-        &:link,
-        &:visited {
-          display: flex;
-          align-items: center;
-          color: $color-300;
-          text-decoration: none;
-          font-size: 1.6rem;
-          &:hover {
-            & .publish__event__text__preview__text {
-              text-decoration: underline;
-            }
-          }
-        }
-
-        &__text {
-          margin-right: 4px;
-        }
-        &__icon {
-        }
-      }
-    }
+    width: 30rem;
   }
 }

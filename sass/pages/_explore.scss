@@ -61,4 +61,18 @@
       color: inherit;
     }
   }
+  &__filter-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background-color: $color-black-20;
+    &__num {
+      font-size: 1.4rem;
+      color: $color-200;
+      line-height: 0;
+    }
+  }
 }

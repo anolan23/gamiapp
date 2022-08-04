@@ -33,9 +33,10 @@ function Explore() {
   const user = useUser();
   const { value: addressText, setValue: setAddressText } = useInput();
   const [filters, setFilters] = useState<Filters>({
+    radius: 300,
     name: undefined,
     categories: [],
-    radius: 300,
+    mechanics: [],
   });
   const config = useMemo(() => {
     if (!coords) return null;
@@ -76,6 +77,8 @@ function Explore() {
         };
       })
     : undefined;
+
+  const numFilters = getNumFilters(filters);
 
   const renderEvents = function () {
     if (eventsLoading) return <div>loading...</div>;
@@ -149,7 +152,17 @@ function Explore() {
             </div>
             <Button
               onClick={() => popup.setShow(true)}
-              icon="tune"
+              icon={
+                numFilters ? (
+                  <div className="explore__filter-icon">
+                    <div className="explore__filter-icon__num">
+                      {numFilters}
+                    </div>
+                  </div>
+                ) : (
+                  'tune'
+                )
+              }
               text="Filter"
               size="small"
               color="secondary"
@@ -172,6 +185,16 @@ function Explore() {
       </Popup>
     </Page>
   );
+}
+
+function getNumFilters(filters: Filters) {
+  let length = 0;
+  const { radius, name, categories, mechanics } = filters;
+  if (radius !== 300) length++;
+  if (name) length++;
+  if (categories?.length) length += categories.length;
+  if (mechanics?.length) length += mechanics.length;
+  return length;
 }
 
 export default Explore;

@@ -1,10 +1,8 @@
 import { useFormik } from 'formik';
-import Image from 'next/image';
-import Link from 'next/link';
 import { Event } from '../../hooks/useEvents';
+import EventComponent from '../Event';
 
 import FormSection from '../FormSection';
-import InputGroup from '../InputGroup';
 import Radio from '../Radio';
 import RadioGroup from '../RadioGroup';
 
@@ -34,46 +32,9 @@ function Publish({ initialValues, onSubmit, event }: Props) {
 
   return (
     <form id="publish" onSubmit={formik.handleSubmit} className="publish">
-      <div className="publish__container">
-        <h1 className="publish__title">Publish Your Event</h1>
+      <FormSection title="Publish Your Event" icon="menu_book">
         <div className="publish__event">
-          <div className="publish__event__image">
-            <Image
-              className="publish__event__image__img"
-              src={event.image || event.game?.thumb_url || '/event.jpeg'}
-              alt="event"
-              layout="fill"
-              objectFit="contain"
-            />
-          </div>
-          <div className="publish__event__text">
-            <span className="publish__event__text__title">{event.title}</span>
-            <div className="publish__event__text__info">
-              <span className="publish__event__text__datetime">
-                Sunday, August 28, 2022 at 7:00 PM CDT
-              </span>
-              <span className="publish__event__text__location">
-                80 West St., Chicago, IL 60605
-              </span>
-            </div>
-            <div className="publish__event__text__attendees">
-              <span className="material-icons">person</span>
-              <span className="publish__event__text__attendees__count">-</span>
-            </div>
-            <span className="publish__event__text__summary">
-              {event.summary}
-            </span>
-            <Link href="/" passHref>
-              <a className="publish__event__text__preview">
-                <span className="publish__event__text__preview__text">
-                  Preview
-                </span>
-                <span className="material-icons publish__event__text__preview__icon">
-                  open_in_new
-                </span>
-              </a>
-            </Link>
-          </div>
+          <EventComponent event={event} />
         </div>
         <RadioGroup>
           <h2>Who can see your event?</h2>
@@ -96,7 +57,7 @@ function Publish({ initialValues, onSubmit, event }: Props) {
             checked={!formik.values.open}
           />
         </RadioGroup>
-      </div>
+      </FormSection>
     </form>
   );
 }
