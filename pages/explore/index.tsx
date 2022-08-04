@@ -11,7 +11,7 @@ import AddressItem from '../../components/AddressItem';
 import AutoComplete from '../../components/AutoComplete';
 import Button from '../../components/Button';
 import ButtonLink from '../../components/ButtonLink';
-import DropdownItem from '../../components/DropdownItem';
+import Item from '../../components/Item';
 import EventComponent from '../../components/Event';
 import Input from '../../components/Input';
 import ListRenderer from '../../components/ListRenderer';
@@ -33,9 +33,9 @@ function Explore() {
   const user = useUser();
   const { value: addressText, setValue: setAddressText } = useInput();
   const [filters, setFilters] = useState<Filters>({
-    name: '',
+    name: undefined,
     categories: [],
-    radius: 150,
+    radius: 300,
   });
   const config = useMemo(() => {
     if (!coords) return null;
@@ -50,7 +50,10 @@ function Explore() {
       },
     };
   }, [coords, filters]);
-  const { data: events } = useBackend<Event[]>(`/api/events`, config);
+  const { data: events, loading: eventsLoading } = useBackend<Event[]>(
+    `/api/events`,
+    config
+  );
   const { data: places, forward } = useMapbox();
   const throttle = useThrottle();
   const router = useRouter();
@@ -73,6 +76,20 @@ function Explore() {
         };
       })
     : undefined;
+
+  const renderEvents = function () {
+    if (eventsLoading) return <div>loading...</div>;
+    if (!events) return null;
+    return events.map((event, index) => {
+      return (
+        <EventComponent
+          key={index}
+          event={event}
+          onClick={() => router.push(`/events/${event.id}`)}
+        />
+      );
+    });
+  };
 
   return (
     <Page className="explore">
@@ -111,13 +128,13 @@ function Explore() {
                 value={addressText}
                 Input={Input}
                 stickyItemsRenderer={() => (
-                  <DropdownItem
+                  <Item
                     icon="my_location"
                     className="explore__current-location"
                     onMouseDown={getCurrentLocation}
                   >
                     Use my current location
-                  </DropdownItem>
+                  </Item>
                 )}
                 itemRenderer={(item) => (
                   <AddressItem placeName={item.place_name} />
@@ -138,20 +155,7 @@ function Explore() {
               color="secondary"
             />
           </div>
-          <div className="explore__events">
-            <ListRenderer
-              list={events}
-              itemRenderer={(event: Event, index) => {
-                return (
-                  <EventComponent
-                    key={index}
-                    event={event}
-                    onClick={() => router.push(`/events/${event.id}`)}
-                  />
-                );
-              }}
-            />
-          </div>
+          <div className="explore__events">{renderEvents()}</div>
         </main>
         <div className="explore__map">
           <MapWithNoSSR center={center} markers={markers} />

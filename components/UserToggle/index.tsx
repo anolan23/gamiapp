@@ -4,7 +4,7 @@ import Avatar from '../Avatar';
 import Dropdown from '../Dropdown';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import useUser from '../../hooks/useUser';
-import DropdownItem from '../DropdownItem';
+import Item from '../Item';
 import useAuth from '../../hooks/useAuth';
 import ItemLink from '../ItemLink';
 

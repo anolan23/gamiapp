@@ -25,3 +25,4 @@ export function parseAddress(address: string) {
 export function coordsToCoordString(coords: Coords): string {
   return `${coords[0]},${coords[1]}`;
 }
+

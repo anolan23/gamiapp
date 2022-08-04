@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { getStaticProps } from '../../pages/events/[id]';
-import DropdownItem, { ItemProps } from '../DropdownItem';
+import Item, { ItemProps } from '../Item';
 
 interface Props extends ItemProps {
   href: string;
@@ -9,8 +9,8 @@ interface Props extends ItemProps {
 function ItemLink({ href, children, ...props }: Props) {
   return (
     <Link href={href} passHref>
-      <a className="dropdown-item-link">
-        <DropdownItem {...props}>{children}</DropdownItem>
+      <a className="item-link">
+        <Item {...props}>{children}</Item>
       </a>
     </Link>
   );

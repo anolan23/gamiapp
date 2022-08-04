@@ -58,8 +58,13 @@ function AutoComplete<T>({
   return (
     <div className="autocomplete" onFocus={handleFocus} onBlur={handleBlur}>
       <Input {...props} />
-      <div className="autocomplete__dropdown">
-        <Dropdown show={show} openTo="right" stretch={true}>
+      <div className="autocomplete__dropdown-container">
+        <Dropdown
+          className="autocomplete__dropdown-container__dropdown"
+          show={show}
+          openTo="right"
+          stretch={true}
+        >
           {stickyItemsRenderer ? stickyItemsRenderer() : null}
           {renderItems()}
         </Dropdown>

@@ -11,7 +11,7 @@ import { parseAddress } from '../../lib/helpers';
 import AddressItem from '../AddressItem';
 import AutoComplete from '../AutoComplete';
 import Button from '../Button';
-import DropdownItem from '../DropdownItem';
+import Item from '../Item';
 
 import FormSection from '../FormSection';
 import InputGroup from '../InputGroup';
@@ -146,7 +146,7 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
           placeholder="Search games"
           Input={InputGroup}
           items={games}
-          itemRenderer={(item) => <DropdownItem>{item.name}</DropdownItem>}
+          itemRenderer={(item) => <Item>{item.name}</Item>}
           onItemClick={(item) => {
             const game = leanGame(item);
             formik.setFieldValue('game', game);

@@ -1,5 +1,9 @@
 .autocomplete {
   position: relative;
-  &__dropdown {
+  &__dropdown-container {
+    &__dropdown {
+      max-height: 40rem;
+      overflow-y: auto;
+    }
   }
 }

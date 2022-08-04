@@ -8,9 +8,10 @@ import useThrottle from '../../hooks/useThrottle';
 import AutoComplete from '../AutoComplete';
 import Button from '../Button';
 import Chip from '../Chip';
-import DropdownItem from '../DropdownItem';
+import Item from '../Item';
 import Input from '../Input';
 import Slider from '../Slider';
+import GameItem from '../GameItem';
 
 export interface Filters {
   name?: string;
@@ -92,9 +93,7 @@ function Filter({ initialValues, onSubmit }: Props) {
                             search({ name: e.target.value, limit: 5 });
                           }, 500);
                         }}
-                        itemRenderer={(item) => (
-                          <DropdownItem>{item.name}</DropdownItem>
-                        )}
+                        itemRenderer={(item) => <GameItem game={item} />}
                         onItemClick={(item) => {
                           setFieldValue('name', item.name);
                         }}
@@ -119,6 +118,7 @@ function Filter({ initialValues, onSubmit }: Props) {
                     }
                   }}
                   value={radius}
+                  style={{ width: '300px' }}
                 />
               </FilterSection>
               <FilterSection
@@ -156,7 +156,19 @@ function Filter({ initialValues, onSubmit }: Props) {
         }}
       </Formik>
       <div className="filter__actions">
-        <Button size="small" text="Reset" color="secondary" />
+        <Button
+          onClick={() => {
+            onSubmit({
+              name: undefined,
+              radius: 300,
+              categories: [],
+              mechanics: [],
+            });
+          }}
+          size="small"
+          text="Reset"
+          color="secondary"
+        />
         <Button form="filter" type="submit" size="small" text="Apply" />
       </div>
     </div>

@@ -1,0 +1,35 @@
+.item {
+  width: 100%;
+  padding: 1.6rem;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: all 0.1s;
+  background-color: $color-200;
+  border: none;
+  font-size: 1.4rem;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(95%);
+  }
+  &--main {
+    color: #eb5757;
+  }
+  &__icon {
+    color: $color-black-20;
+    margin-right: 1.2rem;
+  }
+  &__content {
+  }
+}
+
+.item-link {
+  &,
+  &:link,
+  &:visited {
+    text-decoration: none;
+    color: inherit;
+  }
+}

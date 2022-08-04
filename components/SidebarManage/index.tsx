@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import Sidebar from '../../layouts/Sidebar';
 import DropdownButton from '../DropdownButton';
-import DropdownItem from '../DropdownItem';
+import Item from '../Item';
 import Step from '../Step';
 import { Event } from '../../hooks/useEvents';
 import { toDateTimeString } from '../../lib/helpers';
@@ -34,7 +34,7 @@ function SidebarManage({ event }: Props) {
           openTo="right"
           size="small"
         >
-          <DropdownItem icon="menu_book">Publish now</DropdownItem>
+          <Item icon="menu_book">Publish now</Item>
         </DropdownButton>
         <span className="sidebar-manage__details__title">{event.title}</span>
         <span className="sidebar-manage__details__date">

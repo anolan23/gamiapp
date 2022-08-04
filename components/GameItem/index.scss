@@ -1,0 +1,21 @@
+.game-item {
+  display: flex;
+  align-items: center;
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1.6rem;
+  }
+  &__name {
+    font-weight: 700;
+    white-space: nowrap;
+    min-width: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  &__year {
+    color: $font-color-secondary;
+    font-size: 1.2rem;
+  }
+}

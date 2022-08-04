@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useRef, useState } from 'react';
 import ButtonLink from '../../../components/ButtonLink';
 import Dropdown from '../../../components/Dropdown';
-import DropdownItem from '../../../components/DropdownItem';
+import Item from '../../../components/Item';
 import useBackend from '../../../hooks/useBackend';
 import { Event } from '../../../hooks/useEvents';
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
@@ -86,10 +86,8 @@ function EventComponent({ event }: EventProps) {
               more_horiz
             </span>
             <Dropdown show={show}>
-              <DropdownItem href={`/events/${event.id}`}>View</DropdownItem>
-              <DropdownItem href={`/manage/events/${event.id}/basic-info`}>
-                Edit
-              </DropdownItem>
+              <Item href={`/events/${event.id}`}>View</Item>
+              <Item href={`/manage/events/${event.id}/basic-info`}>Edit</Item>
             </Dropdown>
           </div>
         </div>

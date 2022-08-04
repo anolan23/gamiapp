@@ -20,6 +20,7 @@ export interface Event {
   player_count?: number;
   open?: boolean;
   published?: boolean;
+  distance?: number;
 }
 
 function useEvents() {
