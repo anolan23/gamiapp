@@ -23,10 +23,22 @@ import { Event } from '../../hooks/useEvents';
 import Filter, { Filters } from '../../components/Filter';
 import usePopup from '../../hooks/usePopup';
 import useInput from '../../hooks/useInput';
+import { AxiosRequestConfig } from 'axios';
 
 const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
   ssr: false,
 });
+
+type OrderBy = 'distance' | 'starts_at';
+
+interface EventsRequestParams {
+  center: string;
+  order_by: OrderBy;
+  name?: string;
+  radius?: number;
+  categories?: string[];
+  mechanics?: string[];
+}
 
 function Explore() {
   const { coords, address, setLocation, getCurrentLocation } = useLocation();
@@ -38,17 +50,19 @@ function Explore() {
     categories: [],
     mechanics: [],
   });
-  const config = useMemo(() => {
+  const config: AxiosRequestConfig | null = useMemo(() => {
     if (!coords) return null;
     const [long, lat] = coords;
+    const { name, radius, categories, mechanics } = filters;
     return {
       params: {
         center: `${long},${lat}`,
-        name: filters.name,
-        radius: filters.radius,
-        categories: filters.categories,
-        mechanics: filters.mechanics,
-      },
+        order_by: 'distance',
+        name,
+        radius,
+        categories,
+        mechanics,
+      } as EventsRequestParams,
     };
   }, [coords, filters]);
   const { data: events, loading: eventsLoading } = useBackend<Event[]>(
@@ -168,6 +182,11 @@ function Explore() {
               color="secondary"
             />
           </div>
+          {events ? (
+            <span className="explore__found">
+              {`Found ${events.length} events that matched your criteria`}
+            </span>
+          ) : null}
           <div className="explore__events">{renderEvents()}</div>
         </main>
         <div className="explore__map">
@@ -176,10 +195,8 @@ function Explore() {
       </div>
       <Popup show={popup.show} close={popup.close}>
         <Filter
-          onSubmit={(values) => {
-            setFilters(values);
-            popup.close();
-          }}
+          close={popup.close}
+          setFilters={setFilters}
           initialValues={filters}
         />
       </Popup>

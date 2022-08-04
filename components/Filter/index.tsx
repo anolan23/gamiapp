@@ -22,7 +22,8 @@ export interface Filters {
 
 interface Props {
   initialValues: Filters;
-  onSubmit: (values: Filters) => void;
+  close: () => void;
+  setFilters: (values: Filters) => void;
 }
 
 interface FilterSectionProps {
@@ -31,7 +32,7 @@ interface FilterSectionProps {
   children: React.ReactNode;
 }
 
-function Filter({ initialValues, onSubmit }: Props) {
+function Filter({ initialValues, setFilters, close }: Props) {
   const { address } = useLocation();
   const [radius, setRadius] = useState(initialValues.radius || 150);
   const { data: games, search } = useGames();
@@ -69,9 +70,10 @@ function Filter({ initialValues, onSubmit }: Props) {
         initialValues={initialValues}
         onSubmit={(values) => {
           const filters = { ...values, radius };
-          console.log(filters);
-          onSubmit(filters);
+          setFilters(filters);
+          close();
         }}
+        enableReinitialize
       >
         {({ values, handleChange, setFieldValue }: FormikProps<Filters>) => {
           return (
@@ -158,12 +160,13 @@ function Filter({ initialValues, onSubmit }: Props) {
       <div className="filter__actions">
         <Button
           onClick={() => {
-            onSubmit({
-              name: undefined,
+            setFilters({
               radius: 300,
+              name: undefined,
               categories: [],
               mechanics: [],
             });
+            close();
           }}
           size="small"
           text="Reset"
