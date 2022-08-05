@@ -28,7 +28,7 @@ function DropdownButton({
 
   const renderDropdown = function () {
     return (
-      <Dropdown show={show} close={() => setShow(false)} openTo={openTo}>
+      <Dropdown show={show} openTo={openTo}>
         {children}
       </Dropdown>
     );

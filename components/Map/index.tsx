@@ -1,8 +1,10 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import Control from 'react-leaflet-custom-control';
 import 'leaflet/dist/leaflet.css';
 import { Icon } from 'leaflet';
 import useMapbox, { Coords } from '../../hooks/useMapbox';
-import { useRef, useState } from 'react';
+import Button from '../Button';
+import CircleButton from '../CircleButton';
 
 export interface MarkerType {
   position: Coords;
@@ -17,7 +19,7 @@ function Map({ center, markers }: Props) {
   const { getStaticTilesUrl } = useMapbox();
 
   if (!center) return null;
-  const staticTilesUrl = getStaticTilesUrl('streets-v11');
+  const staticTilesUrl = getStaticTilesUrl();
   const renderMarkers = function () {
     if (!markers) return null;
     return markers.map((marker, index) => {
@@ -27,9 +29,9 @@ function Map({ center, markers }: Props) {
           position={marker.position}
           icon={
             new Icon({
-              iconUrl: '/marker-icon.png',
-              iconSize: [25, 41],
-              iconAnchor: [12, 41],
+              iconUrl: '/circle-marker.png',
+              iconSize: [20, 20],
+              iconAnchor: [20, 20],
             })
           }
         >
@@ -43,11 +45,11 @@ function Map({ center, markers }: Props) {
   return (
     <MapContainer
       center={center}
-      zoom={13}
+      zoom={15}
       scrollWheelZoom={false}
       style={{ height: '100%', minHeight: '100%' }}
     >
-      <ChangeView center={center} zoom={13} />
+      <ChangeView markers={markers} />
       <TileLayer
         attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>
         '
@@ -55,20 +57,40 @@ function Map({ center, markers }: Props) {
         tileSize={512}
         zoomOffset={-1}
       />
+      <CustomControl center={center} />
       {renderMarkers()}
     </MapContainer>
   );
 }
 
 interface ChangeViewProps {
-  center: Coords;
-  zoom: number;
+  markers?: MarkerType[];
 }
 
-function ChangeView({ center, zoom }: ChangeViewProps) {
+function ChangeView({ markers }: ChangeViewProps) {
   const map = useMap();
-  map.setView(center, zoom);
+  if (markers) {
+    const bounds = markers.map((marker) => marker.position);
+    map.flyToBounds(bounds);
+  }
+
   return null;
+}
+
+interface CustomControlProps {
+  center: Coords;
+}
+
+function CustomControl({ center }: CustomControlProps) {
+  const map = useMap();
+  const handleClick = function () {
+    map.flyTo(center, 15);
+  };
+  return (
+    <Control prepend position="topright">
+      <CircleButton icon="near_me" onClick={handleClick} color="secondary" />
+    </Control>
+  );
 }
 
 export default Map;

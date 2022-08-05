@@ -18,7 +18,7 @@ function EventComponent({ event, onClick }: Props) {
           src={event.image || event.game?.thumb_url || '/event.jpeg'}
           alt="event"
           layout="fill"
-          objectFit="contain"
+          objectFit="cover"
         />
       </div>
       <div className="event__text">

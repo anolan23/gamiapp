@@ -15,6 +15,7 @@ import Item from '../Item';
 
 import FormSection from '../FormSection';
 import InputGroup from '../InputGroup';
+import GameItem from '../GameItem';
 
 export interface BasicInfoValues {
   title: string;
@@ -146,7 +147,7 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
           placeholder="Search games"
           Input={InputGroup}
           items={games}
-          itemRenderer={(item) => <Item>{item.name}</Item>}
+          itemRenderer={(item) => <GameItem game={item} />}
           onItemClick={(item) => {
             const game = leanGame(item);
             formik.setFieldValue('game', game);

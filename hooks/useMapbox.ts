@@ -95,10 +95,8 @@ function useMapbox() {
     return `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+000(${long},${lat})/${long},${lat},15/${width}x${height}?access_token=${process.env.NEXT_PUBLIC_MAPBOX}`;
   };
 
-  const getStaticTilesUrl = function (
-    style: MapboxStyle = 'streets-v11'
-  ): string {
-    return `https://api.mapbox.com/styles/v1/mapbox/${style}/tiles/{z}/{x}/{y}?access_token=${process.env.NEXT_PUBLIC_MAPBOX}`;
+  const getStaticTilesUrl = function (): string {
+    return `https://api.mapbox.com/styles/v1/anol1258/cl6fp3478001i14pnlqoiatis/tiles/{z}/{x}/{y}?access_token=${process.env.NEXT_PUBLIC_MAPBOX}`;
   };
 
   return { data, forward, reverse, getStaticMapUrl, getStaticTilesUrl };
