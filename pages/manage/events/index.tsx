@@ -86,8 +86,8 @@ function EventComponent({ event }: EventProps) {
               more_horiz
             </span>
             <Dropdown show={show}>
-              <Item href={`/events/${event.id}`}>View</Item>
-              <Item href={`/manage/events/${event.id}/basic-info`}>Edit</Item>
+              <Item>View</Item>
+              <Item>Edit</Item>
             </Dropdown>
           </div>
         </div>
