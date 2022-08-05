@@ -1,9 +1,6 @@
 import axios from 'axios';
 
-const baseURL =
-  process.env.NODE_ENV !== 'development'
-    ? 'enter heroku'
-    : 'http://localhost:8080';
+const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default axios.create({
   baseURL,

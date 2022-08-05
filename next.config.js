@@ -14,6 +14,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     NEXT_PUBLIC_MAPBOX: process.env.NEXT_PUBLIC_MAPBOX,
     NEXT_PUBLIC_BGA_CLIENT_ID: process.env.NEXT_PUBLIC_BGA_CLIENT_ID,
+    NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
   },
   images: {
     domains: [
