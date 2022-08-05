@@ -25,7 +25,7 @@ export default function useUser({
     return response.data;
   };
   const { data: user, mutate: mutateUser } = useSWR<User>(
-    'http://localhost:8080/api/login',
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/login`,
     fetcher,
     {
       revalidateIfStale: true,
