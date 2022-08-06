@@ -18,3 +18,15 @@ export async function updateEvent(id: number, cols: any) {
     throw error;
   }
 }
+
+export async function attend(event_id: number, user_id: number) {
+  try {
+    const response = await backend.post(`/api/events/attendees`, {
+      event_id,
+      user_id,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -1,0 +1,15 @@
+.attendee {
+  padding: 3.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &__name {
+    margin-top: 1.6rem;
+    font-weight: 700;
+  }
+  &__role {
+    margin-top: 4px;
+    font-size: 1.4rem;
+    color: $font-color-secondary;
+  }
+}

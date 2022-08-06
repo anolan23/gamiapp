@@ -34,6 +34,7 @@
 @import '../components/Item';
 @import '../components/GameItem';
 @import '../components/CircleButton';
+@import '../components/Attendee';
 
 @import '../layouts/Navbar';
 @import '../layouts/Page';
@@ -41,8 +42,9 @@
 @import '../layouts/AuthCard';
 @import '../layouts/Sidebar';
 @import '../layouts/Container';
+@import '../layouts/Card';
 
 @import 'pages/explore';
 @import 'pages/create';
-@import 'pages/events-page';
+@import '../pages/events/[id]';
 @import 'pages/manage-events';

@@ -1,0 +1,129 @@
+.events-page {
+  &__container {
+    overflow-y: auto;
+  }
+  &__content {
+    width: 110rem;
+    margin: 0 auto;
+    background-color: #ededed;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    column-gap: 6.4rem;
+    padding: 3.2rem;
+  }
+  &__main {
+    &__image-container {
+      position: relative;
+      width: 100%;
+      height: 35rem;
+    }
+    &__title {
+      margin: 1.6rem 0;
+
+      &--main {
+        font-weight: 900;
+        font-size: 3.2rem;
+        margin-bottom: 1.6rem;
+      }
+      &--sub {
+        font-weight: 700;
+        color: $font-color-secondary;
+      }
+    }
+    &__about {
+      &--main {
+        font-size: 2.4rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      &--sub {
+        color: $font-color-secondary;
+      }
+    }
+  }
+  &__side {
+  }
+  &__info {
+    &__details {
+      display: grid;
+      gap: 3.2rem;
+      padding: 3.2rem;
+    }
+    &__detail {
+      display: flex;
+      color: $font-color-secondary;
+
+      &__icon {
+        margin-right: 1.2rem;
+      }
+      &__content {
+        &__heading {
+          color: $font-color;
+          font-size: 1.6rem;
+          font-weight: 700;
+        }
+        &__values {
+          &__value {
+          }
+        }
+      }
+    }
+    &__map {
+      position: relative;
+      height: 225px;
+      width: 100%;
+      filter: opacity(0.75);
+    }
+  }
+  &__featured-game {
+    padding: 3.2rem;
+    display: flex;
+    &__image {
+      position: relative;
+      height: 10rem;
+      width: 10rem;
+      border-radius: 12px;
+      align-self: flex-start;
+    }
+    &__info {
+      margin-left: 3.2rem;
+      flex: 1;
+    }
+    &__title {
+      font-size: 2.4rem;
+      font-weight: 700;
+    }
+  }
+  &__attendees {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.2rem;
+  }
+}
+
+.section {
+  margin: 3.2rem 0;
+  &__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &__title {
+    }
+  }
+  &__content {
+    margin-top: 1.6rem;
+  }
+}
+
+.attribute {
+  display: flex;
+  flex-direction: column;
+  margin: 4px 0;
+  &--main {
+    font-weight: 700;
+  }
+  &--sub {
+    font-size: 1.4rem;
+    color: $font-color-secondary;
+  }
+}

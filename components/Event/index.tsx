@@ -45,7 +45,7 @@ function EventComponent({ event, onClick }: Props) {
           </div>
           <div className="event__text__attendees">
             <span className="material-icons event__text__icon">people</span>
-            <span>5</span>
+            <span>{event.attendees?.length || 0}</span>
           </div>
         </div>
       </div>

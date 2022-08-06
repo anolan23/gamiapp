@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import backend from '../lib/backend';
 import { Game } from './useGames';
 import { Coords } from './useMapbox';
+import { User } from './useUser';
 
 export interface Event {
   id?: number;
@@ -17,7 +18,7 @@ export interface Event {
   coords?: Coords;
   location?: string;
   image?: string;
-  player_count?: number;
+  attendees?: User[];
   open?: boolean;
   published?: boolean;
   distance?: number;

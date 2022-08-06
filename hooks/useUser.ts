@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import backend from '../lib/backend';
 
 export interface User {
-  isLoggedIn: boolean;
+  isLoggedIn?: boolean;
   id: number;
   created_at?: string;
   updated_at?: string;

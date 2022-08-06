@@ -108,6 +108,8 @@ function Explore() {
     });
   };
 
+  console.log(events);
+
   return (
     <Page className="explore">
       <Navbar>
