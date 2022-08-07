@@ -49,7 +49,7 @@ function Publish({ initialValues, onSubmit, event }: Props) {
           />
           <Radio
             label="Private"
-            sub="Only available to a selected audience"
+            sub="Only available to those with the link"
             name="open"
             id="private"
             onChange={handleChange}

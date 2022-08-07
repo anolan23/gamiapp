@@ -4,19 +4,20 @@ import Avatar from '../Avatar';
 
 interface Props {
   user: User;
+  role: string;
 }
 
-function Attendee({ user }: Props) {
+function Attendee({ user, role }: Props) {
   const fullName =
     user.first_name && user.last_name
       ? `${user.first_name} ${user.last_name?.charAt(0)}.`
-      : `Full N.`;
+      : null;
   return (
     <Card>
       <div className="attendee">
-        <Avatar />
-        <span className="attendee__name">{fullName}</span>
-        <span className="attendee__role">Gamer</span>
+        <Avatar height={75} width={75} />
+        <span className="attendee__name">{fullName || user.email}</span>
+        <span className="attendee__role">{role}</span>
       </div>
     </Card>
   );

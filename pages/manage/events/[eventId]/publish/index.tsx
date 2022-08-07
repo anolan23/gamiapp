@@ -28,7 +28,7 @@ function PublishPage() {
       if (!event.id) return;
       const cols = { ...values, published: true };
       await updateEvent(event.id, cols);
-      router.push(`/events/${event.id}`);
+      router.push(`/manage/events/${event.id}/invite`);
     } catch (error) {}
   };
 

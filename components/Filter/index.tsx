@@ -1,5 +1,5 @@
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useLocation } from '../../context/location';
 import useCategories from '../../hooks/useCategories';
 import useGames, { Game } from '../../hooks/useGames';
@@ -75,7 +75,12 @@ function Filter({ initialValues, setFilters, close }: Props) {
         }}
         enableReinitialize
       >
-        {({ values, handleChange, setFieldValue }: FormikProps<Filters>) => {
+        {({
+          values,
+          handleChange,
+          setFieldValue,
+          isSubmitting,
+        }: FormikProps<Filters>) => {
           return (
             <Form id="filter" className="filter__form">
               <FilterSection main="Filter by game">

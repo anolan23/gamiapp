@@ -7,6 +7,7 @@ import Item from '../Item';
 import Step from '../Step';
 import { Event } from '../../hooks/useEvents';
 import { toDateTimeString } from '../../lib/helpers';
+import ItemLink from '../ItemLink';
 
 interface Props {
   event: Event;
@@ -40,10 +41,10 @@ function SidebarManage({ event }: Props) {
         <span className="sidebar-manage__details__date">
           {toDateTimeString(event.starts_at)}
         </span>
-        <Link href="/" passHref>
+        <Link href={`/events/${event.id}`} passHref>
           <a className="sidebar-manage__details__preview">
             <span className="sidebar-manage__details__preview__text">
-              Preview your event
+              View your event
             </span>
             <span className="material-icons sidebar-manage__details__preview__icon">
               open_in_new
@@ -72,6 +73,12 @@ function SidebarManage({ event }: Props) {
           active={match === 'publish'}
         />
       </div>
+      <ItemLink
+        href={`/manage/events/${event.id}/invite`}
+        className="sidebar-manage__item"
+      >
+        Invite
+      </ItemLink>
     </Sidebar>
   );
 }

@@ -44,7 +44,8 @@
 @import '../layouts/Container';
 @import '../layouts/Card';
 
-@import 'pages/explore';
-@import 'pages/create';
+@import '../pages/explore';
+@import '../pages/manage/events/create';
 @import '../pages/events/[id]';
-@import 'pages/manage-events';
+@import '../pages/manage/events';
+@import '../pages/manage/events/[eventId]/invite';

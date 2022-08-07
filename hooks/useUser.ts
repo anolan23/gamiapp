@@ -14,6 +14,7 @@ export interface User {
   username?: string;
   first_name?: string;
   last_name?: string;
+  image?: string;
 }
 
 export default function useUser({

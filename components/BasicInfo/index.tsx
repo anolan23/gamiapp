@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import { useFormik } from 'formik';
+import { Formik, useFormik } from 'formik';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLocation } from '../../context/location';

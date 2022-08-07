@@ -1,13 +1,17 @@
 import Image from 'next/image';
+import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useCallback, useRef, useState } from 'react';
+
 import ButtonLink from '../../../components/ButtonLink';
 import Dropdown from '../../../components/Dropdown';
 import Item from '../../../components/Item';
+import ItemLink from '../../../components/ItemLink';
 import useBackend from '../../../hooks/useBackend';
 import { Event } from '../../../hooks/useEvents';
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
 import useUser from '../../../hooks/useUser';
+import Card from '../../../layouts/Card';
 import Container from '../../../layouts/Container';
 import Navbar from '../../../layouts/Navbar';
 import Page from '../../../layouts/Page';
@@ -57,7 +61,7 @@ function EventComponent({ event }: EventProps) {
 
   useOutsideClick(actionRef, onClickOutside);
   return (
-    <div className="manage-events__event">
+    <Card className="manage-events__event">
       <div className="manage-events__event__image">
         <Image
           src={event.image || event.game?.thumb_url || '/event.jpeg'}
@@ -73,7 +77,7 @@ function EventComponent({ event }: EventProps) {
             {event.address.split(',').slice(0, -1).join(',')}
           </span>
           <span className="manage-events__event__text">
-            Sunday, August 28, 2022 at 7:00 PM CDT
+            {dayjs(event.starts_at).format('dddd, MMMM D, YYYY [at] h:mm A')}
           </span>
         </div>
         <div>
@@ -86,13 +90,15 @@ function EventComponent({ event }: EventProps) {
               more_horiz
             </span>
             <Dropdown show={show}>
-              <Item>View</Item>
-              <Item>Edit</Item>
+              <ItemLink href={`/events/${event.id}`}>View</ItemLink>
+              <ItemLink href={`/manage/events/${event.id}/publish`}>
+                Edit
+              </ItemLink>
             </Dropdown>
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
 

@@ -10,9 +10,11 @@ export interface ButtonProps
   text: string;
   icon?: string | ReactElement;
   iconPos?: 'left' | 'right';
+  loading?: boolean;
 }
 
 function Button({
+  loading,
   size,
   icon,
   iconPos = 'left',
@@ -42,7 +44,7 @@ function Button({
           {icon}
         </span>
       ) : null}
-      <span className="btn__text">{text}</span>
+      <span className="btn__text">{loading ? 'loading...' : text}</span>
       {icon && iconPos === 'right' ? (
         <span
           className={`${

@@ -2,6 +2,7 @@ import Image from 'next/image';
 import dayjs from 'dayjs';
 import { Event } from '../../hooks/useEvents';
 import { toDateTimeString } from '../../lib/helpers';
+import Card from '../../layouts/Card';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   event: Event;
@@ -9,9 +10,8 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 function EventComponent({ event, onClick }: Props) {
   const kmToMileRatio = 0.000621371;
-
   return (
-    <div onClick={onClick} className="event">
+    <Card onClick={onClick} className="event">
       <div className="event__image">
         <Image
           className="event__image__img"
@@ -40,7 +40,9 @@ function EventComponent({ event, onClick }: Props) {
                 <span className="event__text__info__text">{`${(
                   event.distance * kmToMileRatio
                 ).toFixed(1)} miles`}</span>
-              ) : null}
+              ) : (
+                'Distance unknown'
+              )}
             </div>
           </div>
           <div className="event__text__attendees">
@@ -49,7 +51,7 @@ function EventComponent({ event, onClick }: Props) {
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
 export default EventComponent;

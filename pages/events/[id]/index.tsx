@@ -17,6 +17,7 @@ import useMapbox from '../../../hooks/useMapbox';
 import { attend } from '../../../lib/api';
 import Attendee from '../../../components/Attendee';
 import Card from '../../../layouts/Card';
+import Banner from '../../../layouts/Banner';
 
 interface Props {
   event: Event;
@@ -34,7 +35,7 @@ function EventPage({ event }: Props) {
     ? getStaticMapUrl({
         coords: event.coords,
         width: 400,
-        height: 225,
+        height: 200,
       })
     : undefined;
 
@@ -58,11 +59,16 @@ function EventPage({ event }: Props) {
       />
     );
   };
-
   const renderAttendees = function () {
     const { attendees } = event;
     if (!attendees) return null;
-    return attendees.map((user) => <Attendee key={user.id} user={user} />);
+    return attendees.map((user) => (
+      <Attendee
+        key={user.id}
+        user={user}
+        role={`${event.user_id === user.id ? 'Host' : 'Gamer'}`}
+      />
+    ));
   };
 
   return (
@@ -97,7 +103,11 @@ function EventPage({ event }: Props) {
                 nisi ut aliquip ex ea commodo consequat.
               </p>
             </div>
-            <Section title="Featured game" label="How to play" labelHref="/">
+            <Section
+              title="Featured game"
+              label="How to play"
+              labelHref={event.game?.rules_url}
+            >
               <Card className="events-page__featured-game">
                 <div className="events-page__featured-game__image">
                   <Image
@@ -136,7 +146,7 @@ function EventPage({ event }: Props) {
             </Section>
           </main>
           <div className="events-page__side">
-            <Card>
+            <Card className="events-page__info">
               <div className="events-page__info__details">
                 <div className="events-page__info__detail">
                   <span className="material-icons events-page__info__detail__icon">
@@ -179,6 +189,15 @@ function EventPage({ event }: Props) {
           </div>
         </div>
       </Container>
+      <Banner>
+        <Button
+          text="Share"
+          color="secondary"
+          icon="ios_share"
+          iconPos="right"
+        />
+        <Button text="Attend" onClick={handleAttendClick} />
+      </Banner>
     </Page>
   );
 }
@@ -186,7 +205,7 @@ function EventPage({ event }: Props) {
 interface SectionProps {
   title: string;
   label: string;
-  labelHref: string;
+  labelHref?: string;
   children: React.ReactNode;
 }
 
@@ -195,9 +214,13 @@ function Section({ title, label, labelHref, children }: SectionProps) {
     <section className="section">
       <div className="section__heading">
         <h2 className="section__heading__title">{title}</h2>
-        <Link href={labelHref}>
-          <a className="link">{label}</a>
-        </Link>
+        {labelHref ? (
+          <Link href={labelHref} passHref>
+            <a className="link" target="_blank" rel="noopener noreferrer">
+              {label}
+            </a>
+          </Link>
+        ) : null}
       </div>
       <div className="section__content">{children}</div>
     </section>

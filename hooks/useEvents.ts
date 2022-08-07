@@ -22,6 +22,7 @@ export interface Event {
   open?: boolean;
   published?: boolean;
   distance?: number;
+  host?: User;
 }
 
 function useEvents() {

@@ -59,5 +59,8 @@ button {
   &:visited {
     text-decoration: none;
     color: $color-300;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

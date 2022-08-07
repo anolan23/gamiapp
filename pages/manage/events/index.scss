@@ -2,6 +2,7 @@
   &__container {
     width: 850px;
     margin: 0 auto;
+    margin-bottom: 3.2rem;
     display: flex;
     flex-direction: column;
   }
@@ -17,20 +18,16 @@
   &__events {
     display: flex;
     flex-direction: column;
-    margin-top: 1.6rem;
-    margin-bottom: 3.2rem;
+    margin: 3.2rem 0;
     overflow-y: auto;
   }
   &__event {
-    display: flex;
     cursor: pointer;
-    background-color: $color-100;
+    display: flex;
     margin-bottom: 1.6rem;
     padding: 1.6rem 3.2rem;
-    transition: all 0.2s;
-    &:hover {
-      filter: brightness(95%);
-    }
+    overflow: visible;
+
     &__image {
       position: relative;
       height: 100px;
@@ -55,6 +52,7 @@
       margin-bottom: 4px;
     }
     &__text {
+      font-size: 1.4rem;
       color: $font-color-secondary;
     }
     &__icon {
