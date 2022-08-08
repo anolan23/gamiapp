@@ -44,7 +44,7 @@ function DetailsPage() {
         />
         <Banner>
           <Button color="secondary" text="Discard" />
-          <Button type="submit" form="details" text="Save & Continue" />
+          <Button type="submit" form="details" text="Save & Continue" loading/>
         </Banner>
       </ManagerDashboard>
     </Page>

@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
 type Color = 'primary' | 'secondary';
 
@@ -26,6 +26,34 @@ function Button({
   onClick,
   className = '',
 }: ButtonProps) {
+  const renderChildren = function () {
+    if (loading) return 
+
+    return (
+      <React.Fragment>
+        {icon && iconPos === 'left' ? (
+          <span
+            className={`${
+              typeof icon === 'string' ? 'material-icons' : ''
+            } btn__icon`}
+          >
+            {icon}
+          </span>
+        ) : null}
+        <span className="btn__text">{text}</span>
+        {icon && iconPos === 'right' ? (
+          <span
+            className={`${
+              typeof icon === 'string' ? 'material-icons' : ''
+            } btn__icon`}
+          >
+            {icon}
+          </span>
+        ) : null}
+      </React.Fragment>
+    );
+  };
+
   return (
     <button
       form={form}
@@ -35,25 +63,7 @@ function Button({
       type={type}
       onClick={onClick}
     >
-      {icon && iconPos === 'left' ? (
-        <span
-          className={`${
-            typeof icon === 'string' ? 'material-icons' : ''
-          } btn__icon`}
-        >
-          {icon}
-        </span>
-      ) : null}
-      <span className="btn__text">{loading ? 'loading...' : text}</span>
-      {icon && iconPos === 'right' ? (
-        <span
-          className={`${
-            typeof icon === 'string' ? 'material-icons' : ''
-          } btn__icon`}
-        >
-          {icon}
-        </span>
-      ) : null}
+      {renderChildren()}
     </button>
   );
 }

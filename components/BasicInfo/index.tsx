@@ -1,7 +1,7 @@
-import { AxiosRequestConfig } from 'axios';
-import { Formik, useFormik } from 'formik';
+import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import Image from 'next/image';
 import Link from 'next/link';
+
 import { useLocation } from '../../context/location';
 import { Event } from '../../hooks/useEvents';
 import useGames, { Game } from '../../hooks/useGames';
@@ -11,7 +11,6 @@ import { parseAddress } from '../../lib/helpers';
 import AddressItem from '../AddressItem';
 import AutoComplete from '../AutoComplete';
 import Button from '../Button';
-import Item from '../Item';
 
 import FormSection from '../FormSection';
 import InputGroup from '../InputGroup';
@@ -29,15 +28,16 @@ export interface BasicInfoValues {
 interface Props {
   event?: Event;
   initialValues?: BasicInfoValues;
-  onSubmit: (values: BasicInfoValues) => any;
+  onSubmit: (values: BasicInfoValues) => Promise<void>;
 }
 
-function BasicInfo({ event, initialValues, onSubmit }: Props) {
+function BasicInfo({ event, initialValues: initialVals, onSubmit }: Props) {
   const { coords } = useLocation();
   const { data: places, forward, getStaticMapUrl } = useMapbox();
   const { data: games, search, leanGame } = useGames();
   const throttle = useThrottle();
-  const initValues: BasicInfoValues = initialValues || {
+
+  const initialValues: BasicInfoValues = initialVals || {
     title: '',
     game: { name: '' },
     address: '',
@@ -45,18 +45,28 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
     ends_at: '',
     coords: '',
   };
-  const formik = useFormik({
-    initialValues: initValues,
-    onSubmit,
-  });
 
-  const handleEditLocationClick = function () {
-    formik.setFieldValue('address', '');
-    formik.setFieldValue('coords', '');
+  const handleSubmit = async function (
+    values: BasicInfoValues,
+    formikHelpers: FormikHelpers<BasicInfoValues>
+  ) {
+    try {
+      await onSubmit(values);
+      formikHelpers.setSubmitting(false);
+    } catch (error) {}
   };
 
-  const renderLocation = function () {
-    const { coords: coordinates, address } = formik.values;
+  const renderLocation = function ({
+    setFieldValue,
+    values,
+    handleChange,
+  }: FormikProps<BasicInfoValues>) {
+    const handleEditLocationClick = function () {
+      setFieldValue('address', '');
+      setFieldValue('coords', '');
+    };
+
+    const { coords: coordinates, address } = values;
     if (coordinates && address) {
       const staticMapUrl = getStaticMapUrl({
         coords: JSON.parse(coordinates),
@@ -92,9 +102,10 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
       return (
         <AutoComplete<Feature>
           name="address"
-          value={formik.values.address}
+          value={values.address}
           onChange={(e) => {
-            formik.handleChange(e);
+            if (!handleChange) return;
+            handleChange(e);
             throttle.wait(() => {
               if (!e.target.value) return;
               if (!coords) return;
@@ -110,8 +121,9 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
           Input={InputGroup}
           itemRenderer={(item) => <AddressItem placeName={item.place_name} />}
           onItemClick={(item) => {
-            formik.setFieldValue('address', item.place_name);
-            formik.setFieldValue('coords', JSON.stringify(item.center));
+            if (!setFieldValue) return;
+            setFieldValue('address', item.place_name);
+            setFieldValue('coords', JSON.stringify(item.center));
           }}
         />
       );
@@ -119,79 +131,86 @@ function BasicInfo({ event, initialValues, onSubmit }: Props) {
   };
 
   return (
-    <form id="basic-info" onSubmit={formik.handleSubmit} className="basic-info">
-      <FormSection
-        title="Basic Info"
-        description="Name your event and tell gamers what game will be played. Add
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      {(formikProps) => {
+        const { values, handleChange, setFieldValue } = formikProps;
+        return (
+          <Form id="basic-info" className="basic-info">
+            <FormSection
+              title="Basic Info"
+              description="Name your event and tell gamers what game will be played. Add
             details that highlight what makes it unique."
-        icon="segment"
-      >
-        <InputGroup
-          name="title"
-          value={formik.values.title}
-          onChange={formik.handleChange}
-          label="Event title"
-          placeholder="Be clear and descriptive"
-        />
-        <AutoComplete<Game>
-          name="game.name"
-          value={formik.values.game.name}
-          onChange={(e) => {
-            formik.handleChange(e);
-            throttle.wait(() => {
-              if (!e.target.value) return;
-              search({ name: e.target.value, limit: 5 });
-            }, 500);
-          }}
-          label="Featured game"
-          placeholder="Search games"
-          Input={InputGroup}
-          items={games}
-          itemRenderer={(item) => <GameItem game={item} />}
-          onItemClick={(item) => {
-            const game = leanGame(item);
-            formik.setFieldValue('game', game);
-          }}
-        />
-        <span>
-          Need game ideas?{' '}
-          <Link href="/" passHref>
-            <a className="link">Browse games by category</a>
-          </Link>
-        </span>
-      </FormSection>
-      <FormSection
-        title="Location"
-        description="Help gamers in the area discover your event and let attendees know where to show up."
-        icon="map"
-      >
-        {renderLocation()}
-      </FormSection>
-      <FormSection
-        title="Date and time"
-        description="Tell gamers when your event starts and ends so they can make plans to attend."
-        icon="date_range"
-      >
-        <InputGroup
-          name="starts_at"
-          value={formik.values.starts_at}
-          onChange={formik.handleChange}
-          label="Event starts"
-          placeholder="Search for a venue or address"
-          type="datetime-local"
-          // icon="calendar_today"
-        />
-        <InputGroup
-          name="ends_at"
-          value={formik.values.ends_at}
-          onChange={formik.handleChange}
-          label="Event ends"
-          placeholder="Search for a venue or address"
-          type="datetime-local"
-          // icon="calendar_today"
-        />
-      </FormSection>
-    </form>
+              icon="segment"
+            >
+              <InputGroup
+                name="title"
+                value={values.title}
+                onChange={handleChange}
+                label="Event title"
+                placeholder="Be clear and descriptive"
+              />
+              <AutoComplete<Game>
+                name="game.name"
+                value={values.game.name}
+                onChange={(e) => {
+                  handleChange(e);
+                  throttle.wait(() => {
+                    if (!e.target.value) return;
+                    search({ name: e.target.value, limit: 5 });
+                  }, 500);
+                }}
+                label="Featured game"
+                placeholder="Search games"
+                Input={InputGroup}
+                items={games}
+                itemRenderer={(item) => <GameItem game={item} />}
+                onItemClick={(item) => {
+                  const game = leanGame(item);
+                  setFieldValue('game', game);
+                }}
+              />
+              <span>
+                Need game ideas?{' '}
+                <Link href="/" passHref>
+                  <a className="link">Browse games by category</a>
+                </Link>
+              </span>
+            </FormSection>
+            <FormSection
+              title="Location"
+              description="Help gamers in the area discover your event and let attendees know where to show up."
+              icon="map"
+            >
+              {renderLocation(formikProps)}
+            </FormSection>
+            <FormSection
+              title="Date and time"
+              description="Tell gamers when your event starts and ends so they can make plans to attend."
+              icon="date_range"
+            >
+              <InputGroup
+                name="starts_at"
+                value={values.starts_at}
+                onChange={handleChange}
+                label="Event starts"
+                placeholder="Search for a venue or address"
+                type="datetime-local"
+                // icon="calendar_today"
+              />
+              <InputGroup
+                name="ends_at"
+                value={values.ends_at}
+                onChange={handleChange}
+                label="Event ends"
+                placeholder="Search for a venue or address"
+                type="datetime-local"
+                // icon="calendar_today"
+              />
+            </FormSection>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 }
 
