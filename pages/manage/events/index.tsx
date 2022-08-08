@@ -2,8 +2,7 @@ import Image from 'next/image';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useCallback, useRef, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 import ButtonLink from '../../../components/ButtonLink';
 import Dropdown from '../../../components/Dropdown';
@@ -35,7 +34,6 @@ function ManageEvents() {
           onDeleteClick={() => {
             const filtered = events.filter((ev) => event.id !== ev.id);
             mutate(filtered);
-            toast.success('Deleted');
           }}
         />
       );
@@ -60,19 +58,6 @@ function ManageEvents() {
           <div className="manage-events__events">{renderEvents()}</div>
         </div>
       </Container>
-      <ToastContainer
-        position="bottom-left"
-        autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-        toastStyle={{ backgroundColor: '#3d98ff' }}
-      />
     </Page>
   );
 }
@@ -96,8 +81,16 @@ function EventComponent({ event, onDeleteClick }: EventProps) {
     try {
       if (!event.id) return;
       await destroy(event.id);
+      toast('Event deleted', {
+        type: 'success',
+        style: { backgroundColor: '#3d98ff' },
+      });
       onDeleteClick();
-    } catch (error) {}
+    } catch (error: any) {
+      toast(error.message, {
+        type: 'error',
+      });
+    }
   };
 
   return (

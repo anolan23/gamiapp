@@ -14,6 +14,7 @@ import useBackend from '../../../../../hooks/useBackend';
 import { Event } from '../../../../../hooks/useEvents';
 import { updateEvent } from '../../../../../lib/api';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 function PublishPage() {
   const { user } = useUser();
@@ -33,6 +34,11 @@ function PublishPage() {
       await updateEvent(event.id, cols);
       await router.push(`/manage/events/${event.id}/invite`);
     } catch (error) {
+      let message = 'Error';
+      if (error instanceof Error) message = error.message;
+      toast(message, {
+        type: 'error',
+      });
     } finally {
       setIsSubmitting(false);
     }

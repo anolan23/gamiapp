@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 import Navbar from '../../../../../layouts/Navbar';
 import Button from '../../../../../components/Button';
@@ -44,7 +45,19 @@ function Invite() {
                     await navigator.clipboard.writeText(
                       `https://gamiapp.com/events/${event.id}`
                     );
-                  } catch (error) {}
+                    toast('Copied', {
+                      type: 'success',
+                      autoClose: 1000,
+                      theme: 'colored',
+                      style: { backgroundColor: '#3d98ff' },
+                    });
+                  } catch (error: any) {
+                    toast(error.message, {
+                      type: 'error',
+                      autoClose: 1000,
+                      theme: 'colored',
+                    });
+                  }
                 }}
               />
             </div>

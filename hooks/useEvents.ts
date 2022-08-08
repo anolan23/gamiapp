@@ -23,6 +23,7 @@ export interface Event {
   published?: boolean;
   distance?: number;
   host?: User;
+  description?: string;
 }
 
 function useEvents() {

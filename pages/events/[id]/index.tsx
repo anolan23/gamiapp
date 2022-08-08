@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import dayjs from 'dayjs';
+import { toast } from 'react-toastify';
 
 import useUser from '../../../hooks/useUser';
 import Page from '../../../layouts/Page';
@@ -18,6 +19,7 @@ import { attend } from '../../../lib/api';
 import Attendee from '../../../components/Attendee';
 import Card from '../../../layouts/Card';
 import Banner from '../../../layouts/Banner';
+import { useState } from 'react';
 
 interface Props {
   event: Event;
@@ -27,6 +29,7 @@ function EventPage({ event }: Props) {
   const { user } = useUser();
   const router = useRouter();
   const { getStaticMapUrl } = useMapbox();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (router.isFallback) return <h1>loading...</h1>;
 
@@ -42,9 +45,19 @@ function EventPage({ event }: Props) {
   const handleAttendClick = async function () {
     try {
       if (!event.id || !user?.id) return;
+      setIsSubmitting(true);
       await attend(event.id, user?.id);
-    } catch (error) {
+      toast('Successfully joined!', {
+        type: 'success',
+        style: { backgroundColor: '#3d98ff' },
+      });
+    } catch (error: any) {
+      toast(error.message, {
+        type: 'error',
+      });
       console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -196,7 +209,11 @@ function EventPage({ event }: Props) {
           icon="ios_share"
           iconPos="right"
         />
-        <Button text="Attend" onClick={handleAttendClick} />
+        <Button
+          text="Attend"
+          onClick={handleAttendClick}
+          loading={isSubmitting}
+        />
       </Banner>
     </Page>
   );

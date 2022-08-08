@@ -6,6 +6,21 @@
   &:focus {
     border: 1px solid white;
   }
+  &--error {
+    border: 1px solid red;
+    & label {
+      color: red;
+    }
+  }
+  &__container {
+    position: relative;
+  }
+  &__error {
+    position: absolute;
+    top: -20px;
+    font-size: 1.2rem;
+    color: red;
+  }
   &__label {
     font-size: 1.2rem;
     color: inherit;

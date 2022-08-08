@@ -15,16 +15,17 @@ import BasicInfo from '../../../../components/BasicInfo';
 import { BasicInfoValues } from '../../../../components/BasicInfo';
 import Container from '../../../../layouts/Container';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 function Create() {
   const { user } = useUser();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async function (values: BasicInfoValues) {
     try {
       if (!user?.id) return;
-      setLoading(true);
+      setIsSubmitting(true);
       const coords = JSON.parse(values.coords);
       const [long, lat] = coords;
       const event: any = {
@@ -37,8 +38,14 @@ function Create() {
       const created = await createEvent(event);
       await router.push(`/manage/events/${created.id}/details`);
     } catch (error) {
+      let message = 'Error';
+      if (error instanceof Error) message = error.message;
+      toast(message, {
+        type: 'error',
+      });
+      console.error(error);
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -53,7 +60,7 @@ function Create() {
             type="submit"
             form="basic-info"
             text="Save & Continue"
-            loading={loading}
+            loading={isSubmitting}
           />
         </Banner>
       </Container>

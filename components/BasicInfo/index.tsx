@@ -1,4 +1,4 @@
-import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
+import { Form, Formik, FormikErrors, FormikHelpers, FormikProps } from 'formik';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -46,6 +46,35 @@ function BasicInfo({ event, initialValues: initialVals, onSubmit }: Props) {
     coords: '',
   };
 
+  const validate = (values: BasicInfoValues) => {
+    const errors: FormikErrors<BasicInfoValues> = {};
+
+    if (values.title.length < 3) {
+      errors.title = 'Must be at least 3 characters';
+    }
+    if (values.title.length > 50) {
+      errors.title = 'Must be less than 50 characters';
+    }
+
+    if (!values.game.name) {
+      errors.game = 'Must select a game' as FormikErrors<Game>;
+    }
+
+    if (!values.coords) {
+      errors.coords = 'Must select a location';
+    }
+
+    if (!values.starts_at) {
+      errors.starts_at = 'Required';
+    }
+
+    if (!values.ends_at) {
+      errors.ends_at = 'Required';
+    }
+
+    return errors;
+  };
+
   const handleSubmit = async function (
     values: BasicInfoValues,
     formikHelpers: FormikHelpers<BasicInfoValues>
@@ -53,13 +82,18 @@ function BasicInfo({ event, initialValues: initialVals, onSubmit }: Props) {
     try {
       await onSubmit(values);
       formikHelpers.setSubmitting(false);
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const renderLocation = function ({
     setFieldValue,
     values,
     handleChange,
+    errors,
+    touched,
+    handleBlur,
   }: FormikProps<BasicInfoValues>) {
     const handleEditLocationClick = function () {
       setFieldValue('address', '');
@@ -125,15 +159,28 @@ function BasicInfo({ event, initialValues: initialVals, onSubmit }: Props) {
             setFieldValue('address', item.place_name);
             setFieldValue('coords', JSON.stringify(item.center));
           }}
+          onBlur={handleBlur}
+          error={errors.coords && touched.address ? errors.coords : undefined}
         />
       );
     }
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validate={validate}
+    >
       {(formikProps) => {
-        const { values, handleChange, setFieldValue } = formikProps;
+        const {
+          values,
+          handleChange,
+          setFieldValue,
+          errors,
+          touched,
+          handleBlur,
+        } = formikProps;
         return (
           <Form id="basic-info" className="basic-info">
             <FormSection
@@ -146,8 +193,10 @@ function BasicInfo({ event, initialValues: initialVals, onSubmit }: Props) {
                 name="title"
                 value={values.title}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 label="Event title"
                 placeholder="Be clear and descriptive"
+                error={errors.title && touched.title ? errors.title : undefined}
               />
               <AutoComplete<Game>
                 name="game.name"
@@ -168,6 +217,11 @@ function BasicInfo({ event, initialValues: initialVals, onSubmit }: Props) {
                   const game = leanGame(item);
                   setFieldValue('game', game);
                 }}
+                error={
+                  errors.game && touched.game
+                    ? (errors.game as string)
+                    : undefined
+                }
               />
               <span>
                 Need game ideas?{' '}
@@ -196,6 +250,11 @@ function BasicInfo({ event, initialValues: initialVals, onSubmit }: Props) {
                 placeholder="Search for a venue or address"
                 type="datetime-local"
                 // icon="calendar_today"
+                error={
+                  errors.starts_at && touched.starts_at
+                    ? errors.starts_at
+                    : undefined
+                }
               />
               <InputGroup
                 name="ends_at"
@@ -205,6 +264,9 @@ function BasicInfo({ event, initialValues: initialVals, onSubmit }: Props) {
                 placeholder="Search for a venue or address"
                 type="datetime-local"
                 // icon="calendar_today"
+                error={
+                  errors.ends_at && touched.ends_at ? errors.ends_at : undefined
+                }
               />
             </FormSection>
           </Form>

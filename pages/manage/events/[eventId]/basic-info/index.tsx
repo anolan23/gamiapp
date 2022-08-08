@@ -12,6 +12,8 @@ import ManagerDashboard from '../../../../../components/ManagerDashboard';
 import useBackend from '../../../../../hooks/useBackend';
 import { Event } from '../../../../../hooks/useEvents';
 import { updateEvent } from '../../../../../lib/api';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
 
 function BasicInfoPage() {
   const { user } = useUser();
@@ -19,6 +21,7 @@ function BasicInfoPage() {
   const { eventId } = router.query;
   const url = eventId ? `/api/events/${eventId}` : undefined;
   const { data: event } = useBackend<Event>(url);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!event) return <h1>loading...</h1>;
 
@@ -29,6 +32,7 @@ function BasicInfoPage() {
   const handleSubmit = async function (values: BasicInfoValues) {
     try {
       if (!event.id) return;
+      setIsSubmitting(true);
       const coords = JSON.parse(values.coords);
       const [long, lat] = coords;
       const updates: any = {
@@ -37,8 +41,16 @@ function BasicInfoPage() {
       };
       delete updates['coords'];
       await updateEvent(event.id, updates);
-      router.push(`/manage/events/${event.id}/details`);
-    } catch (error) {}
+      await router.push(`/manage/events/${event.id}/details`);
+    } catch (error) {
+      let message = 'Error';
+      if (error instanceof Error) message = error.message;
+      toast(message, {
+        type: 'error',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -59,7 +71,12 @@ function BasicInfoPage() {
         />
         <Banner>
           <Button color="secondary" text="Discard" />
-          <Button type="submit" form="basic-info" text="Save & Continue" />
+          <Button
+            type="submit"
+            form="basic-info"
+            text="Save & Continue"
+            loading={isSubmitting}
+          />
         </Banner>
       </ManagerDashboard>
     </Page>

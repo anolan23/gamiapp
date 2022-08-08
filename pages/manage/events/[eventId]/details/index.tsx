@@ -13,6 +13,7 @@ import { Event } from '../../../../../hooks/useEvents';
 import { updateEvent } from '../../../../../lib/api';
 import useMapbox from '../../../../../hooks/useMapbox';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 function DetailsPage() {
   const { user } = useUser();
@@ -32,6 +33,11 @@ function DetailsPage() {
       await updateEvent(event.id, values);
       await router.push(`/manage/events/${event.id}/publish`);
     } catch (error) {
+      let message = 'Error';
+      if (error instanceof Error) message = error.message;
+      toast(message, {
+        type: 'error',
+      });
     } finally {
       setIsSubmitting(false);
     }
