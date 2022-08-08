@@ -1,25 +1,22 @@
-import React from 'react';
-import Input from '../Input';
+import React, { ComponentType } from 'react';
+import InputComponent from '../Input';
 
 export interface InputGroupProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   icon?: string;
   error?: string;
+  Input?: ComponentType<
+    React.HTMLAttributes<HTMLInputElement | HTMLTextAreaElement>
+  >;
 }
 
 function InputGroup({
   error,
   label,
-  icon,
-  type,
-  name,
-  placeholder,
-  value,
-  onChange,
-  onFocus,
-  onBlur,
   className,
+  Input = InputComponent,
+  ...props
 }: InputGroupProps) {
   return (
     <div className="input-group__container">
@@ -30,17 +27,9 @@ function InputGroup({
         }`}
       >
         <label className="input-group__label">{label}</label>
-        <Input
-          className="input-group__input"
-          icon={icon}
-          type={type}
-          name={name}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
-        />
+        <div className="input-group__input">
+          <Input className="input-group__input" {...props} />
+        </div>
       </div>
     </div>
   );

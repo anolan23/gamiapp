@@ -201,6 +201,7 @@ function BasicInfo({ event, initialValues: initialVals, onSubmit }: Props) {
               <AutoComplete<Game>
                 name="game.name"
                 value={values.game.name}
+                onBlur={handleBlur}
                 onChange={(e) => {
                   handleChange(e);
                   throttle.wait(() => {
@@ -246,6 +247,7 @@ function BasicInfo({ event, initialValues: initialVals, onSubmit }: Props) {
                 name="starts_at"
                 value={values.starts_at}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 label="Event starts"
                 placeholder="Search for a venue or address"
                 type="datetime-local"
@@ -260,6 +262,7 @@ function BasicInfo({ event, initialValues: initialVals, onSubmit }: Props) {
                 name="ends_at"
                 value={values.ends_at}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 label="Event ends"
                 placeholder="Search for a venue or address"
                 type="datetime-local"

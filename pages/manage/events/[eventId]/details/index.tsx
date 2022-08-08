@@ -51,6 +51,7 @@ function DetailsPage() {
           onSubmit={onSubmit}
           initialValues={{
             summary: event.summary ?? '',
+            description: event.description ?? '',
           }}
         />
         <Banner>

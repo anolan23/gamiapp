@@ -101,8 +101,7 @@ function EventPage({ event }: Props) {
             <div className="events-page__main__title">
               <h1 className="events-page__main__title--main">{event.title}</h1>
               <p className="events-page__main__title--sub">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                {event.summary ?? 'Event summary'}
               </p>
             </div>
             <div className="events-page__main__about">
@@ -110,10 +109,7 @@ function EventPage({ event }: Props) {
                 About this event
               </h2>
               <p className="events-page__main__about--sub">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
+                {event.description ?? 'Event description'}
               </p>
             </div>
             <Section

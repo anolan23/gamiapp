@@ -3,8 +3,11 @@
   padding-top: 0;
   // border: 1px solid $color-black-20;
   border: 1px solid $color-black-20;
-  &:focus {
-    border: 1px solid white;
+  &:focus-within {
+    border: 1px solid $color-black-40;
+    & label {
+      color: $color-black-50;
+    }
   }
   &--error {
     border: 1px solid red;
@@ -26,10 +29,15 @@
     color: inherit;
   }
   &__input {
-    & input {
+    & input,
+    textarea {
       margin-left: 0;
       height: auto;
       padding: 4px 0;
+      display: block;
+      width: 100%;
+      border: none;
+      outline: none;
     }
   }
 }
