@@ -13,6 +13,7 @@ import ManagerDashboard from '../../../../../components/ManagerDashboard';
 import useBackend from '../../../../../hooks/useBackend';
 import { Event } from '../../../../../hooks/useEvents';
 import { updateEvent } from '../../../../../lib/api';
+import { useState } from 'react';
 
 function PublishPage() {
   const { user } = useUser();
@@ -20,16 +21,21 @@ function PublishPage() {
   const { eventId } = router.query;
   const url = eventId ? `/api/events/${eventId}` : undefined;
   const { data: event } = useBackend<Event>(url);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!event) return <h1>loading...</h1>;
 
   const handleSubmit = async function (values: PublishValues) {
     try {
       if (!event.id) return;
+      setIsSubmitting(true);
       const cols = { ...values, published: true };
       await updateEvent(event.id, cols);
-      router.push(`/manage/events/${event.id}/invite`);
-    } catch (error) {}
+      await router.push(`/manage/events/${event.id}/invite`);
+    } catch (error) {
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -49,6 +55,7 @@ function PublishPage() {
             type="submit"
             form="publish"
             text={event.published ? 'Save' : 'Publish'}
+            loading={isSubmitting}
           />
         </Banner>
       </ManagerDashboard>

@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react';
+import React, { CSSProperties, ReactElement } from 'react';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 type Color = 'primary' | 'secondary';
 
@@ -12,6 +13,10 @@ export interface ButtonProps
   iconPos?: 'left' | 'right';
   loading?: boolean;
 }
+
+const override: CSSProperties = {
+  borderWidth: '3px',
+};
 
 function Button({
   loading,
@@ -27,7 +32,11 @@ function Button({
   className = '',
 }: ButtonProps) {
   const renderChildren = function () {
-    if (loading) return 
+    if (loading) {
+      return (
+        <ClipLoader loading cssOverride={override} color={'white'} size={25} />
+      );
+    }
 
     return (
       <React.Fragment>

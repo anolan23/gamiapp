@@ -71,7 +71,7 @@ function ChangeView({ markers }: ChangeViewProps) {
   const map = useMap();
   if (markers) {
     const bounds = markers.map((marker) => marker.position);
-    map.flyToBounds(bounds);
+    if (bounds) map.fitBounds(bounds);
   }
 
   return null;

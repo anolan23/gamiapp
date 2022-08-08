@@ -1,5 +1,5 @@
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from '../../context/location';
 import useCategories from '../../hooks/useCategories';
 import useGames, { Game } from '../../hooks/useGames';
@@ -8,7 +8,6 @@ import useThrottle from '../../hooks/useThrottle';
 import AutoComplete from '../AutoComplete';
 import Button from '../Button';
 import Chip from '../Chip';
-import Item from '../Item';
 import Input from '../Input';
 import Slider from '../Slider';
 import GameItem from '../GameItem';
@@ -75,12 +74,7 @@ function Filter({ initialValues, setFilters, close }: Props) {
         }}
         enableReinitialize
       >
-        {({
-          values,
-          handleChange,
-          setFieldValue,
-          isSubmitting,
-        }: FormikProps<Filters>) => {
+        {({ handleChange, setFieldValue }: FormikProps<Filters>) => {
           return (
             <Form id="filter" className="filter__form">
               <FilterSection main="Filter by game">

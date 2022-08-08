@@ -24,7 +24,11 @@ function useBackend<T>(url?: string, config?: AxiosRequestConfig | null) {
     get();
   }, [url, config]);
 
-  return { data, loading, error };
+  const mutate = function (data: T) {
+    setData(data);
+  };
+
+  return { data, loading, error, mutate };
 }
 
 export default useBackend;

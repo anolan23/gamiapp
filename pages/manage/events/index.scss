@@ -1,13 +1,11 @@
 .manage-events {
   &__container {
-    width: 850px;
-    margin: 0 auto;
-    margin-bottom: 3.2rem;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
   }
   &__title {
-    margin: 3.2rem 0;
+    margin-bottom: 3.2rem;
     font-size: 4.8rem;
     font-weight: 800;
   }
@@ -18,8 +16,7 @@
   &__events {
     display: flex;
     flex-direction: column;
-    margin: 3.2rem 0;
-    overflow-y: auto;
+    margin-bottom: 6.4rem;
   }
   &__event {
     cursor: pointer;
@@ -57,6 +54,13 @@
     }
     &__icon {
       color: $font-color-secondary;
+    }
+  }
+  &__content {
+    width: 850px;
+    margin: 0 auto;
+    &__heading {
+      margin: 3.2rem 0;
     }
   }
 }

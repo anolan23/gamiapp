@@ -26,3 +26,6 @@ export function coordsToCoordString(coords: Coords): string {
   return `${coords[0]},${coords[1]}`;
 }
 
+export function wait(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}

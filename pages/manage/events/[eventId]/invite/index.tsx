@@ -40,9 +40,11 @@ function Invite() {
                 text="Copy"
                 size="small"
                 onClick={async () => {
-                  await navigator.clipboard.writeText(
-                    `https://gamiapp.com/events/${event.id}`
-                  );
+                  try {
+                    await navigator.clipboard.writeText(
+                      `https://gamiapp.com/events/${event.id}`
+                    );
+                  } catch (error) {}
                 }}
               />
             </div>
