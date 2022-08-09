@@ -8,12 +8,13 @@ import useUser from '../../../../../hooks/useUser';
 import BasicInfo, {
   BasicInfoValues,
 } from '../../../../../components/BasicInfo';
-import ManagerDashboard from '../../../../../components/ManagerDashboard';
 import useBackend from '../../../../../hooks/useBackend';
 import { Event } from '../../../../../hooks/useEvents';
 import { updateEvent } from '../../../../../lib/api';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
+import Layout from '../../../../../layouts/Layout';
+import SidebarManage from '../../../../../components/SidebarManage';
 
 function BasicInfoPage() {
   const { user } = useUser();
@@ -55,8 +56,7 @@ function BasicInfoPage() {
 
   return (
     <Page>
-      <Navbar></Navbar>
-      <ManagerDashboard event={event}>
+      <Layout navbar={<Navbar />} sidebar={<SidebarManage event={event} />}>
         <BasicInfo
           event={event}
           onSubmit={handleSubmit}
@@ -78,7 +78,7 @@ function BasicInfoPage() {
             loading={isSubmitting}
           />
         </Banner>
-      </ManagerDashboard>
+      </Layout>
     </Page>
   );
 }

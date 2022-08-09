@@ -7,13 +7,14 @@ import Details, { DetailsValues } from '../../../../../components/Details';
 import Page from '../../../../../layouts/Page';
 import Banner from '../../../../../layouts/Banner';
 import useUser from '../../../../../hooks/useUser';
-import ManagerDashboard from '../../../../../components/ManagerDashboard';
 import useBackend from '../../../../../hooks/useBackend';
 import { Event } from '../../../../../hooks/useEvents';
 import { updateEvent } from '../../../../../lib/api';
 import useMapbox from '../../../../../hooks/useMapbox';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import Layout from '../../../../../layouts/Layout';
+import SidebarManage from '../../../../../components/SidebarManage';
 
 function DetailsPage() {
   const { user } = useUser();
@@ -45,8 +46,7 @@ function DetailsPage() {
 
   return (
     <Page>
-      <Navbar></Navbar>
-      <ManagerDashboard event={event}>
+      <Layout navbar={<Navbar />} sidebar={<SidebarManage event={event} />}>
         <Details
           onSubmit={onSubmit}
           initialValues={{
@@ -63,7 +63,7 @@ function DetailsPage() {
             loading={isSubmitting}
           />
         </Banner>
-      </ManagerDashboard>
+      </Layout>
     </Page>
   );
 }

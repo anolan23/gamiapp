@@ -10,11 +10,11 @@ import Page from '../../../../../layouts/Page';
 import Banner from '../../../../../layouts/Banner';
 import useUser from '../../../../../hooks/useUser';
 import SidebarManage from '../../../../../components/SidebarManage';
-import ManagerDashboard from '../../../../../components/ManagerDashboard';
 import useBackend from '../../../../../hooks/useBackend';
 import { Event } from '../../../../../hooks/useEvents';
 import { updateEvent } from '../../../../../lib/api';
 import Card from '../../../../../layouts/Card';
+import Layout from '../../../../../layouts/Layout';
 
 function Invite() {
   const { user } = useUser();
@@ -27,8 +27,7 @@ function Invite() {
 
   return (
     <Page className="share">
-      <Navbar></Navbar>
-      <ManagerDashboard event={event}>
+      <Layout navbar={<Navbar />} sidebar={<SidebarManage event={event} />}>
         <div className="share__content">
           <h1 className="share__title">Invite</h1>
           <Section title="Event Url">
@@ -68,7 +67,7 @@ function Invite() {
             </Card>
           </Section>
         </div>
-      </ManagerDashboard>
+      </Layout>
     </Page>
   );
 }

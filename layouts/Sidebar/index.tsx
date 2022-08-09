@@ -6,6 +6,6 @@ interface Props {
 }
 
 function Sidebar({ children }: Props) {
-  return <div className="sidebar">{children}</div>;
+  return <aside className="sidebar">{children}</aside>;
 }
 export default Sidebar;

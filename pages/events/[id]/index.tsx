@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import useUser from '../../../hooks/useUser';
 import Page from '../../../layouts/Page';
 import Navbar from '../../../layouts/Navbar';
-import Container from '../../../layouts/Container';
 import { GetStaticProps } from 'next';
 import backend from '../../../lib/backend';
 import { ParsedUrlQuery } from 'querystring';
@@ -20,6 +19,7 @@ import Attendee from '../../../components/Attendee';
 import Card from '../../../layouts/Card';
 import Banner from '../../../layouts/Banner';
 import { useState } from 'react';
+import Layout from '../../../layouts/Layout';
 
 interface Props {
   event: Event;
@@ -85,11 +85,10 @@ function EventPage({ event }: Props) {
   };
 
   return (
-    <Page className="events-page">
-      <Navbar></Navbar>
-      <Container className="events-page__container">
+    <Page>
+      <Layout navbar={<Navbar />}>
         <div className="events-page__content">
-          <main className="events-page__main">
+          <div className="events-page__main">
             <div className="events-page__main__image-container">
               <Image
                 src={event.image || event.game?.image_url || 'event.jpeg'}
@@ -153,7 +152,7 @@ function EventPage({ event }: Props) {
             >
               <div className="events-page__attendees">{renderAttendees()}</div>
             </Section>
-          </main>
+          </div>
           <div className="events-page__side">
             <Card className="events-page__info">
               <div className="events-page__info__details">
@@ -197,7 +196,7 @@ function EventPage({ event }: Props) {
             </Card>
           </div>
         </div>
-      </Container>
+      </Layout>
       <Banner>
         <Button
           text="Share"

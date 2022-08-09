@@ -13,9 +13,9 @@ import { createEvent } from '../../../../lib/api';
 import useUser from '../../../../hooks/useUser';
 import BasicInfo from '../../../../components/BasicInfo';
 import { BasicInfoValues } from '../../../../components/BasicInfo';
-import Container from '../../../../layouts/Container';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import Layout from '../../../../layouts/Layout';
 
 function Create() {
   const { user } = useUser();
@@ -51,8 +51,7 @@ function Create() {
 
   return (
     <Page className="create">
-      <Navbar></Navbar>
-      <Container className="create__container">
+      <Layout navbar={<Navbar />}>
         <BasicInfo onSubmit={onSubmit} />
         <Banner>
           <Button color="secondary" text="Discard" />
@@ -63,7 +62,7 @@ function Create() {
             loading={isSubmitting}
           />
         </Banner>
-      </Container>
+      </Layout>
     </Page>
   );
 }

@@ -9,12 +9,12 @@ import Page from '../../../../../layouts/Page';
 import Banner from '../../../../../layouts/Banner';
 import useUser from '../../../../../hooks/useUser';
 import SidebarManage from '../../../../../components/SidebarManage';
-import ManagerDashboard from '../../../../../components/ManagerDashboard';
 import useBackend from '../../../../../hooks/useBackend';
 import { Event } from '../../../../../hooks/useEvents';
 import { updateEvent } from '../../../../../lib/api';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import Layout from '../../../../../layouts/Layout';
 
 function PublishPage() {
   const { user } = useUser();
@@ -46,8 +46,7 @@ function PublishPage() {
 
   return (
     <Page>
-      <Navbar></Navbar>
-      <ManagerDashboard event={event}>
+      <Layout navbar={<Navbar />} sidebar={<SidebarManage event={event} />}>
         <Publish
           onSubmit={handleSubmit}
           event={event}
@@ -64,7 +63,7 @@ function PublishPage() {
             loading={isSubmitting}
           />
         </Banner>
-      </ManagerDashboard>
+      </Layout>
     </Page>
   );
 }

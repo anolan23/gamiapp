@@ -13,10 +13,10 @@ import { Event } from '../../../hooks/useEvents';
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
 import useUser from '../../../hooks/useUser';
 import Card from '../../../layouts/Card';
-import Container from '../../../layouts/Container';
 import Navbar from '../../../layouts/Navbar';
 import Page from '../../../layouts/Page';
 import { destroy } from '../../../lib/api/events';
+import Layout from '../../../layouts/Layout';
 
 function ManageEvents() {
   const { user } = useUser();
@@ -41,9 +41,8 @@ function ManageEvents() {
     });
   };
   return (
-    <Page className="manage-events">
-      <Navbar></Navbar>
-      <Container className="manage-events__container">
+    <Page>
+      <Layout navbar={<Navbar />}>
         <div className="manage-events__content">
           <div className="manage-events__content__heading">
             <h1 className="manage-events__title">Events</h1>
@@ -58,7 +57,7 @@ function ManageEvents() {
           </div>
           <div className="manage-events__events">{renderEvents()}</div>
         </div>
-      </Container>
+      </Layout>
     </Page>
   );
 }

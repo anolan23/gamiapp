@@ -24,6 +24,7 @@ import Filter, { Filters } from '../../components/Filter';
 import usePopup from '../../hooks/usePopup';
 import useInput from '../../hooks/useInput';
 import { AxiosRequestConfig } from 'axios';
+import Layout from '../../layouts/Layout';
 
 const MapWithNoSSR = dynamic(() => import('../../components/Map'), {
   ssr: false,
@@ -111,90 +112,96 @@ function Explore() {
   console.log(events);
 
   return (
-    <Page className="explore">
-      <Navbar>
-        <ButtonLink
-          href="/manage/events/create"
-          size="small"
-          icon="add"
-          text="Create event"
-          color="primary"
-        />
-      </Navbar>
-      <div className="explore__content">
-        <main className="explore__main">
-          <div className="explore__main__filters">
-            <div className="explore__main__filters__inputs">
-              <AutoComplete<Feature>
-                icon="location_on"
-                placeholder="Choose a location"
-                className="explore__input"
-                onChange={(e) => {
-                  setAddressText(e.target.value);
-                  throttle.wait(() => {
-                    if (!e.target.value) return;
-                    if (!coords) return;
-                    forward({
-                      coords,
-                      q: e.target.value,
-                    });
-                  }, 500);
-                }}
-                items={places}
-                onItemClick={(item) => {
-                  setLocation(item.center, item.place_name);
-                }}
-                value={addressText}
-                Input={Input}
-                stickyItemsRenderer={() => (
-                  <Item
-                    icon="my_location"
-                    className="explore__current-location"
-                    onMouseDown={getCurrentLocation}
-                  >
-                    Use my current location
-                  </Item>
-                )}
-                itemRenderer={(item) => (
-                  <AddressItem placeName={item.place_name} />
-                )}
-                onFocus={() => {
-                  setAddressText('');
-                }}
-                onBlur={() => {
-                  setAddressText(address || '');
-                }}
+    <Page>
+      <Layout
+        navbar={
+          <Navbar>
+            <ButtonLink
+              href="/manage/events/create"
+              size="small"
+              icon="add"
+              text="Create event"
+              color="primary"
+            />
+          </Navbar>
+        }
+      >
+        <div className="explore__content">
+          <div className="explore__main">
+            <div className="explore__main__filters">
+              <div className="explore__main__filters__inputs">
+                <AutoComplete<Feature>
+                  icon="location_on"
+                  placeholder="Choose a location"
+                  className="explore__input"
+                  onChange={(e) => {
+                    setAddressText(e.target.value);
+                    throttle.wait(() => {
+                      if (!e.target.value) return;
+                      if (!coords) return;
+                      forward({
+                        coords,
+                        q: e.target.value,
+                      });
+                    }, 500);
+                  }}
+                  items={places}
+                  onItemClick={(item) => {
+                    setLocation(item.center, item.place_name);
+                  }}
+                  value={addressText}
+                  Input={Input}
+                  stickyItemsRenderer={() => (
+                    <Item
+                      icon="my_location"
+                      className="explore__current-location"
+                      onMouseDown={getCurrentLocation}
+                    >
+                      Use my current location
+                    </Item>
+                  )}
+                  itemRenderer={(item) => (
+                    <AddressItem placeName={item.place_name} />
+                  )}
+                  onFocus={() => {
+                    setAddressText('');
+                  }}
+                  onBlur={() => {
+                    setAddressText(address || '');
+                  }}
+                />
+              </div>
+              <Button
+                onClick={() => popup.setShow(true)}
+                icon={
+                  numFilters ? (
+                    <div className="explore__filter-icon">
+                      <div className="explore__filter-icon__num">
+                        {numFilters}
+                      </div>
+                    </div>
+                  ) : (
+                    'tune'
+                  )
+                }
+                text="Filter"
+                size="small"
+                color="secondary"
               />
             </div>
-            <Button
-              onClick={() => popup.setShow(true)}
-              icon={
-                numFilters ? (
-                  <div className="explore__filter-icon">
-                    <div className="explore__filter-icon__num">
-                      {numFilters}
-                    </div>
-                  </div>
-                ) : (
-                  'tune'
-                )
-              }
-              text="Filter"
-              size="small"
-              color="secondary"
-            />
+            {events ? (
+              <span className="explore__found">
+                {`Found ${events.length} events that matched your criteria`}
+              </span>
+            ) : null}
+            <div className="explore__events">{renderEvents()}</div>
           </div>
-          {events ? (
-            <span className="explore__found">
-              {`Found ${events.length} events that matched your criteria`}
-            </span>
-          ) : null}
-          <div className="explore__events">{renderEvents()}</div>
-        </main>
-        <div className="explore__map">
-          <MapWithNoSSR center={center} markers={markers} />
+          <div className="explore__map">
+            <MapWithNoSSR center={center} markers={markers} />
+          </div>
         </div>
-      </div>
+      </Layout>
+
       <Popup show={popup.show} close={popup.close}>
         <Filter
           close={popup.close}

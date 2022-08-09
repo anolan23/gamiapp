@@ -19,7 +19,6 @@
 @import '../components/DropdownButton';
 @import '../components/SidebarManage';
 @import '../components/BasicInfo';
-@import '../components/ManagerDashboard';
 @import '../components/Details';
 @import '../components/BasicInfo';
 @import '../components/Publish';
@@ -42,8 +41,8 @@
 @import '../layouts/Banner';
 @import '../layouts/AuthCard';
 @import '../layouts/Sidebar';
-@import '../layouts/Container';
 @import '../layouts/Card';
+@import '../layouts/Layout';
 
 @import '../pages/explore';
 @import '../pages/profiles/[id]';

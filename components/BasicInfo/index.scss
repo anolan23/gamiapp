@@ -1,4 +1,5 @@
 .basic-info {
+  flex: 1;
   overflow-y: auto;
   &__location {
     background-color: $color-200;

@@ -6,13 +6,13 @@ import { useRouter } from 'next/router';
 import useUser, { User } from '../../../hooks/useUser';
 import Page from '../../../layouts/Page';
 import Navbar from '../../../layouts/Navbar';
-import Container from '../../../layouts/Container';
 import { ParsedUrlQuery } from 'querystring';
 import { GetStaticProps } from 'next';
 import backend from '../../../lib/backend';
 import Avatar from '../../../components/Avatar';
 import Button from '../../../components/Button';
 import ButtonLink from '../../../components/ButtonLink';
+import Layout from '../../../layouts/Layout';
 
 interface Props {
   profile: User;
@@ -26,9 +26,8 @@ function Profile({ profile }: Props) {
 
   return (
     <Page className="profile">
-      <Navbar></Navbar>
-      <Container className="profile__container">
-        <main className="profile__content">
+      <Layout navbar={<Navbar />}>
+        <div className="profile__content">
           <div className="profile__content__info">
             <Avatar height={300} width={300} />
             <div className="profile__content__info__text">
@@ -58,8 +57,8 @@ function Profile({ profile }: Props) {
               />
             </div>
           </div>
-        </main>
-      </Container>
+        </div>
+      </Layout>
     </Page>
   );
 }
