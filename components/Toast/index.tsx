@@ -6,7 +6,7 @@ interface Props extends ToastContainerProps {}
 function Toast({ ...props }: Props) {
   return (
     <ToastContainer
-      position="bottom-left"
+      position="top-center"
       autoClose={5000}
       hideProgressBar={true}
       newestOnTop

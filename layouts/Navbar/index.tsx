@@ -16,6 +16,10 @@ function Navbar({ children }: Props) {
       </Link>
       <div className="navbar__right">
         {children}
+        <span className="material-icons-outlined navbar__icon">mail</span>
+        <span className="material-icons-outlined navbar__icon">
+          notifications
+        </span>
         <UserToggle />
       </div>
     </nav>

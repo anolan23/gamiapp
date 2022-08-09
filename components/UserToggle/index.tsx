@@ -23,7 +23,7 @@ function UserToggle({ className }: Props) {
   }, []);
 
   useOutsideClick(toggleRef, onClickOutside);
-
+  if (!user) return null;
   return (
     <div
       className={`user-toggle ${className || ''}`}
@@ -31,10 +31,13 @@ function UserToggle({ className }: Props) {
       ref={toggleRef}
     >
       <Avatar className="user-toggle__image" />
-      <span className="user-toggle__name">{user?.email || 'Sign up'}</span>
       <span className="material-icons user-toggle__icon">expand_more</span>
       <Dropdown show={show}>
+        <ItemLink href="/manage/events/create" icon="add">
+          Create event
+        </ItemLink>
         <ItemLink href="/manage/events">Manage my events</ItemLink>
+        <ItemLink href={`/profiles/${user.id}`}>View profile</ItemLink>
         <ItemLink href="/login" icon="logout" onClick={logout}>
           Logout
         </ItemLink>

@@ -26,6 +26,7 @@ function ManageEvents() {
 
   const renderEvents = function () {
     if (!events) return null;
+    if (!events.length) return <h2>No events</h2>;
     return events.map((event, index) => {
       return (
         <EventComponent
