@@ -1,0 +1,22 @@
+.edit-profile {
+  margin: 2.4rem 3.2rem;
+  display: grid;
+  gap: 3.2rem;
+  max-width: 60rem;
+  &__heading {
+    &__title {
+      font-size: 3.2rem;
+      font-weight: 900;
+    }
+    &__description {
+      display: block;
+    }
+  }
+  &__upload {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min-content;
+    gap: 3.2rem;
+    align-items: center;
+  }
+}

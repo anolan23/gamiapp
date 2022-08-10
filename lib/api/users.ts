@@ -9,3 +9,12 @@ export async function findOneById(id: number) {
     throw error;
   }
 }
+
+export async function update(id: number, cols: any) {
+  try {
+    const updated = await backend.patch<User>(`/api/users/${id}`, cols);
+    return updated.data;
+  } catch (error) {
+    throw error;
+  }
+}

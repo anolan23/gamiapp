@@ -7,7 +7,7 @@ function TextArea({ name, ...props }: Props) {
       id={name}
       autoComplete="off"
       spellCheck={false}
-      rows={10}
+      rows={5}
       {...props}
     />
   );

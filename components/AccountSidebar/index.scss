@@ -1,0 +1,40 @@
+.account-sidebar {
+  &__items {
+    padding: 1.6rem 0;
+  }
+  &__item {
+    position: relative;
+    padding: 0 2.4rem;
+    margin: 3.2rem 0;
+    display: flex;
+    align-items: center;
+    &,
+    &:visited,
+    &:link {
+      color: $font-color;
+      text-decoration: none;
+    }
+    &--active {
+      &,
+      &:visited,
+      &:link {
+        color: $color-400;
+        text-decoration: none;
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          height: 100%;
+          background-color: $color-400;
+          width: 3px;
+          border-radius: 999px;
+        }
+      }
+    }
+    &__icon {
+    }
+    &__text {
+      margin-left: 8px;
+    }
+  }
+}

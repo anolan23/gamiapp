@@ -35,6 +35,7 @@
 @import '../components/CircleButton';
 @import '../components/Attendee';
 @import '../components/TextArea';
+@import '../components/AccountSidebar';
 
 @import '../layouts/Navbar';
 @import '../layouts/Page';
@@ -50,3 +51,4 @@
 @import '../pages/events/[id]';
 @import '../pages/manage/events';
 @import '../pages/manage/events/[eventId]/invite';
+@import '../pages/account';
