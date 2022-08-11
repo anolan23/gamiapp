@@ -30,7 +30,7 @@ function UserToggle({ className }: Props) {
       onClick={() => setShow(!show)}
       ref={toggleRef}
     >
-      <Avatar className="user-toggle__image" />
+      <Avatar className="user-toggle__image" objectKey={user.image} />
       <span className="material-icons user-toggle__icon">expand_more</span>
       <Dropdown show={show}>
         <ItemLink href="/manage/events/create" icon="add">

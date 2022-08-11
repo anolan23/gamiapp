@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -13,6 +13,8 @@ import TextArea from '../../components/TextArea';
 import { Form, Formik } from 'formik';
 import { update } from '../../lib/api/users';
 import { toast } from 'react-toastify';
+import ButtonUpload from '../../components/ButtonUpload';
+import useBucket from '../../hooks/useBucket';
 
 interface ProfileValues {
   first_name: string;
@@ -25,12 +27,36 @@ interface Props {}
 function Account() {
   const { user } = useUser();
   const router = useRouter();
+  const bucket = useBucket();
+  const [uploading, setUploading] = useState(false);
 
   if (!user) return <h1>...loading</h1>;
   const initialValues: ProfileValues = {
     first_name: user.first_name ?? '',
     last_name: user.last_name ?? '',
     bio: user.bio ?? '',
+  };
+
+  const handleUpload = async function (file: File) {
+    try {
+      setUploading(true);
+      const image = await bucket.upload('users', file);
+      await update(user.id, { image });
+      toast('Image uploaded', {
+        type: 'success',
+        theme: 'colored',
+        style: { backgroundColor: '#3d98ff' },
+      });
+    } catch (error) {
+      console.error(error);
+      let message = 'Error';
+      if (error instanceof Error) message = error.message;
+      toast(message, {
+        type: 'error',
+      });
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
@@ -70,12 +96,13 @@ function Account() {
               </span>
             </div>
             <div className="edit-profile__upload">
-              <Avatar height={150} width={150} />
-              <Button
+              <Avatar height={150} width={150} objectKey={user.image} />
+              <ButtonUpload
+                onUpload={handleUpload}
                 text="Upload new"
                 size="small"
                 icon="image"
-                color="secondary"
+                loading={uploading}
               />
             </div>
             <InputGroup

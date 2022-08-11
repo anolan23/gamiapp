@@ -15,7 +15,7 @@ function Attendee({ user, role }: Props) {
   return (
     <Card>
       <div className="attendee">
-        <Avatar height={75} width={75} />
+        <Avatar height={75} width={75} objectKey={user.image}/>
         <span className="attendee__name">{fullName || user.email}</span>
         <span className="attendee__role">{role}</span>
       </div>

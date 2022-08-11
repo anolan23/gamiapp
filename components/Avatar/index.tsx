@@ -1,24 +1,26 @@
 import Image from 'next/image';
+import useBucket from '../../hooks/useBucket';
 
 interface Props {
-  src?: string;
+  objectKey?: string;
   className?: string;
   height?: number;
   width?: number;
 }
 
-function Avatar({
-  src = '/avatar.jpeg',
-  height = 50,
-  width = 50,
-  className,
-}: Props) {
+function Avatar({ objectKey, height = 50, width = 50, className }: Props) {
+  const { buildImageUrl } = useBucket();
   return (
     <div
       className={`avatar ${className ?? ''}`}
       style={{ height: `${height}px`, width: `${width}px` }}
     >
-      <Image src={src} alt="avatar" layout="fill" objectFit="cover" />
+      <Image
+        src={objectKey ? buildImageUrl(objectKey) : '/avatar.jpeg'}
+        alt="avatar"
+        layout="fill"
+        objectFit="cover"
+      />
     </div>
   );
 }

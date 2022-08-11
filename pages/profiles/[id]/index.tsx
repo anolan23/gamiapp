@@ -29,7 +29,7 @@ function Profile({ profile }: Props) {
       <Layout navbar={<Navbar />}>
         <div className="profile__content">
           <div className="profile__content__info">
-            <Avatar height={300} width={300} />
+            <Avatar height={300} width={300} objectKey={profile.image} />
             <div className="profile__content__info__text">
               <h1 className="profile__content__title">
                 {profile.first_name ? `${profile.first_name}` : 'Your name'}
