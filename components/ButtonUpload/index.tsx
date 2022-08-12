@@ -15,7 +15,13 @@ function ButtonUpload({ onUpload, ...props }: Props) {
   };
   return (
     <div>
-      <input ref={ref} hidden type="file" onChange={handleChange} />
+      <input
+        ref={ref}
+        hidden
+        type="file"
+        onChange={handleChange}
+        accept="image/*"
+      />
       <Button
         {...props}
         type="button"

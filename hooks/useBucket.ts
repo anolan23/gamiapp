@@ -1,18 +1,22 @@
 import backend from '../lib/backend';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
-interface SignedUrlConfig {
-  key: string;
+interface PresignedData {
+  fields: any;
   url: string;
+  key: string;
 }
 
 type Resource = 'users' | 'events';
 
 function useBucket() {
-  const upload = async (resource: Resource, file: File) => {
-    const getSignedUrlConfig = async () => {
+  const uploadViaPresignedPost = async function (
+    resource: Resource,
+    file: File
+  ) {
+    const requestPresignedUrl = async function () {
       try {
-        const response = await backend.get<SignedUrlConfig>(
+        const response = await backend.get<PresignedData>(
           `/api/uploads/${resource}`,
           {
             params: {
@@ -21,16 +25,48 @@ function useBucket() {
           }
         );
         return response.data;
-      } catch (error) {
+      } catch (error: unknown | AxiosError) {
+        if (error instanceof AxiosError) {
+          if (error.response?.data?.error) {
+            throw new Error(error.response.data.error);
+          }
+        }
         throw error;
       }
     };
-    try {
-      const signedUrlConfig: SignedUrlConfig = await getSignedUrlConfig();
-      await axios.put(signedUrlConfig.url, file);
 
-      return signedUrlConfig.key;
-    } catch (error) {
+    try {
+      const presignedData = await requestPresignedUrl();
+
+      const form = new FormData();
+      Object.keys(presignedData.fields).forEach((key) =>
+        form.append(key, presignedData.fields[key])
+      );
+      form.set('content-type', file.type);
+      form.append('file', file);
+
+      // Send the POST request
+      await axios({
+        method: 'POST',
+        url: presignedData.url,
+        data: form,
+      });
+      return presignedData.key;
+    } catch (error: unknown | AxiosError) {
+      if (error instanceof AxiosError) {
+        if (
+          error.response?.headers?.['content-type']?.includes('application/xml')
+        ) {
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(
+            error.response.data,
+            'text/xml'
+          );
+          const errorMsg =
+            xmlDoc.getElementsByTagName('Message')[0].childNodes[0].nodeValue;
+          if (errorMsg) throw new Error(errorMsg);
+        }
+      }
       throw error;
     }
   };
@@ -38,6 +74,6 @@ function useBucket() {
   const buildImageUrl = function (key: string) {
     return `${process.env.NEXT_PUBLIC_S3_BUCKET_DOMAIN}/${key}`;
   };
-  return { upload, buildImageUrl };
+  return { uploadViaPresignedPost, buildImageUrl };
 }
 export default useBucket;

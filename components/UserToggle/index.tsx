@@ -33,9 +33,7 @@ function UserToggle({ className }: Props) {
       <Avatar className="user-toggle__image" objectKey={user.image} />
       <span className="material-icons user-toggle__icon">expand_more</span>
       <Dropdown show={show}>
-        <ItemLink href="/manage/events/create" icon="add">
-          Create event
-        </ItemLink>
+        <ItemLink href="/manage/events/create">Create event</ItemLink>
         <ItemLink href="/manage/events">Manage my events</ItemLink>
         <ItemLink href={`/profiles/${user.id}`}>View profile</ItemLink>
         <ItemLink href="/login" icon="logout" onClick={logout}>

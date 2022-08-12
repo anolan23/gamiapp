@@ -15,6 +15,7 @@ import { update } from '../../lib/api/users';
 import { toast } from 'react-toastify';
 import ButtonUpload from '../../components/ButtonUpload';
 import useBucket from '../../hooks/useBucket';
+import axios, { AxiosError } from 'axios';
 
 interface ProfileValues {
   first_name: string;
@@ -40,14 +41,14 @@ function Account() {
   const handleUpload = async function (file: File) {
     try {
       setUploading(true);
-      const image = await bucket.upload('users', file);
+      const image = await bucket.uploadViaPresignedPost('users', file);
       await update(user.id, { image });
       toast('Image uploaded', {
         type: 'success',
         theme: 'colored',
         style: { backgroundColor: '#3d98ff' },
       });
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
       let message = 'Error';
       if (error instanceof Error) message = error.message;
