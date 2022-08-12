@@ -8,15 +8,11 @@ interface Props {
 }
 
 function Attendee({ user, role }: Props) {
-  const fullName =
-    user.first_name && user.last_name
-      ? `${user.first_name} ${user.last_name?.charAt(0)}.`
-      : null;
   return (
     <Card>
       <div className="attendee">
-        <Avatar height={75} width={75} objectKey={user.image}/>
-        <span className="attendee__name">{fullName || user.email}</span>
+        <Avatar height={75} width={75} objectKey={user.image} />
+        <span className="attendee__name">{user.name || user.email}</span>
         <span className="attendee__role">{role}</span>
       </div>
     </Card>

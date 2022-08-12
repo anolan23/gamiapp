@@ -17,8 +17,7 @@ import ButtonUpload from '../../components/ButtonUpload';
 import bucket from '../../lib/bucket';
 
 interface ProfileValues {
-  first_name: string;
-  last_name: string;
+  name: string;
   bio: string;
 }
 
@@ -31,8 +30,7 @@ function Account() {
 
   if (!user) return <h1>...loading</h1>;
   const initialValues: ProfileValues = {
-    first_name: user.first_name ?? '',
-    last_name: user.last_name ?? '',
+    name: user.name ?? '',
     bio: user.bio ?? '',
   };
 
@@ -108,16 +106,10 @@ function Account() {
               />
             </div>
             <InputGroup
-              label="First name"
-              name="first_name"
+              label="Name"
+              name="name"
               onChange={handleChange}
-              value={values.first_name}
-            />
-            <InputGroup
-              label="Last name"
-              name="last_name"
-              onChange={handleChange}
-              value={values.last_name}
+              value={values.name}
             />
             <InputGroup
               label="Bio"

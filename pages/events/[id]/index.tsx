@@ -137,12 +137,19 @@ function EventPage({ event }: Props) {
                   />
                   <Attribute
                     label="Description"
-                    value={event.game?.description_preview}
+                    value={
+                      event.game?.description_preview
+                        ? event.game.description_preview.slice(0, 300) + '...'
+                        : 'Event description'
+                    }
                   />
                   <Attribute label="Players" value={event.game?.players} />
                   <Attribute
                     label="Average user rating"
-                    value={event.game?.average_user_rating?.toString()}
+                    value={
+                      event.game?.average_user_rating?.toFixed(1).toString() +
+                      ' stars out of 5'
+                    }
                   />
                 </div>
               </Card>

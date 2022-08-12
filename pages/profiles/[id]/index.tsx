@@ -13,6 +13,7 @@ import Avatar from '../../../components/Avatar';
 import Button from '../../../components/Button';
 import ButtonLink from '../../../components/ButtonLink';
 import Layout from '../../../layouts/Layout';
+import MaterialIcon from '../../../components/MaterialIcon';
 
 interface Props {
   profile: User;
@@ -32,7 +33,7 @@ function Profile({ profile }: Props) {
             <Avatar height={300} width={300} objectKey={profile.image} />
             <div className="profile__content__info__text">
               <h1 className="profile__content__title">
-                {profile.first_name ? `${profile.first_name}` : 'Your name'}
+                {profile.name ?? profile.email ?? null}
               </h1>
               <span className="profile__content__join-date">
                 {`Member since ${dayjs(profile.created_at).format(
@@ -43,18 +44,23 @@ function Profile({ profile }: Props) {
                 {profile.bio ?? 'Your bio goes here'}
               </p>
               <div className="profile__content__attr">
-                <span className="material-icons-outlined profile__content__attr__icon">
-                  event
-                </span>
+                <MaterialIcon
+                  className="profile__content__attr__icon"
+                  icon="event"
+                  filled
+                />
                 <span className="profile__content__attr__text">
                   Attended 0 events
                 </span>
               </div>
-              <ButtonLink
-                href="/account"
-                text="Edit profile"
-                color="secondary"
-              />
+              {user?.id === profile.id ? (
+                <ButtonLink
+                  href="/account"
+                  text="Edit profile"
+                  color="secondary"
+                  size="small"
+                />
+              ) : null}
             </div>
           </div>
         </div>
