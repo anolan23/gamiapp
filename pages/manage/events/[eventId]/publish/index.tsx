@@ -32,6 +32,10 @@ function PublishPage() {
       setIsSubmitting(true);
       const cols = { ...values, published: true };
       await updateEvent(event.id, cols);
+      toast('Published successfully', {
+        type: 'success',
+        style: { backgroundColor: '#3d98ff' },
+      });
       await router.push(`/manage/events/${event.id}/invite`);
     } catch (error) {
       let message = 'Error';

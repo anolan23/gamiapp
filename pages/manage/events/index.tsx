@@ -17,6 +17,7 @@ import Navbar from '../../../layouts/Navbar';
 import Page from '../../../layouts/Page';
 import { destroy } from '../../../lib/api/events';
 import Layout from '../../../layouts/Layout';
+import { buildImageUrl } from '../../../lib/bucket';
 
 function ManageEvents() {
   const { user } = useUser();
@@ -70,6 +71,7 @@ interface EventProps {
 function EventComponent({ event, onDeleteClick }: EventProps) {
   const [show, setShow] = useState<boolean>(false);
   const actionRef = useRef<HTMLDivElement>(null);
+  const src = event.image ? buildImageUrl(event.image) : undefined;
 
   const onClickOutside = useCallback(() => {
     setShow(false);
@@ -97,7 +99,7 @@ function EventComponent({ event, onDeleteClick }: EventProps) {
     <Card className="manage-events__event">
       <div className="manage-events__event__image">
         <Image
-          src={event.image || event.game?.thumb_url || '/event.jpeg'}
+          src={src || event.game?.thumb_url || '/event.jpeg'}
           alt="game event"
           layout="fill"
           objectFit="contain"

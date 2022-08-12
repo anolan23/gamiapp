@@ -14,8 +14,7 @@ import { Form, Formik } from 'formik';
 import { update } from '../../lib/api/users';
 import { toast } from 'react-toastify';
 import ButtonUpload from '../../components/ButtonUpload';
-import useBucket from '../../hooks/useBucket';
-import axios, { AxiosError } from 'axios';
+import bucket from '../../lib/bucket';
 
 interface ProfileValues {
   first_name: string;
@@ -28,7 +27,6 @@ interface Props {}
 function Account() {
   const { user } = useUser();
   const router = useRouter();
-  const bucket = useBucket();
   const [uploading, setUploading] = useState(false);
 
   if (!user) return <h1>...loading</h1>;
@@ -41,7 +39,10 @@ function Account() {
   const handleUpload = async function (file: File) {
     try {
       setUploading(true);
-      const image = await bucket.uploadViaPresignedPost('users', file);
+      const image = await bucket.uploadViaPresignedPost({
+        resource: 'users',
+        file,
+      });
       await update(user.id, { image });
       toast('Image uploaded', {
         type: 'success',

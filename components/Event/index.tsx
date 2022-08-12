@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { Event } from '../../hooks/useEvents';
 import { toDateTimeString } from '../../lib/helpers';
 import Card from '../../layouts/Card';
+import { buildImageUrl } from '../../lib/bucket';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   event: Event;
@@ -10,12 +11,13 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 function EventComponent({ event, onClick }: Props) {
   const kmToMileRatio = 0.000621371;
+  const src = event.image ? buildImageUrl(event.image) : undefined;
   return (
     <Card onClick={onClick} className="event">
       <div className="event__image">
         <Image
           className="event__image__img"
-          src={event.image || event.game?.thumb_url || '/event.jpeg'}
+          src={src || event.game?.thumb_url || '/event.jpeg'}
           alt="event"
           layout="fill"
           objectFit="cover"

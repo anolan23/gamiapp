@@ -33,6 +33,10 @@ function Signup() {
           onSubmit={async (credentials, { setSubmitting }) => {
             try {
               await signup(credentials);
+              toast('Welcome!', {
+                type: 'success',
+                style: { backgroundColor: '#3d98ff' },
+              });
               await router.push(`/explore`);
             } catch (error) {
               console.error(error);

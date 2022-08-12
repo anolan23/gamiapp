@@ -1,3 +1,15 @@
 .details {
   overflow-y: auto;
+  &__upload {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20rem;
+    background-color: $color-black-10;
+    border-radius: 12px;
+    &__icon {
+      color: $color-black-20;
+    }
+  }
 }

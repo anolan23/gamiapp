@@ -31,6 +31,10 @@ function Login() {
           onSubmit={async (credentials: Credentials, { setSubmitting }) => {
             try {
               await login(credentials);
+              toast('Login successful', {
+                type: 'success',
+                style: { backgroundColor: '#3d98ff' },
+              });
               await router.push('/explore');
             } catch (error) {
               console.error(error);

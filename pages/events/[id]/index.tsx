@@ -20,6 +20,7 @@ import Card from '../../../layouts/Card';
 import Banner from '../../../layouts/Banner';
 import { useState } from 'react';
 import Layout from '../../../layouts/Layout';
+import { buildImageUrl } from '../../../lib/bucket';
 
 interface Props {
   event: Event;
@@ -33,6 +34,7 @@ function EventPage({ event }: Props) {
 
   if (router.isFallback) return <h1>loading...</h1>;
 
+  const src = event.image ? buildImageUrl(event.image) : undefined;
   const { street, city } = parseAddress(event.address);
   const staticMapUrl = event.coords
     ? getStaticMapUrl({
@@ -91,7 +93,7 @@ function EventPage({ event }: Props) {
           <div className="events-page__main">
             <div className="events-page__main__image-container">
               <Image
-                src={event.image || event.game?.image_url || 'event.jpeg'}
+                src={src || event.game?.image_url || 'event.jpeg'}
                 alt="event main"
                 layout="fill"
                 objectFit="cover"

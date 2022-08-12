@@ -49,6 +49,7 @@ function DetailsPage() {
       <Layout navbar={<Navbar />} sidebar={<SidebarManage event={event} />}>
         <Details
           onSubmit={onSubmit}
+          event={event}
           initialValues={{
             summary: event.summary ?? '',
             description: event.description ?? '',

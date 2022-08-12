@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import useBucket from '../../hooks/useBucket';
+import { buildImageUrl } from '../../lib/bucket';
 
 interface Props {
   objectKey?: string;
@@ -9,7 +9,6 @@ interface Props {
 }
 
 function Avatar({ objectKey, height = 50, width = 50, className }: Props) {
-  const { buildImageUrl } = useBucket();
   return (
     <div
       className={`avatar ${className ?? ''}`}
