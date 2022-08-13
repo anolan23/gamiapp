@@ -1,13 +1,14 @@
 import backend from '../lib/backend';
 import axios, { AxiosError } from 'axios';
 
+type Resource = 'users' | 'events';
+type S3ObjectKey = string;
+
 interface PresignedData {
   fields: any;
   url: string;
-  key: string;
+  key: S3ObjectKey;
 }
-
-type Resource = 'users' | 'events';
 
 interface Upload {
   resource: Resource;
@@ -15,7 +16,13 @@ interface Upload {
   file: File;
 }
 
-export const uploadViaPresignedPost = async function ({
+interface DeleteParams {
+  resource: Resource;
+  resourceId?: number;
+  key: S3ObjectKey;
+}
+
+export async function uploadViaPresignedPost({
   resource,
   resourceId,
   file,
@@ -73,14 +80,34 @@ export const uploadViaPresignedPost = async function ({
     }
     throw error;
   }
-};
+}
 
-export const buildImageUrl = function (key: string) {
+export async function deleteImage({ resource, resourceId, key }: DeleteParams) {
+  try {
+    const response = await backend.delete(`/api/uploads/${resource}`, {
+      params: {
+        key,
+        id: resourceId,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      if (error.response?.data?.error) {
+        throw new Error(error.response.data.error);
+      }
+    }
+    throw error;
+  }
+}
+
+export function buildImageUrl(key: string) {
   return `${process.env.NEXT_PUBLIC_S3_BUCKET_DOMAIN}/${key}`;
-};
+}
 
 const bucket = {
   uploadViaPresignedPost,
   buildImageUrl,
+  deleteImage,
 };
 export default bucket;

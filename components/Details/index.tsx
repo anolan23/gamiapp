@@ -5,9 +5,12 @@ import FormSection from '../FormSection';
 import InputGroup from '../InputGroup';
 import MaterialIcon from '../MaterialIcon';
 import TextArea from '../TextArea';
-import bucket from '../../lib/bucket';
+import bucket, { buildImageUrl } from '../../lib/bucket';
 import { updateEvent } from '../../lib/api';
 import { toast } from 'react-toastify';
+import Image from 'next/image';
+import ButtonUpload from '../ButtonUpload';
+import Button from '../Button';
 
 export interface DetailsValues {
   summary: string;
@@ -34,11 +37,9 @@ function Details({ initialValues: initialVals, event, onSubmit }: Props) {
     return errors;
   };
 
-  const handleUpload = async function (e: React.ChangeEvent<HTMLInputElement>) {
+  const handleUpload = async function (file: File) {
     try {
-      if (!e.target.files) return;
       if (!event.id) return;
-      const file = e.target.files[0];
       const image = await bucket.uploadViaPresignedPost({
         resource: 'events',
         resourceId: event.id,
@@ -60,6 +61,46 @@ function Details({ initialValues: initialVals, event, onSubmit }: Props) {
     }
   };
 
+  const handleRemoveClick = async function () {
+    try {
+      if (!event.image) throw new Error('No image to delete');
+      if (!event.id) throw new Error('No event associated with this image');
+      await bucket.deleteImage({
+        resource: 'events',
+        resourceId: event.id,
+        key: event.image,
+      });
+      await updateEvent(event.id, { image: null });
+      toast('Image removed', {
+        type: 'success',
+        theme: 'colored',
+        style: { backgroundColor: '#3d98ff' },
+      });
+    } catch (error) {
+      console.error(error);
+      let message = 'Error';
+      if (error instanceof Error) message = error.message;
+      toast(message, {
+        type: 'error',
+      });
+    }
+  };
+
+  const renderEventImage = function () {
+    if (!event.image) {
+      return (
+        <MaterialIcon
+          className="details__upload__icon"
+          icon="add_photo_alternate"
+          size={80}
+          filled
+        />
+      );
+    }
+    const src = buildImageUrl(event.image);
+    return <Image src={src} alt="main event" objectFit="cover" layout="fill" />;
+  };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -74,21 +115,29 @@ function Details({ initialValues: initialVals, event, onSubmit }: Props) {
               description="This is the first image gamers will see at the top of your listing. Use a high quality image: 2160x1080px (2:1 ratio)."
               icon="image"
             >
-              <label className="details__upload">
-                <MaterialIcon
-                  className="details__upload__icon"
-                  icon="add_photo_alternate"
-                  size={80}
-                  filled
-                />
-                <input
-                  hidden
-                  id="file-upload"
-                  type="file"
-                  onChange={handleUpload}
-                  accept="image/*"
-                />
-              </label>
+              <div className="details__upload">
+                <div className="details__upload__image-container">
+                  {renderEventImage()}
+                </div>
+                <div className="details__upload__actions">
+                  {event.image ? (
+                    <Button
+                      text="Remove"
+                      color="secondary"
+                      size="small"
+                      onClick={handleRemoveClick}
+                      type="button"
+                    />
+                  ) : null}
+                  {!event.image ? (
+                    <ButtonUpload
+                      text="Upload"
+                      size="small"
+                      onUpload={handleUpload}
+                    />
+                  ) : null}
+                </div>
+              </div>
             </FormSection>
             <FormSection
               title="Description"

@@ -21,24 +21,24 @@ export default function useUser({
   redirectIfFound = false,
 } = {}) {
   const fetcher = async function (url: string) {
-    const response = await backend.get(url);
+    const response = await backend.get(
+      process.env.NEXT_PUBLIC_BACKEND_URL + url
+    );
     return response.data;
   };
   const { data: user, mutate: mutateUser } = useSWR<User>(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/login`,
+    '/api/login',
     fetcher,
     {
       revalidateIfStale: true,
       revalidateOnFocus: false,
-      revalidateOnReconnect: false,
+      revalidateOnReconnect: true,
     }
   );
-
   useEffect(() => {
     // if no redirect needed, just return (example: already on /dashboard)
     // if user data not yet there (fetch in progress, logged in or not) then don't do anything yet
     if (!redirectTo || !user) return;
-
     if (
       // If redirectTo is set, redirect if the user was not found.
       (redirectTo && !redirectIfFound && !user?.isLoggedIn) ||

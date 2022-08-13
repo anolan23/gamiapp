@@ -1,15 +1,34 @@
 .details {
   overflow-y: auto;
+  flex: 1;
   &__upload {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 20rem;
-    background-color: $color-black-10;
-    border-radius: 12px;
+    background-color: $color-200;
+    border: $border;
+    &__image-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $color-100;
+      position: relative;
+      width: 100%;
+      height: 35rem;
+    }
+    &__actions {
+      padding: 1.6rem 3.2rem;
+      display: grid;
+      grid-auto-flow: column;
+      gap: 1.6rem;
+      justify-content: flex-end;
+    }
     &__icon {
       color: $color-black-20;
     }
+  }
+  &__image {
+    position: relative;
+    height: 35rem;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
   }
 }

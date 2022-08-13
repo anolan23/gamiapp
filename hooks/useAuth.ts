@@ -1,3 +1,4 @@
+import { useSWRConfig } from 'swr';
 import backend from '../lib/backend';
 
 export interface Credentials {
@@ -6,6 +7,8 @@ export interface Credentials {
 }
 
 function useAuth() {
+  const { mutate } = useSWRConfig();
+
   const signup = async function (credentials: Credentials) {
     try {
       const user = await backend.post('/api/signup', credentials);
@@ -26,8 +29,8 @@ function useAuth() {
 
   const logout = async function () {
     try {
-      const user = await backend.post('/api/logout');
-      return user;
+      await backend.post('/api/logout');
+      await mutate('/api/login', null);
     } catch (error) {
       throw error;
     }

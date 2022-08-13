@@ -21,7 +21,6 @@ function UserToggle({ className }: Props) {
   const onClickOutside = useCallback(() => {
     setShow(false);
   }, []);
-
   useOutsideClick(toggleRef, onClickOutside);
   if (!user) return null;
   return (
