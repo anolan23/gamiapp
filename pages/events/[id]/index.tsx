@@ -21,19 +21,28 @@ import Banner from '../../../layouts/Banner';
 import { useState } from 'react';
 import Layout from '../../../layouts/Layout';
 import { buildImageUrl } from '../../../lib/bucket';
+import useBackendSWR from '../../../hooks/useBackendSWR';
 
 interface Props {
   event: Event;
 }
 
-function EventPage({ event }: Props) {
+function EventPage({ event: fallbackData }: Props) {
   const { user } = useUser();
   const router = useRouter();
   const { getStaticMapUrl } = useMapbox();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  if (router.isFallback) return <h1>loading...</h1>;
+  const url = fallbackData?.id ? `/api/events/${fallbackData.id}` : undefined;
+  const { data: event, mutate } = useBackendSWR<Event>(url, undefined, {
+    fallbackData,
+    revalidateOnMount: true,
+  });
+  if (!event || router.isFallback) return <div>loading...</div>;
 
+  const isAttending = !!event.attendees?.find(
+    (attendee) => attendee.id === user?.id
+  );
   const src = event.image ? buildImageUrl(event.image) : undefined;
   const { street, city } = parseAddress(event.address);
   const staticMapUrl = event.coords
@@ -49,6 +58,7 @@ function EventPage({ event }: Props) {
       if (!event.id || !user?.id) return;
       setIsSubmitting(true);
       await attend(event.id, user?.id);
+      await mutate();
       toast('Successfully joined!', {
         type: 'success',
         style: { backgroundColor: '#3d98ff' },
@@ -214,6 +224,7 @@ function EventPage({ event }: Props) {
           iconPos="right"
         />
         <Button
+          disabled={isAttending}
           text="Attend"
           onClick={handleAttendClick}
           loading={isSubmitting}

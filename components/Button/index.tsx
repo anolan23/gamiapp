@@ -30,6 +30,7 @@ function Button({
   color = 'primary',
   onClick,
   className = '',
+  ...props
 }: ButtonProps) {
   const renderChildren = function () {
     if (loading) {
@@ -71,6 +72,7 @@ function Button({
       } ${className} btn--${color} btn--${size}`}
       type={type}
       onClick={onClick}
+      {...props}
     >
       {renderChildren()}
     </button>

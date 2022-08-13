@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import Image from 'next/image';
 import ButtonUpload from '../ButtonUpload';
 import Button from '../Button';
+import { useSWRConfig } from 'swr';
 
 export interface DetailsValues {
   summary: string;
@@ -24,6 +25,8 @@ interface Props {
 }
 
 function Details({ initialValues: initialVals, event, onSubmit }: Props) {
+  const { mutate } = useSWRConfig();
+
   const initialValues: DetailsValues = initialVals || {
     summary: '',
     description: '',
@@ -46,6 +49,7 @@ function Details({ initialValues: initialVals, event, onSubmit }: Props) {
         file,
       });
       await updateEvent(event.id, { image });
+      await mutate(`/api/events/${event.id}`);
       toast('Image uploaded', {
         type: 'success',
         theme: 'colored',
@@ -71,6 +75,7 @@ function Details({ initialValues: initialVals, event, onSubmit }: Props) {
         key: event.image,
       });
       await updateEvent(event.id, { image: null });
+      await mutate(`/api/events/${event.id}`);
       toast('Image removed', {
         type: 'success',
         theme: 'colored',

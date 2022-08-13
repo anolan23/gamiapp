@@ -24,7 +24,7 @@ interface ProfileValues {
 interface Props {}
 
 function Account() {
-  const { user } = useUser();
+  const { user, mutateUser } = useUser();
   const router = useRouter();
   const [uploading, setUploading] = useState(false);
 
@@ -37,11 +37,20 @@ function Account() {
   const handleUpload = async function (file: File) {
     try {
       setUploading(true);
+      if (!user.id) throw new Error('No userId to assign image to');
+      if (user.image) {
+        await bucket.deleteImage({
+          resource: 'users',
+          resourceId: user.id,
+          key: user.image,
+        });
+      }
       const image = await bucket.uploadViaPresignedPost({
         resource: 'users',
         file,
       });
       await update(user.id, { image });
+      await mutateUser();
       toast('Image uploaded', {
         type: 'success',
         theme: 'colored',

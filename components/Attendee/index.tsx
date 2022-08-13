@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { User } from '../../hooks/useUser';
 import Card from '../../layouts/Card';
 import Avatar from '../Avatar';
@@ -10,11 +11,13 @@ interface Props {
 function Attendee({ user, role }: Props) {
   return (
     <Card>
-      <div className="attendee">
-        <Avatar height={75} width={75} objectKey={user.image} />
-        <span className="attendee__name">{user.name || user.email}</span>
-        <span className="attendee__role">{role}</span>
-      </div>
+      <Link href={`/profiles/${user.id}`} passHref>
+        <a className="attendee">
+          <Avatar height={75} width={75} objectKey={user.image} />
+          <span className="attendee__name">{user.name || user.email}</span>
+          <span className="attendee__role">{role}</span>
+        </a>
+      </Link>
     </Card>
   );
 }
