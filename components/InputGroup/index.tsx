@@ -26,7 +26,9 @@ function InputGroup({
           error ? 'input-group--error' : ''
         }`}
       >
-        <label className="input-group__label">{label}</label>
+        <label className="input-group__label" htmlFor={props.name}>
+          {label}
+        </label>
         <div className="input-group__input">
           <Input className="input-group__input" {...props} />
         </div>

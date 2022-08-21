@@ -55,9 +55,13 @@ function EventPage({ event: fallbackData }: Props) {
 
   const handleAttendClick = async function () {
     try {
-      if (!event.id || !user?.id) return;
       setIsSubmitting(true);
-      await attend(event.id, user?.id);
+      if (!event.id) throw new Error('No id associated with this event');
+      if (!user?.id) {
+        router.push('/signup');
+        return;
+      }
+      await attend(event.id, user.id);
       await mutate();
       toast('Successfully joined!', {
         type: 'success',

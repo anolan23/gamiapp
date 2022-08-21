@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -15,6 +15,7 @@ import { update } from '../../lib/api/users';
 import { toast } from 'react-toastify';
 import ButtonUpload from '../../components/ButtonUpload';
 import bucket from '../../lib/bucket';
+import AccountForm from '../../components/AccountForm';
 
 interface ProfileValues {
   name: string;
@@ -29,6 +30,7 @@ function Account() {
   const [uploading, setUploading] = useState(false);
 
   if (!user) return <h1>...loading</h1>;
+
   const initialValues: ProfileValues = {
     name: user.name ?? '',
     bio: user.bio ?? '',
@@ -69,7 +71,9 @@ function Account() {
   };
 
   return (
-    <Formik
+    <AccountForm<ProfileValues>
+      title="Edit profile"
+      description="This information will appear on your public profile"
       initialValues={initialValues}
       onSubmit={async (values, { setSubmitting }) => {
         try {
@@ -95,15 +99,9 @@ function Account() {
         }
       }}
     >
-      {({ handleChange, isSubmitting, values }) => {
+      {({ handleChange, values }) => {
         return (
-          <Form className="edit-profile">
-            <div className="edit-profile__heading">
-              <h1 className="edit-profile__heading__title">Edit profile</h1>
-              <span className="edit-profile__heading__description">
-                This information will appear on your public profile
-              </span>
-            </div>
+          <React.Fragment>
             <div className="edit-profile__upload">
               <Avatar height={150} width={150} objectKey={user.image} />
               <ButtonUpload
@@ -127,13 +125,10 @@ function Account() {
               onChange={handleChange}
               value={values.bio}
             />
-            <div>
-              <Button text="Save" type="submit" loading={isSubmitting} />
-            </div>
-          </Form>
+          </React.Fragment>
         );
       }}
-    </Formik>
+    </AccountForm>
   );
 }
 

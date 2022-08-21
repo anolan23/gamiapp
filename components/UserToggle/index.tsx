@@ -33,8 +33,9 @@ function UserToggle({ className }: Props) {
       <span className="material-icons user-toggle__icon">expand_more</span>
       <Dropdown show={show}>
         <ItemLink href="/manage/events/create">Create event</ItemLink>
-        <ItemLink href="/manage/events">Manage my events</ItemLink>
+        <ItemLink href="/manage/events">Your events</ItemLink>
         <ItemLink href={`/profiles/${user.id}`}>View profile</ItemLink>
+        <ItemLink href={`/account`}>Settings</ItemLink>
         <ItemLink href="/login" icon="logout" onClick={logout}>
           Logout
         </ItemLink>

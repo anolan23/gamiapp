@@ -8,7 +8,6 @@ import ButtonLink from '../../../components/ButtonLink';
 import Dropdown from '../../../components/Dropdown';
 import Item from '../../../components/Item';
 import ItemLink from '../../../components/ItemLink';
-import useBackend from '../../../hooks/useBackend';
 import { Event } from '../../../hooks/useEvents';
 import { useOutsideClick } from '../../../hooks/useOutsideClick';
 import useUser from '../../../hooks/useUser';
@@ -18,26 +17,25 @@ import Page from '../../../layouts/Page';
 import { destroy } from '../../../lib/api/events';
 import Layout from '../../../layouts/Layout';
 import { buildImageUrl } from '../../../lib/bucket';
+import Tabs from '../../../components/Tabs';
+import useBackendSWR from '../../../hooks/useBackendSWR';
 
 function ManageEvents() {
   const { user } = useUser();
   const router = useRouter();
   const url = user ? `/api/users/${user.id}/events` : undefined;
-  const { data: events, mutate } = useBackend<Event[]>(url);
+  const { data: events, mutate } = useBackendSWR<Event[]>(url);
+
+  const handleTabClick = function (tab: string) {
+    console.log(tab);
+  };
 
   const renderEvents = function () {
     if (!events) return null;
     if (!events.length) return <h2>No events</h2>;
     return events.map((event, index) => {
       return (
-        <EventComponent
-          key={index}
-          event={event}
-          onDeleteClick={() => {
-            const filtered = events.filter((ev) => event.id !== ev.id);
-            mutate(filtered);
-          }}
-        />
+        <EventComponent key={index} event={event} onDeleteClick={mutate} />
       );
     });
   };
@@ -56,7 +54,11 @@ function ManageEvents() {
               />
             </div>
           </div>
-          <div className="manage-events__events">{renderEvents()}</div>
+          <Tabs tabs={['Attending', 'Hosting']}>
+            {({ active }) => (
+              <div className="manage-events__events">{renderEvents()}</div>
+            )}
+          </Tabs>
         </div>
       </Layout>
     </Page>

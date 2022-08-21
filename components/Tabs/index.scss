@@ -1,0 +1,36 @@
+.tabs {
+  display: flex;
+  // border-bottom: $border;
+}
+
+.tab {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.6rem;
+  font-weight: 400;
+  color: $font-color;
+  cursor: pointer;
+  user-select: none;
+
+  &--active {
+    color: $font-color;
+    font-weight: 700;
+  }
+
+  &__bar {
+    width: 50%;
+    height: 4px;
+    border-radius: 9999px;
+    background-color: $color-400;
+    position: absolute;
+    bottom: 0;
+    align-self: center;
+  }
+
+  &:hover {
+    background-color: $color-100;
+  }
+}

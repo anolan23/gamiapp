@@ -21,7 +21,11 @@ function AccountSidebar() {
         >
           Personal Info
         </Item>
-        <Item href="/account" icon="settings" active={match === 'manage'}>
+        <Item
+          href="/account/management"
+          icon="settings"
+          active={match === 'management'}
+        >
           Account Management
         </Item>
       </div>

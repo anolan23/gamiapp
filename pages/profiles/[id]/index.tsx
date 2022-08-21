@@ -28,7 +28,7 @@ function Profile({ profile }: Props) {
   return (
     <Page className="profile">
       <Layout navbar={<Navbar />}>
-        <div className="profile__content">
+        <div className="profile__content container">
           <div className="profile__content__info">
             <Avatar height={300} width={300} objectKey={profile.image} />
             <div className="profile__content__info__text">
